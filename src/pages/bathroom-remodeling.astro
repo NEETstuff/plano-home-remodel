@@ -1,0 +1,393 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import TrustSignals from '../components/TrustSignals.astro';
+import CTA from '../components/CTA.astro';
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": ["Service", "Product"],
+  name: "Bathroom Remodeling in Plano, TX",
+  description: "Professional bathroom remodeling services in Plano and North Dallas. Custom showers, double vanities, soaking tubs, and accessibility upgrades by Millwood Remodeling.",
+  provider: {
+    "@type": "HomeAndConstructionBusiness",
+    "@id": "https://planohomeremodel.com",
+    name: "Plano Home Remodel & Design",
+    url: "https://planohomeremodel.com",
+    telephone: "+14695062339",
+    areaServed: [
+      { "@type": "City", name: "Plano" },
+      { "@type": "City", name: "Frisco" },
+      { "@type": "City", name: "Allen" },
+      { "@type": "City", name: "Dallas" },
+    ],
+    parentOrganization: {
+      "@type": "HomeAndConstructionBusiness",
+      name: "Millwood Remodeling",
+      url: "https://millwoodremodeling.com",
+    },
+  },
+  areaServed: [
+    { "@type": "City", name: "Plano", sameAs: "https://en.wikipedia.org/wiki/Plano,_Texas" },
+    { "@type": "City", name: "Frisco", sameAs: "https://en.wikipedia.org/wiki/Frisco,_Texas" },
+    { "@type": "City", name: "Allen", sameAs: "https://en.wikipedia.org/wiki/Allen,_Texas" },
+    { "@type": "City", name: "Dallas", sameAs: "https://en.wikipedia.org/wiki/Dallas" },
+    { "@type": "City", name: "McKinney", sameAs: "https://en.wikipedia.org/wiki/McKinney,_Texas" },
+    { "@type": "City", name: "Richardson", sameAs: "https://en.wikipedia.org/wiki/Richardson,_Texas" },
+  ],
+  offers: {
+    "@type": "Offer",
+    priceRange: "$10,000 – $35,000+",
+    priceCurrency: "USD",
+    availability: "https://schema.org/InStock",
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.9",
+    reviewCount: "127",
+    bestRating: "5",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How much does a bathroom remodel cost in Plano, TX?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Bathroom remodeling costs in Plano typically range from $10,000 for a small powder room refresh to $35,000+ for a full master bathroom renovation. Factors include the scope of work, tile selection, fixture quality, and whether you are changing the layout. We provide a detailed, transparent estimate during your free consultation.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How long does a bathroom remodel take in Plano?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Most bathroom remodels in Plano take 3–5 weeks from demolition to completion. A simple powder room update can be done in 1–2 weeks, while a full master bath with layout changes may take 5–6 weeks. We provide a clear timeline before work begins.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do you install walk-in showers in Plano?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Walk-in showers are one of our most requested features. We build custom curbless and low-curb showers with linear drains, frameless glass enclosures, bench seating, and premium tile finishes. They are a perfect choice for Plano homeowners planning to age in place or simply wanting a modern, spa-like bathroom.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can you remodel a bathroom without changing the plumbing layout?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Absolutely. Many Plano homeowners choose to keep existing plumbing locations to save on cost and timeline. We can still deliver a completely transformed bathroom with new tile, vanity, toilet, lighting, and fixtures — all while keeping plumbing where it is.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do I need a permit for a bathroom remodel in Plano?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Permits are required in Plano for most bathroom remodels involving electrical, plumbing, or structural changes. We handle all permit applications and coordinate with the City of Plano Building Inspections department on your behalf.",
+      },
+    },
+  ],
+};
+
+const features = [
+  {
+    title: 'Custom Walk-In Showers',
+    description: 'Curbless entries, linear drains, rain shower heads, body sprays, and frameless glass enclosures. We build showers that feel like a luxury spa, with non-slip flooring and built-in seating.',
+    icon: `<svg class="w-6 h-6 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>`,
+  },
+  {
+    title: 'Double Vanities & Custom Cabinetry',
+    description: 'Custom vanity cabinets with quartz or marble countertops, undermount sinks, and ample storage. Double vanities with lighting-matched mirrors create the perfect his-and-hers setup.',
+    icon: `<svg class="w-6 h-6 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>`,
+  },
+  {
+    title: 'Soaking Tubs & Freestanding Baths',
+    description: 'Freestanding soaking tubs, jetted tubs, and claw-foot options for homeowners who love a long bath. We handle the structural reinforcement and premium plumbing fixtures.',
+    icon: `<svg class="w-6 h-6 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>`,
+  },
+  {
+    title: 'Tile Work & Flooring',
+    description: 'Large-format porcelain tiles, natural stone, heated floors, and intricate mosaic accents. Our tile installers create waterproof, beautiful surfaces that stand up to Plano humidity.',
+    icon: `<svg class="w-6 h-6 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>`,
+  },
+  {
+    title: 'Lighting & Ventilation',
+    description: 'Layered lighting with vanity fixtures, recessed cans, and moisture-rated fixtures. Proper ventilation is critical in North Texas bathrooms — we install high-quality exhaust fans that keep your bathroom dry and mold-free.',
+    icon: `<svg class="w-6 h-6 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>`,
+  },
+  {
+    title: 'Accessibility & Aging-in-Place',
+    description: 'Curbless showers, grab bars, comfort-height toilets, wide doorways, and non-slip flooring. We design bathrooms that adapt to your needs today and in the future, without sacrificing style.',
+    icon: `<svg class="w-6 h-6 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>`,
+  },
+  {
+    title: 'Waterproofing & Mold Prevention',
+    description: 'Proper waterproofing is essential in North Texas bathrooms. We use Schluter-Kerdi and similar systems for shower pans and walls, plus moisture-resistant drywall and proper sealing throughout.',
+    icon: `<svg class="w-6 h-6 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>`,
+  },
+  {
+    title: 'Plumbing Fixtures & Hardware',
+    description: 'Premium faucets, shower valves, toilets, and bidet seats from top brands. We install thermostatic mixing valves for precise temperature control and water-saving fixtures that meet Plano codes.',
+    icon: `<svg class="w-6 h-6 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"/></svg>`,
+  },
+];
+
+const processSteps = [
+  {
+    number: '01',
+    title: 'Free Consultation',
+    description: 'We visit your Plano home, discuss your vision, assess your space, and provide transparent pricing. No pressure, just helpful expertise.',
+  },
+  {
+    number: '02',
+    title: 'Design & Material Selection',
+    description: 'Our in-house designer creates 3D renderings of your new bathroom. You select tile, fixtures, vanities, and finishes with expert guidance every step of the way.',
+  },
+  {
+    number: '03',
+    title: 'Permitting & Prep',
+    description: 'We handle all Plano permits and prepare your home for construction. We protect your floors, seal off work areas, and set up a clean job site.',
+  },
+  {
+    number: '04',
+    title: 'Construction',
+    description: 'Demolition, plumbing, electrical, drywall, tile, and fixture installation. Our crew works efficiently to get your bathroom back in service as quickly as possible.',
+  },
+  {
+    number: '05',
+    title: 'Final Walkthrough',
+    description: 'We inspect every detail with you, make any needed adjustments, and ensure you are completely satisfied before we leave.',
+  },
+];
+---
+
+<Layout
+  title="Bathroom Remodeling Plano, TX – Custom Bathroom Remodels"
+  description="Expert Plano bathroom remodeling. Custom walk-in showers, double vanities, soaking tubs, and accessibility upgrades. 15+ years experience, in-house designer, 2-year warranty. A Millwood Remodeling Company."
+  canonical="https://planohomeremodel.com/bathroom-remodeling/"
+  schema={[serviceSchema, faqSchema]}
+>
+
+  <Hero
+    title="Bathroom Remodeling in Plano & North Dallas"
+    subtitle="Transform your bathroom into a personal sanctuary with custom showers, elegant vanities, and spa-quality finishes. We bring Plano bathrooms to life."
+    ctaText="Get Your Free Bathroom Estimate"
+    ctaHref="/contact/"
+    secondaryText="View Our Process"
+    secondaryHref="/our-process/"
+  />
+
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">What We Deliver in Every Bathroom Remodel</h2>
+        <p class="text-text-light text-lg">
+          From master suite transformations to sleek powder room updates, every bathroom we build reflects our commitment to quality, durability, and design.
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {features.map((feature) => (
+          <div class="bg-warm rounded-xl p-6 border border-warm-dark">
+            <div class="flex items-center gap-3 mb-3">
+              <span set:html={feature.icon} />
+              <h3 class="font-bold text-primary">{feature.title}</h3>
+            </div>
+            <p class="text-text-light text-sm leading-relaxed">{feature.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-warm">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">Our Bathroom Remodeling Process</h2>
+        <p class="text-text-light text-lg">
+          A proven, stress-free process that turns your outdated bathroom into a space you will love. From consultation to completion, we manage every detail.
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        {processSteps.map((step) => (
+          <div class="bg-white rounded-xl p-6 border border-warm-dark text-center">
+            <div class="text-accent font-bold text-3xl mb-2">{step.number}</div>
+            <h3 class="font-bold text-primary mb-2">{step.title}</h3>
+            <p class="text-text-light text-sm leading-relaxed">{step.description}</p>
+          </div>
+        ))}
+      </div>
+      <div class="text-center mt-8">
+        <a href="/our-process/" class="text-accent hover:text-accent-light font-semibold inline-flex items-center gap-1 transition-colors">
+          Learn More About Our Process →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Why Plano Homeowners Choose Us for Bathroom Remodeling</h2>
+          <div class="space-y-5">
+            <div class="flex gap-4">
+              <span class="shrink-0 w-1 h-auto rounded-full bg-accent" />
+              <div>
+                <h3 class="font-bold text-primary">Master Bath Experts</h3>
+                <p class="text-text-light text-sm leading-relaxed">Plano master bathrooms often feature large footprints with separate tub and shower zones, double vanities, and walk-in closets. We specialize in reimagining these spaces for maximum luxury and function — including converting unused tubs into expansive walk-in showers.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <span class="shrink-0 w-1 h-auto rounded-full bg-accent" />
+              <div>
+                <h3 class="font-bold text-primary">In-House Designer, One Vision</h3>
+                <p class="text-text-light text-sm leading-relaxed">Our designer creates 3D renderings so you see exactly how tile, fixtures, lighting, and cabinetry will work together. No surprises, no guesswork — just a bathroom you will love.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <span class="shrink-0 w-1 h-auto rounded-full bg-accent" />
+              <div>
+                <h3 class="font-bold text-primary">2-Year Workmanship Warranty</h3>
+                <p class="text-text-light text-sm leading-relaxed">Bathrooms see more moisture and daily wear than any other room. Our 2-year warranty gives you confidence that your investment is protected — and that we stand behind every tile, fixture, and pipe we install.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <span class="shrink-0 w-1 h-auto rounded-full bg-accent" />
+              <div>
+                <h3 class="font-bold text-primary">Millwood Quality Standards</h3>
+                <p class="text-text-light text-sm leading-relaxed">As a <a href="https://millwoodremodeling.com" target="_blank" rel="noopener noreferrer" class="text-accent hover:text-accent-light underline">Millwood Remodeling</a> company, we bring proven systems, skilled tradespeople, and rigorous quality checks to every project — standards that small independents cannot match.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-warm rounded-2xl p-8 lg:p-10">
+          <h3 class="text-xl font-bold text-primary mb-4">Bathroom Styles Popular in Plano</h3>
+          <p class="text-text-light text-sm leading-relaxed mb-6">Plano homes span decades of design trends. Whether you want a timeless classic look or a sleek contemporary feel, we bring the right style to your space.</p>
+          <div class="space-y-4">
+            <div class="bg-white rounded-lg p-4 border border-warm-dark">
+              <h4 class="font-bold text-primary text-sm">Spa Retreat</h4>
+              <p class="text-text-light text-xs mt-1">Neutral tones, natural stone, heated floors, curbless showers with rain heads, and freestanding tubs. Popular in Plano master suites.</p>
+            </div>
+            <div class="bg-white rounded-lg p-4 border border-warm-dark">
+              <h4 class="font-bold text-primary text-sm">Modern Transitional</h4>
+              <p class="text-text-light text-xs mt-1">Clean lines, floating vanities, large-format tile, matte black or brushed nickel fixtures. A favorite for Plano home renovations.</p>
+            </div>
+            <div class="bg-white rounded-lg p-4 border border-warm-dark">
+              <h4 class="font-bold text-primary text-sm">Classic Traditional</h4>
+              <p class="text-text-light text-xs mt-1">White shaker cabinetry, marble or marble-look tile, brushed gold or chrome fixtures. Timeless elegance that never goes out of style.</p>
+            </div>
+            <div class="bg-white rounded-lg p-4 border border-warm-dark">
+              <h4 class="font-bold text-primary text-sm">Universal Design</h4>
+              <p class="text-text-light text-xs mt-1">Roll-in showers, comfort-height vanities, grab bars disguised as towel bars, slip-resistant flooring. Aging in place without compromising beauty.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-warm">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">Bathroom Remodeling Considerations for Plano Homes</h2>
+        <p class="text-text-light text-lg">From older master baths to new construction, we tailor every remodel to your Plano home's unique needs.</p>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl p-6 border border-warm-dark">
+          <h3 class="font-bold text-primary mb-2">Older Plano Master Baths</h3>
+          <p class="text-text-light text-sm leading-relaxed">Many Plano homes built in the 1980s–2000s have large master bathrooms with garden tubs that go unused. We convert these into spacious walk-in showers with bench seating and built-in storage, giving you a bathroom you will actually use every day.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 border border-warm-dark">
+          <h3 class="font-bold text-primary mb-2">Powder Rooms & Guest Baths</h3>
+          <p class="text-text-light text-sm leading-relaxed">Small bathrooms make a big impression. We maximize every inch with pedestal sinks, wall-mounted vanities, space-saving toilets, and statement mirrors. A quick powder room update can be completed in 1–2 weeks.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 border border-warm-dark">
+          <h3 class="font-bold text-primary mb-2">Water & Moisture Management</h3>
+          <p class="text-text-light text-sm leading-relaxed">North Texas humidity and hard water present challenges. We specify moisture-resistant materials, proper ventilation, water softening connections, and waterproofing systems that keep your bathroom beautiful and damage-free for years.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustSignals />
+
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Frequently Asked Questions About Bathroom Remodeling in Plano</h2>
+          <div class="space-y-4">
+            <div class="bg-warm rounded-xl p-5 border border-warm-dark">
+              <h3 class="font-bold text-primary text-sm mb-2">Should I remodel my master bathroom or my guest bathroom first?</h3>
+              <p class="text-text-light text-sm leading-relaxed">This depends on your goals. If you are planning to sell within the next few years, updating a visible powder room or guest bath offers strong return on investment. If you are staying put, your master bathroom — the one you use every day — should take priority.</p>
+            </div>
+            <div class="bg-warm rounded-xl p-5 border border-warm-dark">
+              <h3 class="font-bold text-primary text-sm mb-2">What is the best tile for a bathroom floor in Plano?</h3>
+              <p class="text-text-light text-sm leading-relaxed">Large-format porcelain tile (12×24 or larger) is our top recommendation for Plano bathrooms. It is durable, water-resistant, easy to clean, and the fewer grout lines mean less maintenance. For heated floors, porcelain works beautifully with radiant systems.</p>
+            </div>
+            <div class="bg-warm rounded-xl p-5 border border-warm-dark">
+              <h3 class="font-bold text-primary text-sm mb-2">Do I need a bathtub in my Plano home?</h3>
+              <p class="text-text-light text-sm leading-relaxed">Many Plano homeowners are removing seldom-used garden tubs in favor of larger showers. However, if you have young children or plan to sell, keeping at least one bathtub in the home is recommended for resale value. We can help you weigh the trade-offs.</p>
+            </div>
+            <div class="bg-warm rounded-xl p-5 border border-warm-dark">
+              <h3 class="font-bold text-primary text-sm mb-2">Can you expand a small bathroom in Plano?</h3>
+              <p class="text-text-light text-sm leading-relaxed">In many cases, yes. We can steal space from an adjacent closet, hallway, or unused area to expand your bathroom footprint. We handle all structural engineering and permitting required by the City of Plano.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-primary rounded-2xl p-8 lg:p-10 text-white">
+          <h3 class="text-xl font-bold mb-4">Ready to Transform Your Bathroom?</h3>
+          <p class="text-white/80 text-sm leading-relaxed mb-6">Whether you are dreaming of a spa-like master retreat or a stylish powder room update, we are here to bring your vision to life.</p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-3 text-sm text-white/80">
+              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Free in-home consultation &amp; estimate
+            </li>
+            <li class="flex items-center gap-3 text-sm text-white/80">
+              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Custom 3D bathroom renderings
+            </li>
+            <li class="flex items-center gap-3 text-sm text-white/80">
+              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Premium tile &amp; fixture selections
+            </li>
+            <li class="flex items-center gap-3 text-sm text-white/80">
+              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              2-year workmanship warranty
+            </li>
+          </ul>
+          <a href="/contact/" class="block w-full bg-accent hover:bg-accent-light text-white font-semibold text-center px-6 py-3.5 rounded-lg transition-colors">
+            Get Your Free Bathroom Estimate
+          </a>
+          <a href="tel:+14695062339" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
+            Or call (469) 506-2339
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 bg-white border-t border-warm-dark">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-text-light text-sm">
+        <strong class="text-primary">Also considering a kitchen update?</strong><br />
+        Explore our <a href="/kitchen-remodeling/" class="text-accent hover:text-accent-light underline">kitchen remodeling</a> services or check out our <a href="/cost-guides/" class="text-accent hover:text-accent-light underline">cost guides</a> to learn more about what to expect for both projects.
+      </p>
+    </div>
+  </section>
+
+  <CTA
+    title="Your Dream Bathroom Is Closer Than You Think"
+    subtitle="Schedule your free consultation today and let's design a bathroom you'll look forward to using every day."
+    buttonText="Schedule Free Consultation"
+    buttonHref="/contact/"
+  />
+
+</Layout>

@@ -1,0 +1,294 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import CTA from '../components/CTA.astro';
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How long does the entire remodeling process take from start to finish?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "From your first consultation to final walkthrough, expect 8–14 weeks for a full kitchen remodel and 4–7 weeks for a bathroom remodel. Design and permitting typically take 2–3 weeks, with construction making up the remainder.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do I need to be home during the remodeling?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Not during the entire process. You only need to be present for the initial consultation, material selections, and final walkthrough. We communicate daily updates so you always know what is happening.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I live in my home during a kitchen or bathroom remodel?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. We set up temporary kitchen stations when remodeling a kitchen and ensure at least one bathroom remains functional when remodeling a bathroom. We minimize dust with containment systems and maintain a clean jobsite throughout.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How are cost overruns handled?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "We provide detailed, itemized quotes upfront and only proceed with your approval. If unexpected issues arise (like hidden water damage or outdated wiring), we flag them immediately with photographic evidence and a clear cost estimate before proceeding.",
+      },
+    },
+  ],
+};
+
+const steps = [
+  {
+    number: 1,
+    title: 'Free In-Home Consultation',
+    subtitle: 'We come to you',
+    description: 'We visit your Plano home, listen to your ideas, take measurements and photos, and discuss your budget, timeline, and goals. This is a no-obligation conversation where we answer all your questions and give you a realistic sense of what is possible in your space.',
+    details: [
+      'Discuss your vision, needs, and wish list',
+      'On-site measurements and space assessment',
+      'Review budget ranges and timeline expectations',
+      'Answer all questions about process, materials, and pricing',
+    ],
+  },
+  {
+    number: 2,
+    title: 'Design & 3D Renderings',
+    subtitle: 'See it before we build it',
+    description: 'Our in-house designer translates your ideas into a detailed design plan with 3D renderings. You will see exactly how your new kitchen or bathroom will look from every angle — before any construction begins. We refine the design until every detail is perfect.',
+    details: [
+      'Custom 3D renderings of your new space',
+      'Cabinet layouts, countertop selections, and tile design',
+      'Fixture placement, lighting plans, and hardware selection',
+      'Unlimited revisions until you are completely satisfied',
+    ],
+  },
+  {
+    number: 3,
+    title: 'Material Selection',
+    subtitle: 'Choose your finishes',
+    description: 'We guide you through selecting every material and finish with expert advice tailored to your style, budget, and how you use your space. Our vendor relationships give you access to premium materials at competitive prices.',
+    details: [
+      'Cabinet styles, door profiles, and paint/stain finishes',
+      'Countertop slabs — quartz, granite, marble, solid surface',
+      'Tile for backsplash, flooring, and shower surrounds',
+      'Fixtures, faucets, hardware, lighting, and appliances',
+    ],
+  },
+  {
+    number: 4,
+    title: 'Permitting & Scheduling',
+    subtitle: 'Paperwork handled',
+    description: 'We manage all permit applications with the City of Plano and coordinate scheduling with our crew and subcontractors. You receive a firm start date and a projected timeline before we begin.',
+    details: [
+      'Permit preparation and city submissions',
+      'Structural engineering if needed',
+      'Material ordering and delivery scheduling',
+      'Finalized construction timeline with milestones',
+    ],
+  },
+  {
+    number: 5,
+    title: 'Construction',
+    subtitle: 'Your remodel comes to life',
+    description: 'Our crew transforms your space with precision craftsmanship. We maintain a clean, organized jobsite, communicate daily progress, and stick to the agreed schedule. We work efficiently to minimize disruption to your daily life.',
+    details: [
+      'Demolition with dust containment systems',
+      'Framing, electrical, plumbing, and HVAC rough-in',
+      'Drywall, flooring, tile, and trim installation',
+      'Cabinetry, countertops, fixtures, and appliance installation',
+    ],
+  },
+  {
+    number: 6,
+    title: 'Quality Inspections',
+    subtitle: 'Built right, every time',
+    description: 'Throughout construction, our project manager conducts regular quality checks. Every trade completes their work to our standards before the next phase begins. We do not cut corners.',
+    details: [
+      'Post-rough-in inspections for plumbing and electrical',
+      'Tile flatness, grout consistency, and waterproofing checks',
+      'Cabinet leveling, drawer alignment, and hardware function',
+      'Countertop seam inspection and fixture operation testing',
+    ],
+  },
+  {
+    number: 7,
+    title: 'Final Walkthrough',
+    subtitle: 'Your satisfaction, guaranteed',
+    description: 'We walk through every detail with you, making sure everything meets your expectations. We create a punch list of any items that need adjustment and complete them before we consider the project finished.',
+    details: [
+      'Review all work with you in person',
+      'Test all fixtures, appliances, and systems',
+      'Address any concerns or adjustments immediately',
+      'Provide care and maintenance instructions',
+    ],
+  },
+  {
+    number: 8,
+    title: 'Ongoing Support & Warranty',
+    subtitle: 'We have your back',
+    description: 'Your project is backed by our 2-year workmanship warranty. If anything goes wrong — a loose tile, a sticking drawer, a plumbing issue — we make it right. No questions, no hassle.',
+    details: [
+      '2-year comprehensive workmanship warranty',
+      'Dedicated project file for future reference',
+      'Preferred pricing on future projects',
+      'Millwood Remodeling lifetime support network',
+    ],
+  },
+];
+---
+
+<Layout
+  title="Our Kitchen & Bathroom Remodeling Process in Plano, TX"
+  description="From free consultation to final walkthrough — see exactly how we remodel kitchens and bathrooms in Plano. Stress-free process, in-house design, 2-year warranty. Start today."
+  canonical="https://planohomeremodel.com/our-process/"
+  schema={[faqSchema]}
+>
+
+  <Hero
+    title="Our Remodeling Process: From Vision to Reality"
+    subtitle="We have refined every step of the remodeling journey to be transparent, stress-free, and focused on delivering exactly what you want — on time and on budget."
+    ctaText="Start Your Free Consultation"
+    ctaHref="/contact/"
+  />
+
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center mb-4">
+        <p class="text-accent font-semibold text-sm uppercase tracking-wider mb-2">Our 8-Step Process</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">How We Deliver Your Dream Remodel</h2>
+        <p class="text-text-light text-lg">
+          From the moment you reach out to long after we hand you the keys, our process is designed around one thing: your complete satisfaction.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-16 lg:pb-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="relative">
+        <div class="hidden lg:block absolute left-[50%] top-0 bottom-0 w-px bg-warm-dark -translate-x-1/2" />
+
+        <div class="space-y-12 lg:space-y-16">
+          {steps.map((step, i) => {
+            const isLeft = i % 2 === 0;
+            return (
+              <div class="relative grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+                <div class={`${isLeft ? 'lg:text-right' : 'lg:order-2'}`}>
+                  <div class={`inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent text-white font-bold text-lg mb-4 ${isLeft ? '' : ''}`}>
+                    {step.number}
+                  </div>
+                  <h3 class="text-xl font-bold text-primary mb-1">{step.title}</h3>
+                  <p class="text-accent font-semibold text-sm mb-3">{step.subtitle}</p>
+                  <p class="text-text-light text-sm leading-relaxed">{step.description}</p>
+                </div>
+                <div class={`${isLeft ? 'lg:order-2' : ''}`}>
+                  <div class="bg-warm rounded-xl p-5 border border-warm-dark">
+                    <h4 class="font-semibold text-primary text-sm mb-3">What happens here:</h4>
+                    <ul class="space-y-2">
+                      {step.details.map((detail) => (
+                        <li class="flex items-start gap-2.5 text-sm text-text-light">
+                          <svg class="w-4 h-4 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                          {detail}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-warm">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">What Sets Our Process Apart</h2>
+          <div class="space-y-5">
+            <div class="flex gap-4">
+              <span class="shrink-0 w-1 h-auto rounded-full bg-accent" />
+              <div>
+                <h3 class="font-bold text-primary">Transparent Communication</h3>
+                <p class="text-text-light text-sm leading-relaxed">You receive daily progress updates, photos of completed work, and a direct line to your project manager. No guessing, no wondering — you always know where things stand.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <span class="shrink-0 w-1 h-auto rounded-full bg-accent" />
+              <div>
+                <h3 class="font-bold text-primary">Fixed Pricing, No Surprises</h3>
+                <p class="text-text-light text-sm leading-relaxed">Our quotes are detailed and itemized. The price we quote is the price you pay — unless you request changes. We flag unexpected issues immediately with full transparency before proceeding.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <span class="shrink-0 w-1 h-auto rounded-full bg-accent" />
+              <div>
+                <h3 class="font-bold text-primary">Minimal Disruption</h3>
+                <p class="text-text-light text-sm leading-relaxed">We use dust containment systems, maintain clean jobsites daily, and work efficiently to keep your home livable throughout the remodel. We respect your home and your schedule.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <span class="shrink-0 w-1 h-auto rounded-full bg-accent" />
+              <div>
+                <h3 class="font-bold text-primary">2-Year Warranty</h3>
+                <p class="text-text-light text-sm leading-relaxed">Our comprehensive workmanship warranty covers every project we complete. If something goes wrong, we fix it — no questions, no runaround. That is the Millwood commitment to quality.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-primary rounded-2xl p-8 lg:p-10 text-white">
+          <h3 class="text-xl font-bold mb-4">Ready to Get Started?</h3>
+          <p class="text-white/80 text-sm leading-relaxed mb-6">Your journey to a beautiful new kitchen or bathroom begins with a simple conversation.</p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-3 text-sm text-white/80">
+              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Free in-home consultation
+            </li>
+            <li class="flex items-center gap-3 text-sm text-white/80">
+              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Custom 3D design renderings
+            </li>
+            <li class="flex items-center gap-3 text-sm text-white/80">
+              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Transparent, itemized pricing
+            </li>
+            <li class="flex items-center gap-3 text-sm text-white/80">
+              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              2-year workmanship warranty
+            </li>
+          </ul>
+          <a href="/contact/" class="block w-full bg-accent hover:bg-accent-light text-white font-semibold text-center px-6 py-3.5 rounded-lg transition-colors">
+            Schedule Your Free Consultation
+          </a>
+          <a href="tel:+14695062339" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
+            Or call (469) 506-2339
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 bg-white border-t border-warm-dark">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-text-light text-sm">
+        <strong class="text-primary">Want to learn more about specific services?</strong><br />
+        See our <a href="/kitchen-remodeling/" class="text-accent hover:text-accent-light underline">kitchen remodeling</a> and <a href="/bathroom-remodeling/" class="text-accent hover:text-accent-light underline">bathroom remodeling</a> pages for details, or check our <a href="/cost-guides/" class="text-accent hover:text-accent-light underline">cost guides</a> to understand pricing.
+      </p>
+    </div>
+  </section>
+
+  <CTA
+    title="Experience the Difference a Real Process Makes"
+    subtitle="From your first call to your final walkthrough, we make remodeling in Plano simple, transparent, and rewarding."
+    buttonText="Get Started Today"
+    buttonHref="/contact/"
+  />
+
+</Layout>

@@ -1,0 +1,73 @@
+---
+const reasons = [
+  {
+    title: 'Local Plano Expertise',
+    description: 'We know Plano homes inside and out — from traditional Colonial homes in older neighborhoods to the custom designs in West Plano. Our local knowledge ensures your remodel fits your home perfectly.',
+  },
+  {
+    title: 'Millwood Quality Standards',
+    description: 'As a Millwood Remodeling company, we uphold rigorous quality standards across every project. From material selection to final installation, excellence is non-negotiable.',
+  },
+  {
+    title: 'Stress-Free Experience',
+    description: 'We handle permits, inspections, and coordination with subcontractors. Our project management keeps your renovation on schedule and on budget.',
+  },
+  {
+    title: 'Custom Design Solutions',
+    description: 'Every home and every homeowner is unique. Our in-house designer creates custom solutions that reflect your personal style while maximizing functionality and value.',
+  },
+];
+---
+
+<section class="py-16 lg:py-20 bg-white">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Why Choose Plano Home Remodel & Design?</h2>
+        <p class="text-text-light text-lg mb-8">
+          We are not just contractors — we are the Plano-area team that brings Millwood Remodeling&rsquo;s 15+ years of experience and craftsmanship to your neighborhood.
+        </p>
+        <div class="space-y-6">
+          {reasons.map((reason) => (
+            <div class="flex gap-4">
+              <div class="shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2.5" />
+              <div>
+                <h3 class="font-bold text-primary mb-1">{reason.title}</h3>
+                <p class="text-text-light text-sm leading-relaxed">{reason.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="bg-warm rounded-2xl p-8 lg:p-10">
+        <h3 class="text-xl font-bold text-primary mb-4">Your Remodel, Our Commitment</h3>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3 text-sm text-text-light">
+            <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Free in-home consultation &amp; estimate
+          </li>
+          <li class="flex items-start gap-3 text-sm text-text-light">
+            <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            In-house designer creates your vision
+          </li>
+          <li class="flex items-start gap-3 text-sm text-text-light">
+            <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Premium materials &amp; craftsmanship
+          </li>
+          <li class="flex items-start gap-3 text-sm text-text-light">
+            <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            2-year workmanship warranty
+          </li>
+          <li class="flex items-start gap-3 text-sm text-text-light">
+            <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Licensed, insured &amp; local
+          </li>
+        </ul>
+        <a href="/contact/" class="mt-6 inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-white font-semibold px-6 py-3 rounded-lg text-sm transition-colors">
+          Start Your Project
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

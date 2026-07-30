@@ -1,0 +1,49 @@
+---
+import ServiceCard from './ServiceCard.astro';
+
+const services = [
+  {
+    title: 'Kitchen Remodeling',
+    description: 'Transform your kitchen into the heart of your home. From custom cabinetry to premium countertops and layout redesigns, we create kitchens that blend beauty with function.',
+    href: '/kitchen-remodeling/',
+    icon: 'kitchen' as const,
+  },
+  {
+    title: 'Bathroom Remodeling',
+    description: 'Create your personal spa retreat. We specialize in luxury bathroom renovations including custom showers, soaking tubs, and stunning tile work.',
+    href: '/bathroom-remodeling/',
+    icon: 'bathroom' as const,
+  },
+  {
+    title: 'Design & Planning',
+    description: 'Our in-house designer works with you from concept to completion, creating a customized plan that reflects your style, needs, and budget.',
+    href: '/our-process/',
+    icon: 'design' as const,
+  },
+  {
+    title: 'Full-Service Process',
+    description: 'From the initial consultation to the final walk-through, our dedicated team manages every detail so you can enjoy a stress-free renovation.',
+    href: '/our-process/',
+    icon: 'process' as const,
+  },
+];
+---
+
+<section class="py-16 lg:py-20 bg-warm">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">Our Remodeling Services</h2>
+      <p class="text-text-light text-lg max-w-2xl mx-auto">Comprehensive kitchen and bathroom remodeling services tailored to Plano homeowners.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+      {services.map((service) => (
+        <ServiceCard
+          title={service.title}
+          description={service.description}
+          href={service.href}
+          icon={service.icon}
+        />
+      ))}
+    </div>
+  </div>
+</section>

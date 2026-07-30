@@ -1,0 +1,26 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  href: string;
+  icon: 'kitchen' | 'bathroom' | 'design' | 'process';
+}
+
+const icons: Record<string, string> = {
+  kitchen: `<svg class="w-10 h-10 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>`,
+  bathroom: `<svg class="w-10 h-10 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 2l3 7h6l3-7M6 2l3 7h6l3-7M6 2l3 7h6l3-7M6 2l3 7h6l3-7M3 12h18v2H3v-2zm0 5h18v4H3v-4z"/>`,
+  design: `<svg class="w-10 h-10 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>`,
+  process: `<svg class="w-10 h-10 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>`,
+};
+const { title, description, href, icon } = Astro.props;
+---
+
+<a href={href} class="group block bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-warm-dark hover:shadow-md hover:border-accent/30 transition-all duration-200">
+  <div class="mb-4" set:html={icons[icon]} />
+  <h3 class="text-lg font-bold text-primary mb-2 group-hover:text-accent transition-colors">{title}</h3>
+  <p class="text-text-light text-sm leading-relaxed">{description}</p>
+  <span class="inline-flex items-center gap-1 text-accent font-semibold text-sm mt-4 group-hover:gap-2 transition-all">
+    Learn More
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+  </span>
+</a>

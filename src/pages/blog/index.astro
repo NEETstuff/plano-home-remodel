@@ -1,0 +1,96 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CTA from '../../components/CTA.astro';
+
+const blogPosts = [
+  {
+    title: 'How Much Does a Kitchen Remodel Cost in Plano, TX?',
+    excerpt: 'A realistic look at kitchen remodeling costs in Plano and North Dallas. See what different budget ranges get you and how to plan your project.',
+    href: '#',
+    date: 'Coming Soon',
+    category: 'Cost Guide',
+  },
+  {
+    title: 'Walk-In Showers vs. Tub-Show Combos: Which Is Right for Your Plano Home?',
+    excerpt: 'Plano homeowners are increasingly choosing walk-in showers over traditional tub-showers. We break down the pros, cons, and considerations for each.',
+    href: '#',
+    date: 'Coming Soon',
+    category: 'Bathroom',
+  },
+  {
+    title: 'Open-Concept Kitchens: What Plano Homeowners Need to Know',
+    excerpt: 'Thinking about removing a wall to create an open kitchen? Here is what Plano homeowners should consider before starting construction.',
+    href: '#',
+    date: 'Coming Soon',
+    category: 'Kitchen',
+  },
+];
+---
+
+<Layout
+  title="Remodeling Tips & Insights for Plano Homeowners"
+  description="Practical advice, cost guides, and design inspiration for Plano and North Dallas homeowners planning a kitchen or bathroom remodel. From the team at Millwood Remodeling."
+  canonical="https://planohomeremodel.com/blog/"
+>
+
+  <section class="bg-warm py-16 lg:py-24">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary mb-6">Remodeling Tips & Insights for Plano Homeowners</h1>
+      <p class="text-text-light text-lg sm:text-xl max-w-2xl mx-auto">
+        Practical advice, local insights, and design inspiration from the team at Plano Home Remodel & Design — a Millwood Remodeling Company.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {blogPosts.length > 0 ? (
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {blogPosts.map((post) => (
+            <article class="bg-warm rounded-xl border border-warm-dark overflow-hidden hover:shadow-md transition-shadow">
+              <div class="p-6">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="text-xs font-semibold text-accent uppercase tracking-wider">{post.category}</span>
+                  <span class="text-xs text-text-light">{post.date}</span>
+                </div>
+                <h2 class="font-bold text-primary mb-2">
+                  <a href={post.href} class="hover:text-accent transition-colors">{post.title}</a>
+                </h2>
+                <p class="text-text-light text-sm leading-relaxed">{post.excerpt}</p>
+                <a href={post.href} class="inline-flex items-center gap-1 text-accent hover:text-accent-light text-sm font-semibold mt-4 transition-colors">
+                  Read More
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <p class="text-text-light text-lg">Coming soon — we are writing helpful content for Plano homeowners.</p>
+          <p class="text-text-light text-sm mt-2">Check back soon for guides, tips, and inspiration.</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="bg-warm py-12">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-text-light text-sm">
+        <strong class="text-primary">In the meantime, explore our services:</strong><br />
+        <a href="/kitchen-remodeling/" class="text-accent hover:text-accent-light underline">Kitchen Remodeling</a> &middot;
+        <a href="/bathroom-remodeling/" class="text-accent hover:text-accent-light underline">Bathroom Remodeling</a> &middot;
+        <a href="/cost-guides/" class="text-accent hover:text-accent-light underline">Cost Guides</a> &middot;
+        <a href="/our-process/" class="text-accent hover:text-accent-light underline">Our Process</a>
+      </p>
+    </div>
+  </section>
+
+  <CTA
+    title="Have a Question? We Are Here to Help"
+    subtitle="Not sure where to start? Contact us for a free consultation and we will guide you through every step."
+    buttonText="Get Free Consultation"
+    buttonHref="/contact/"
+  />
+
+</Layout>

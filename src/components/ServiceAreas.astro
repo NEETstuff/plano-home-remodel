@@ -1,0 +1,28 @@
+---
+const areas = [
+  'Plano', 'Frisco', 'Allen', 'McKinney', 'Dallas', 'Richardson',
+  'Carrollton', 'Addison', 'The Colony', 'Little Elm', 'Murphy', 'Sachse',
+];
+---
+
+<section class="py-16 lg:py-20 bg-warm">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">Proudly Serving Plano & the North Dallas Area</h2>
+    <p class="text-text-light text-lg max-w-2xl mx-auto mb-10">
+      From the historic streets of Downtown Plano to the master-planned communities of West Plano — we bring our remodeling expertise to your neighborhood.
+    </p>
+    <div class="flex flex-wrap justify-center gap-3">
+      {areas.map((area) => (
+        <span class="bg-white px-4 py-2 rounded-full text-sm font-medium text-text border border-warm-dark">
+          {area}, TX
+        </span>
+      ))}
+    </div>
+    <div class="mt-10">
+      <a href="/service-areas/" class="inline-flex items-center gap-2 text-accent hover:text-accent-light font-semibold transition-colors">
+        View Full Service Area
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+    </div>
+  </div>
+</section>

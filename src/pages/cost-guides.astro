@@ -1,0 +1,312 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import TrustSignals from '../components/TrustSignals.astro';
+import CTA from '../components/CTA.astro';
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How much does a kitchen remodel cost in Plano, TX in 2026?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Most kitchen remodels in Plano range from $25,000 to $75,000+ depending on size and scope. A minor refresh with new countertops, hardware, and paint runs $8,000–$15,000. A mid-range remodel with semi-custom cabinets and quartz countertops is $25,000–$50,000. A full custom renovation with premium materials and layout changes starts at $50,000 and can exceed $100,000.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How much does a bathroom remodel cost in Plano, TX?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Bathroom remodel costs in Plano range from $6,000–$10,000 for a powder room update, $10,000–$20,000 for a guest bath, and $20,000–$40,000+ for a full master bathroom renovation. Key cost drivers include tile selection, shower size and complexity, vanity quality, and whether you are changing the layout.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What is the biggest cost driver in a kitchen remodel?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Cabinetry is typically the largest expense in a kitchen remodel, accounting for 30–40% of the total budget. Countertops are the second-largest at 10–15%. Labor, appliances, flooring, lighting, plumbing fixtures, and backsplash make up the remainder. Choosing stock versus custom cabinetry and quartz versus marble can significantly affect your total cost.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is financing available for kitchen and bathroom remodeling?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Millwood Remodeling offers financing options through approved lenders to help you manage your project budget. We discuss financing during your free consultation and can help you find a plan that works for your situation. Ask about current rates and terms when you call.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How long does a kitchen or bathroom remodel take in Plano?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A kitchen remodel typically takes 6–10 weeks, and a bathroom remodel takes 3–5 weeks. Timelines depend on the scope of work, material availability, and any unexpected structural issues. We provide a detailed timeline during the design phase and keep you updated throughout the project.",
+      },
+    },
+  ],
+};
+
+const kitchenCosts = [
+  { tier: 'Minor Refresh', range: '$8,000 – $15,000', timeline: '2–3 weeks', includes: 'Countertop replacement, new hardware, lighting updates, paint, and backsplash refresh.' },
+  { tier: 'Mid-Range Remodel', range: '$25,000 – $50,000', timeline: '4–6 weeks', includes: 'Semi-custom cabinets, quartz or granite countertops, new appliances, tile backsplash, updated lighting and fixtures.' },
+  { tier: 'Full Custom Renovation', range: '$50,000 – $100,000+', timeline: '6–10 weeks', includes: 'Custom cabinetry, premium stone countertops, layout changes, custom tile, high-end appliances, under-cabinet lighting, specialty features.' },
+];
+
+const kitchenCostDrivers = [
+  { factor: 'Cabinetry', impact: '30–40% of budget', note: 'Stock vs. custom, door style, wood species, finish, and hardware all affect cost. Pull-out shelves and custom organizers add value.' },
+  { factor: 'Countertops', impact: '10–15% of budget', note: 'Laminate is most affordable, quartz is the mid-range sweet spot, marble and premium quartzite are top-tier. Edge profile and slab size matter.' },
+  { factor: 'Appliances', impact: '10–15% of budget', note: 'Pro-style ranges, built-in refrigerators, and panel-ready dishwashers cost more but deliver a built-in look. Standard sizes cost less.' },
+  { factor: 'Layout Changes', impact: 'Varies significantly', note: 'Removing walls, relocating plumbing, or moving electrical panels adds cost but can transform how your kitchen functions and feels.' },
+  { factor: 'Flooring & Tile', impact: '5–10% of budget', note: 'Hardwood and large-format tile cost more but look premium. Luxury vinyl plank offers durability at a lower price point.' },
+  { factor: 'Lighting & Electrical', impact: '5–8% of budget', note: 'Recessed lighting, under-cabinet task lights, pendant fixtures, and dimmer switches add both function and ambiance.' },
+];
+
+const bathroomCosts = [
+  { tier: 'Powder Room Update', range: '$6,000 – $10,000', timeline: '1–2 weeks', includes: 'New vanity, toilet, mirror, lighting, paint, and updated fixtures. Minimal tile or flooring refresh.' },
+  { tier: 'Guest Bath Remodel', range: '$10,000 – $20,000', timeline: '2–3 weeks', includes: 'New vanity and countertop, tub/shower surround replacement, flooring, toilet, lighting, and fixtures.' },
+  { tier: 'Master Bath Renovation', range: '$20,000 – $40,000+', timeline: '4–6 weeks', includes: 'Custom walk-in shower with glass enclosure, double vanity, freestanding tub, premium tile, heated floors, high-end fixtures.' },
+];
+
+const bathroomCostDrivers = [
+  { factor: 'Tile & Flooring', impact: '15–25% of budget', note: 'Large-format porcelain, natural stone, heated floors, and intricate patterns increase cost. Simple ceramic tile in standard sizes is more affordable.' },
+  { factor: 'Shower & Tub', impact: '15–20% of budget', note: 'Custom curbless showers with linear drains and frameless glass cost more than standard tub-showers. Freestanding tubs add cost but create a focal point.' },
+  { factor: 'Vanity & Countertops', impact: '10–15% of budget', note: 'Double vanities cost more than single. Quartz is popular for bathrooms. Custom cabinets with soft-close drawers add to the total.' },
+  { factor: 'Plumbing & Electrical', impact: '10–15% of budget', note: 'Relocating plumbing, adding outlets for heated floors, and installing high-end faucets and shower systems all affect cost. Keeping existing plumbing saves money.' },
+  { factor: 'Fixtures & Hardware', impact: '5–10% of budget', note: 'Faucets, shower heads, towel bars, toilet paper holders, and door hardware. Brushed nickel and matte black are trending in Plano bathrooms.' },
+  { factor: 'Permits & Engineering', impact: '3–5% of budget', note: 'Structural changes, electrical upgrades, and plumbing work require permits. We handle all permitting as part of our service.' },
+];
+---
+
+<Layout
+  title="Kitchen & Bathroom Remodel Cost Guide – Plano, TX (2026)"
+  description="Realistic pricing for kitchen and bathroom remodeling in Plano and North Dallas. See cost ranges, what drives your budget, timelines, and financing options. Free consultation included."
+  canonical="https://planohomeremodel.com/cost-guides/"
+  schema={[faqSchema]}
+>
+
+  <Hero
+    title="Kitchen & Bathroom Remodel Cost Guide for Plano"
+    subtitle="Transparent pricing information to help you plan your project. Every home is unique, but these ranges give you a realistic starting point for budgeting."
+    ctaText="Get Your Free Custom Estimate"
+    ctaHref="/contact/"
+  />
+
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-sm text-text-light mb-2">Last updated: 2026</p>
+      <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">How Much Does a Kitchen or Bathroom Remodel Cost in Plano?</h2>
+      <p class="text-text-light text-lg leading-relaxed">
+        The short answer: kitchen remodels typically range from <strong>$25,000 to $75,000+</strong>, and bathroom remodels from <strong>$10,000 to $40,000+</strong>.
+      </p>
+      <p class="text-text-light leading-relaxed mt-4">
+        The real answer: it depends on your home, your goals, and the level of finish you want. Below we break down realistic ranges for Plano and North Dallas homes so you can plan with confidence. All estimates include materials and labor.
+      </p>
+      <div class="bg-warm rounded-xl p-6 border border-warm-dark mt-8 text-left">
+        <p class="text-xs text-text-light font-semibold uppercase tracking-wider mb-2">Important Note</p>
+        <p class="text-sm text-text-light leading-relaxed">
+          These are average ranges based on our 15+ years of experience remodeling Plano homes. Every project is unique, and actual costs depend on your specific home, material selections, and scope of work. The only way to get an accurate price is a free in-home consultation — and we would love to provide one.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-warm">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-8 text-center">Kitchen Remodel Cost Breakdown</h2>
+
+      <div class="grid lg:grid-cols-3 gap-6 mb-12">
+        {kitchenCosts.map((tier) => (
+          <div class="bg-white rounded-xl p-6 border border-warm-dark">
+            <h3 class="font-bold text-primary mb-1">{tier.tier}</h3>
+            <p class="text-2xl font-bold text-accent mb-2">{tier.range}</p>
+            <p class="text-sm text-text-light mb-3">Timeline: <span class="font-medium text-text">{tier.timeline}</span></p>
+            <p class="text-sm text-text-light leading-relaxed">{tier.includes}</p>
+          </div>
+        ))}
+      </div>
+
+      <h3 class="text-xl font-bold text-primary mb-6">What Drives Kitchen Remodel Costs?</h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {kitchenCostDrivers.map((driver) => (
+          <div class="bg-white rounded-lg p-4 border border-warm-dark">
+            <div class="flex items-center justify-between mb-1">
+              <h4 class="font-bold text-primary text-sm">{driver.factor}</h4>
+              <span class="text-xs font-semibold text-accent">{driver.impact}</span>
+            </div>
+            <p class="text-text-light text-xs leading-relaxed">{driver.note}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-8 text-center">Bathroom Remodel Cost Breakdown</h2>
+
+      <div class="grid lg:grid-cols-3 gap-6 mb-12">
+        {bathroomCosts.map((tier) => (
+          <div class="bg-white rounded-xl p-6 border border-warm-dark">
+            <h3 class="font-bold text-primary mb-1">{tier.tier}</h3>
+            <p class="text-2xl font-bold text-accent mb-2">{tier.range}</p>
+            <p class="text-sm text-text-light mb-3">Timeline: <span class="font-medium text-text">{tier.timeline}</span></p>
+            <p class="text-sm text-text-light leading-relaxed">{tier.includes}</p>
+          </div>
+        ))}
+      </div>
+
+      <h3 class="text-xl font-bold text-primary mb-6">What Drives Bathroom Remodel Costs?</h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {bathroomCostDrivers.map((driver) => (
+          <div class="bg-white rounded-lg p-4 border border-warm-dark">
+            <div class="flex items-center justify-between mb-1">
+              <h4 class="font-bold text-primary text-sm">{driver.factor}</h4>
+              <span class="text-xs font-semibold text-accent">{driver.impact}</span>
+            </div>
+            <p class="text-text-light text-xs leading-relaxed">{driver.note}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-warm">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Ways to Save — Without Sacrificing Quality</h2>
+          <div class="space-y-4">
+            <div class="bg-white rounded-xl p-5 border border-warm-dark">
+              <h3 class="font-bold text-primary text-sm">Keep Your Layout</h3>
+              <p class="text-text-light text-sm leading-relaxed mt-1">Keeping existing plumbing and electrical locations saves thousands. You can still achieve a stunning transformation with new cabinets, countertops, tile, and fixtures in the same footprint.</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-warm-dark">
+              <h3 class="font-bold text-primary text-sm">Phase Your Project</h3>
+              <p class="text-text-light text-sm leading-relaxed mt-1">If a full renovation is not in the budget right now, we can phase the work. Start with the most impactful changes — like countertops and backsplash — and tackle cabinets and flooring later.</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-warm-dark">
+              <h3 class="font-bold text-primary text-sm">Choose Value Materials</h3>
+              <p class="text-text-light text-sm leading-relaxed mt-1">Quartz offers marble-like beauty at a fraction of the cost. Luxury vinyl plank flooring delivers the look of hardwood with better water resistance. Semi-custom cabinets provide excellent quality without the custom price tag.</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-warm-dark">
+              <h3 class="font-bold text-primary text-sm">Ask About Financing</h3>
+              <p class="text-text-light text-sm leading-relaxed mt-1">Millwood Remodeling offers financing options through approved lenders. Spread your investment over manageable monthly payments. Ask about current rates during your free consultation.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-primary rounded-2xl p-8 lg:p-10 text-white">
+          <h3 class="text-xl font-bold mb-4">Get Your Personalized Estimate</h3>
+          <p class="text-white/80 text-sm leading-relaxed mb-6">Online ranges are helpful, but nothing replaces a real conversation about your specific home and vision. Let us provide an accurate, no-obligation estimate for your project.</p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-3 text-sm text-white/80">
+              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Free in-home consultation
+            </li>
+            <li class="flex items-center gap-3 text-sm text-white/80">
+              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Detailed, itemized estimate
+            </li>
+            <li class="flex items-center gap-3 text-sm text-white/80">
+              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              No obligation, no pressure
+            </li>
+            <li class="flex items-center gap-3 text-sm text-white/80">
+              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Financing options available
+            </li>
+          </ul>
+          <a href="/contact/" class="block w-full bg-accent hover:bg-accent-light text-white font-semibold text-center px-6 py-3.5 rounded-lg transition-colors">
+            Get Your Free Estimate
+          </a>
+          <a href="tel:+14695062339" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
+            Or call (469) 506-2339
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Typical Remodeling Timelines</h2>
+          <div class="space-y-4">
+            <div class="bg-warm rounded-lg p-4">
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="font-bold text-primary text-sm">Design & Planning Phase</h3>
+                <span class="text-xs font-semibold text-accent">1–3 weeks</span>
+              </div>
+              <p class="text-text-light text-xs">Consultation, 3D renderings, material selection, permits.</p>
+            </div>
+            <div class="bg-warm rounded-lg p-4">
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="font-bold text-primary text-sm">Material Ordering & Lead Times</h3>
+                <span class="text-xs font-semibold text-accent">1–4 weeks</span>
+              </div>
+              <p class="text-text-light text-xs">Cabinets (2–4 weeks), countertop templating (1 week), fixtures (stock to 2 weeks). Quartz and granite are typically faster than marble.</p>
+            </div>
+            <div class="bg-warm rounded-lg p-4">
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="font-bold text-primary text-sm">Kitchen Construction Phase</h3>
+                <span class="text-xs font-semibold text-accent">3–6 weeks</span>
+              </div>
+              <p class="text-text-light text-xs">Demo (1–3 days), rough-in (3–5 days), drywall/paint (3–5 days), cabinets/countertops (3–5 days), flooring/tile (3–5 days), fixtures/finishing (2–3 days).</p>
+            </div>
+            <div class="bg-warm rounded-lg p-4">
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="font-bold text-primary text-sm">Bathroom Construction Phase</h3>
+                <span class="text-xs font-semibold text-accent">2–4 weeks</span>
+              </div>
+              <p class="text-text-light text-xs">Demo (1 day), rough-in (2–3 days), waterproofing (1–2 days), tile (3–7 days), vanity/counter (1–2 days), fixtures/glass (2–3 days).</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Financing Your Remodel</h2>
+          <p class="text-text-light text-sm leading-relaxed mb-4">
+            Investing in your home is one of the smartest financial decisions you can make — especially in Plano's strong real estate market. A well-executed kitchen or bathroom remodel not only improves your daily life but also adds significant value to your home.
+          </p>
+          <p class="text-text-light text-sm leading-relaxed mb-4">
+            Millwood Remodeling offers financing options through approved lenders to help you manage your project budget. We can discuss options during your free consultation and help you understand what might work best for your situation.
+          </p>
+          <p class="text-text-light text-sm leading-relaxed">
+            Ask about current rates, terms, and promotional offers when you call or schedule your consultation.
+          </p>
+          <div class="mt-6 flex flex-col sm:flex-row gap-3">
+            <a href="/contact/" class="bg-accent hover:bg-accent-light text-white font-semibold px-6 py-3 rounded-lg text-sm text-center transition-colors">
+              Schedule Free Consultation
+            </a>
+            <a href="tel:+14695062339" class="border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold px-6 py-3 rounded-lg text-sm text-center transition-colors">
+              Call (469) 506-2339
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 bg-white border-t border-warm-dark">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-text-light text-sm">
+        <strong class="text-primary">Ready to explore specific services?</strong><br />
+        Learn more about our <a href="/kitchen-remodeling/" class="text-accent hover:text-accent-light underline">kitchen remodeling</a>, <a href="/bathroom-remodeling/" class="text-accent hover:text-accent-light underline">bathroom remodeling</a>, or <a href="/our-process/" class="text-accent hover:text-accent-light underline">our process</a> to see how we bring your project to life.
+      </p>
+    </div>
+  </section>
+
+  <TrustSignals />
+
+  <CTA
+    title="Ready for a Real Number? Let's Talk"
+    subtitle="Skip the guesswork. Schedule your free in-home consultation and we will provide a detailed, itemized estimate for your specific project."
+    buttonText="Get Your Free Estimate"
+    buttonHref="/contact/"
+  />
+
+</Layout>
