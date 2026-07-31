@@ -5,29 +5,13 @@ import CTA from '../../components/CTA.astro';
 // TO ADD A REAL ARTICLE: create it in src/pages/blog/ (e.g. slug.astro) and add
 // an entry below with its URL. The page stays noindex until real posts exist —
 // remove `noIndex` in the <Layout> above once the first article is published.
-const blogPosts = [
-  {
-    title: 'How Much Does a Kitchen Remodel Cost in Plano, TX?',
-    excerpt: 'A realistic look at kitchen remodeling costs in Plano and North Dallas. See what different budget ranges get you and how to plan your project.',
-    href: '#',
-    date: 'Coming Soon',
-    category: 'Cost Guide',
-  },
-  {
-    title: 'Walk-In Showers vs. Tub-Show Combos: Which Is Right for Your Plano Home?',
-    excerpt: 'Plano homeowners are increasingly choosing walk-in showers over traditional tub-showers. We break down the pros, cons, and considerations for each.',
-    href: '#',
-    date: 'Coming Soon',
-    category: 'Bathroom',
-  },
-  {
-    title: 'Open-Concept Kitchens: What Plano Homeowners Need to Know',
-    excerpt: 'Thinking about removing a wall to create an open kitchen? Here is what Plano homeowners should consider before starting construction.',
-    href: '#',
-    date: 'Coming Soon',
-    category: 'Kitchen',
-  },
-];
+const blogPosts: {
+  title: string;
+  excerpt: string;
+  href: string;
+  date: string;
+  category: string;
+}[] = [];
 const categories = [
   { name: 'Kitchen', href: '/kitchen-remodeling/' },
   { name: 'Bathroom', href: '/bathroom-remodeling/' },

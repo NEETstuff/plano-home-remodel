@@ -1,7 +1,6 @@
 ---
-import { Image } from 'astro:assets';
 import type { GalleryProject } from '../assets/projects/gallery';
-import { getProjectPhoto } from '../assets/projects/gallery';
+import GalleryImage from './GalleryImage.astro';
 
 export interface Props {
   projects: GalleryProject[];
@@ -10,48 +9,68 @@ export interface Props {
 
 const { projects, columns = 3 } = Astro.props;
 
-const gridClass =
+// columns=4 renders a flat, header-less mosaic (used for the homepage
+// "More Than Kitchens & Baths" band). columns=2/3 render an editorial,
+// project-grouped layout with numbered headers.
+const flat = columns === 4;
+
+const gridCols =
   columns === 2
     ? 'sm:grid-cols-2'
     : columns === 4
-      ? 'sm:grid-cols-2 lg:grid-cols-4'
+      ? 'grid-cols-2 lg:grid-cols-4'
       : 'sm:grid-cols-2 lg:grid-cols-3';
+
+const sizes = flat
+  ? '(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw'
+  : columns === 2
+    ? '(min-width: 640px) 50vw, 100vw'
+    : '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw';
 ---
 
-<div class={`grid ${gridClass} gap-6`}>
-  {
-    projects.map((project) => {
-      const photo = getProjectPhoto(project.photo);
-      return (
-        <figure class="bg-warm rounded-xl overflow-hidden border border-warm-dark">
-          <!-- The expected photo file is: {project.photo} (.jpg/.jpeg/.png/.webp/.avif) in src/assets/projects/ -->
-          {
-            photo ? (
-              <Image
-                src={photo}
-                width={800}
-                height={600}
-                fit="cover"
-                widths={[400, 800, 1200]}
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                alt={project.alt}
-                loading="lazy"
-              />
-            ) : (
-              <div class="aspect-[4/3] w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center p-6">
-                <div class="text-center">
-                  <p class="text-accent font-semibold text-xs uppercase tracking-wider mb-2">Project Photo</p>
-                  <p class="text-white font-semibold text-sm leading-relaxed">{project.caption}</p>
-                  <p class="text-white/50 text-xs mt-2">Photo coming soon</p>
+{
+  flat ? (
+    <div class={`grid ${gridCols} gap-4 sm:gap-5`}>
+      {
+        projects.flatMap((project) => project.photos).map((photo) => (
+          <GalleryImage src={photo.src} alt={photo.alt} sizes={sizes} />
+        ))
+      }
+    </div>
+  ) : (
+    <div class="space-y-14 lg:space-y-16">
+      {
+        projects.map((project, index) => {
+          const number = String(index + 1).padStart(2, '0');
+          const count = project.photos.length;
+          return (
+            <section>
+              <div class="flex items-baseline justify-between gap-4 mb-6 pb-4 border-b border-warm-dark">
+                <div class="flex items-baseline gap-3">
+                  <span class="text-accent font-bold text-lg leading-none tabular-nums">{number}</span>
+                  <h3 class="text-xl sm:text-2xl font-bold text-primary">{project.title}</h3>
                 </div>
+                <p class="text-sm text-text-light shrink-0">
+                  {count} {count === 1 ? 'photo' : 'photos'}
+                </p>
               </div>
-            )
-          }
-          <figcaption class="p-4">
-            <p class="font-semibold text-primary text-sm">{project.caption}</p>
-          </figcaption>
-        </figure>
-      );
-    })
-  }
-</div>
+              {count === 1 ? (
+                <div class="max-w-2xl">
+                  <GalleryImage src={project.photos[0].src} alt={project.photos[0].alt} sizes={sizes} />
+                </div>
+              ) : (
+                <div class={`grid grid-cols-1 ${gridCols} gap-5`}>
+                  {
+                    project.photos.map((photo) => (
+                      <GalleryImage src={photo.src} alt={photo.alt} sizes={sizes} />
+                    ))
+                  }
+                </div>
+              )}
+            </section>
+          );
+        })
+      }
+    </div>
+  )
+}

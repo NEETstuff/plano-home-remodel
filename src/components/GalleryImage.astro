@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import { getPhoto } from '../assets/projects/gallery';
+
+export interface Props {
+  src: string;
+  alt: string;
+  sizes: string;
+}
+
+const { src, alt, sizes } = Astro.props;
+const img = getPhoto(src);
+---
+
+{
+  img ? (
+    <Image
+      src={img}
+      widths={[400, 800, 1200]}
+      sizes={sizes}
+      alt={alt}
+      loading="lazy"
+      quality={82}
+      class="w-full h-auto rounded-xl border border-warm-dark bg-warm"
+    />
+  ) : (
+    <div class="aspect-[4/3] w-full bg-gradient-to-br from-primary to-primary-light rounded-xl flex items-center justify-center p-6">
+      <p class="text-white font-semibold text-sm text-center">{alt}</p>
+    </div>
+  )
+}

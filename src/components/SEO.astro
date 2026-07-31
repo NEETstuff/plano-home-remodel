@@ -15,11 +15,10 @@ const titleBrand = brand ?? 'Plano Home Remodel';
 const fullTitle = titleBrand ? `${title} | ${titleBrand}` : title;
 const pageCanonical = canonical || Astro.url.href;
 
-// Social sharing image: only rendered when a real image is provided via the
-// ogImage prop. There is intentionally no hard-coded default — a missing file
-// would generate a broken social card. Once a real image exists at
-// /public/og-image.jpg (1200x630 recommended), pass it per page, e.g.
-// ogImage="https://planohomeremodel.com/og-image.jpg", or restore a default here.
+// Social sharing image: a real, branded 1200x630 image is committed at
+// /public/og-image.jpg and used as the default. Pages can override it by
+// passing ogImage="https://planohomeremodel.com/your-image.jpg".
+const pageOgImage = ogImage ?? 'https://planohomeremodel.com/og-image.jpg';
 ---
 
 <title>{fullTitle}</title>
@@ -31,12 +30,18 @@ const pageCanonical = canonical || Astro.url.href;
 <meta property="og:description" content={description} />
 <meta property="og:url" content={pageCanonical} />
 <meta property="og:site_name" content={siteName} />
-{ogImage && <meta property="og:image" content={ogImage} />}
+<meta property="og:image" content={pageOgImage} />
+{!ogImage && (
+  <>
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+  </>
+)}
 <meta property="og:locale" content="en_US" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
-{ogImage && <meta name="twitter:image" content={ogImage} />}
+<meta name="twitter:image" content={pageOgImage} />
 
 {noIndex && <meta name="robots" content="noindex, nofollow" />}

@@ -7,7 +7,7 @@ import WhyChooseUs from '../components/WhyChooseUs.astro';
 import ServiceAreas from '../components/ServiceAreas.astro';
 import CTA from '../components/CTA.astro';
 import ProjectGallery from '../components/ProjectGallery.astro';
-import { homepageProjects } from '../assets/projects/gallery';
+import { homeHighlights, supportingProjects } from '../assets/projects/gallery';
 
 const baseSchema = {
   "@context": "https://schema.org",
@@ -111,7 +111,7 @@ const schemas = [baseSchema];
         <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">Our Recent Work in Plano & North Dallas</h2>
         <p class="text-text-light text-lg max-w-2xl mx-auto">From custom kitchens to spa-like bathrooms, see how we transform North Texas homes.</p>
       </div>
-      <ProjectGallery projects={homepageProjects} />
+      <ProjectGallery projects={homeHighlights} />
       <div class="text-center mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
         <a href="/kitchen-remodeling/" class="inline-flex items-center gap-2 text-accent hover:text-accent-light font-semibold transition-colors">
           View Our Kitchen & Bathroom Work
@@ -121,6 +121,13 @@ const schemas = [baseSchema];
           See Kitchen & Bathroom Costs
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         </a>
+      </div>
+      <div class="mt-16 pt-16 border-t border-warm-dark">
+        <div class="text-center mb-10">
+          <h3 class="text-xl sm:text-2xl font-bold text-primary mb-3">More Than Kitchens & Baths</h3>
+          <p class="text-text-light text-lg max-w-2xl mx-auto">We bring the same craftsmanship to flooring, pantries, laundry rooms, dining areas, and home offices across North Dallas.</p>
+        </div>
+        <ProjectGallery projects={supportingProjects} columns={4} />
       </div>
     </div>
   </section>
