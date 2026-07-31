@@ -14,6 +14,7 @@
     "build:grapevine": "SITE_CITY=grapevine astro build",
     "build:southlake": "SITE_CITY=southlake astro build",
     "build:highlandpark": "SITE_CITY=highlandpark astro build",
+    "build:dallas": "SITE_CITY=dallas astro build",
     "preview": "astro preview",
     "astro": "astro"
   },

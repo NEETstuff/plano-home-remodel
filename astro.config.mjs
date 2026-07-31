@@ -16,6 +16,7 @@ const CITY_SITES = {
   grapevine: 'https://grapevinehomeremodel.com',
   southlake: 'https://southlakehomeremodel.com',
   highlandpark: 'https://highlandparkhomeremodel.com',
+  dallas: 'https://dallasremodelanddesign.com',
 };
 
 const siteCity = (process.env.SITE_CITY || 'plano').toLowerCase().trim();

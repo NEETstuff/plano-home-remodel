@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ServicePage from '../components/ServicePage.astro';
+import { getSiteConfig, localBathroomPath } from '../data/site';
+import {
+  buildBathroomLocalPage,
+  buildLocalServiceSchemas,
+} from '../data/site/local-service';
+
+const config = getSiteConfig();
+if (config.id !== 'dallas') {
+  return Astro.redirect(localBathroomPath(config));
+}
+
+const page = buildBathroomLocalPage(config);
+---
+
+<Layout
+  title={page.title}
+  description={page.description}
+  canonical={page.canonical}
+  brand=""
+  schema={buildLocalServiceSchemas(page, config)}
+>
+  <ServicePage {...page.content} />
+</Layout>

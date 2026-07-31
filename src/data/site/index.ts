@@ -7,6 +7,7 @@
  *   SITE_CITY=grapevine      npm run build:grapevine
  *   SITE_CITY=southlake      npm run build:southlake
  *   SITE_CITY=highlandpark   npm run build:highlandpark
+ *   SITE_CITY=dallas         npm run build:dallas
  */
 
 import type { CitySiteConfig } from './types';
@@ -16,6 +17,7 @@ import { richardson } from './cities/richardson';
 import { grapevine } from './cities/grapevine';
 import { southlake } from './cities/southlake';
 import { highlandpark } from './cities/highlandpark';
+import { dallas } from './cities/dallas';
 import { SHARED } from './shared';
 
 export type { CitySiteConfig } from './types';
@@ -26,6 +28,7 @@ export { richardson } from './cities/richardson';
 export { grapevine } from './cities/grapevine';
 export { southlake } from './cities/southlake';
 export { highlandpark } from './cities/highlandpark';
+export { dallas } from './cities/dallas';
 
 /** Registry of city sites ready for multi-domain builds */
 export const citySites = {
@@ -35,6 +38,7 @@ export const citySites = {
   grapevine,
   southlake,
   highlandpark,
+  dallas,
 } as const;
 
 export type CitySiteId = keyof typeof citySites;
