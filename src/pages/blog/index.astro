@@ -1,6 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import CTA from '../../components/CTA.astro';
+import { getSiteConfig, siteUrl, SHARED } from '../../data/site';
+
+const config = getSiteConfig();
 
 const blogPosts: {
   title: string;
@@ -89,17 +92,17 @@ const categories = [
 ---
 
 <Layout
-  title="Kitchen & Bathroom Remodeling Tips for Plano, TX"
-  description="Practical remodeling advice and design tips for Plano and North Dallas homeowners. Kitchen and bathroom remodel guides, cost insights, and local expertise from Millwood Remodeling."
-  canonical="https://planohomeremodel.com/blog/"
+  title={`Kitchen & Bathroom Remodeling Tips for ${config.city}, TX`}
+  description={`Practical remodeling advice and design tips for ${config.city} and North Dallas homeowners. Kitchen and bathroom remodel guides, cost insights, and local expertise from ${SHARED.parentCompany.name}.`}
+  canonical={siteUrl('/blog/', config)}
   brand=""
 >
 
   <section class="bg-warm py-16 lg:py-24">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary mb-6">Remodeling Tips & Insights for Plano Homeowners</h1>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary mb-6">Remodeling Tips & Insights for {config.city} Homeowners</h1>
       <p class="text-text-light text-lg sm:text-xl max-w-2xl mx-auto">
-        Practical advice, local insights, and design inspiration from the team at Plano Home Remodel & Design — a Millwood Remodeling Company.
+        Practical advice, local insights, and design inspiration from the team at {config.brandName} — a {SHARED.parentCompany.name} company.
       </p>
       <p class="text-text-light max-w-2xl mx-auto mt-4">
         New here? Start with our <a href="/cost-guides/" class="text-accent hover:text-accent-light underline">kitchen and bathroom cost guides</a>, then read about our <a href="/our-process/" class="text-accent hover:text-accent-light underline">design-build process</a> to see how a remodel actually comes together.
@@ -123,7 +126,7 @@ const categories = [
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
         <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">Latest Articles</h2>
-        <p class="text-text-light text-lg max-w-2xl mx-auto">Guides, design ideas, and planning advice written specifically for Plano and North Dallas homeowners.</p>
+        <p class="text-text-light text-lg max-w-2xl mx-auto">Guides, design ideas, and planning advice for {config.city} and North Dallas homeowners. Some articles still use Plano market examples that apply across the region.</p>
       </div>
       {blogPosts.length > 0 ? (
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -2,21 +2,28 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import CTA from '../components/CTA.astro';
+import {
+  getSiteConfig,
+  siteUrl,
+  buildBreadcrumbSchema,
+  SHARED,
+} from '../data/site';
+
+const config = getSiteConfig();
 
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "@id": "https://planohomeremodel.com/our-process/",
-  name: "Our Remodeling Process Plano TX | Kitchen & Bathroom Remodels",
-  description: "See exactly how we remodel kitchens and bathrooms in Plano and North Dallas. Free consultation, 3D design, expert craftsmanship, 2-year warranty.",
+  "@id": siteUrl('/our-process/', config),
+  name: config.seo.ourProcess.title,
+  description: config.seo.ourProcess.description,
 };
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://planohomeremodel.com/" },
-    { "@type": "ListItem", position: 2, name: "Our Process", item: "https://planohomeremodel.com/our-process/" },
+    ...buildBreadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Our Process', path: '/our-process/' }]).itemListElement,
   ],
 };
 
@@ -25,7 +32,7 @@ const steps = [
     number: 1,
     title: 'Free In-Home Consultation',
     subtitle: 'We come to you',
-    description: 'We visit your Plano home, listen to your ideas, take measurements and photos, and discuss your budget, timeline, and goals. This is a no-obligation conversation where we answer all your questions and give you a realistic sense of what is possible in your space.',
+    description: `We visit your ${config.city} home, listen to your ideas, take measurements and photos, and discuss your budget, timeline, and goals. This is a no-obligation conversation where we answer all your questions and give you a realistic sense of what is possible in your space.`,
     details: [
       'Discuss your vision, needs, and wish list',
       'On-site measurements and space assessment',
@@ -61,7 +68,7 @@ const steps = [
     number: 4,
     title: 'Permitting & Scheduling',
     subtitle: 'Paperwork handled',
-    description: 'We manage all permit applications with the City of Plano and coordinate scheduling with our crew and subcontractors. You receive a firm start date and a projected timeline before we begin.',
+    description: `We manage all permit applications with the City of ${config.city} and coordinate scheduling with our crew and subcontractors. You receive a firm start date and a projected timeline before we begin.`,
     details: [
       'Permit preparation and city submissions',
       'Structural engineering if needed',
@@ -121,9 +128,9 @@ const steps = [
 ---
 
 <Layout
-  title="Our Remodeling Process Plano, TX"
-  description="See exactly how we remodel kitchens and bathrooms in Plano and North Dallas. Free consultation, 3D design, expert craftsmanship, 2-year warranty. Start your project today."
-  canonical="https://planohomeremodel.com/our-process/"
+  title={config.seo.ourProcess.title}
+  description={config.seo.ourProcess.description}
+  canonical={siteUrl('/our-process/', config)}
   schema={[pageSchema, breadcrumbSchema]}
 >
 
@@ -245,8 +252,8 @@ const steps = [
           <a href="/contact/" class="block w-full bg-accent hover:bg-accent-light text-white font-semibold text-center px-6 py-3.5 rounded-lg transition-colors">
             Schedule Your Free Consultation
           </a>
-          <a href="tel:+12144495922" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
-            Or call (214) 449-5922
+          <a href={`tel:${SHARED.phoneTel}`} class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
+            Or call {SHARED.phoneDisplay}
           </a>
         </div>
       </div>
@@ -264,7 +271,7 @@ const steps = [
 
   <CTA
     title="Experience the Difference a Real Process Makes"
-    subtitle="From your first call to your final walkthrough, we make remodeling in Plano simple, transparent, and rewarding."
+    subtitle={`From your first call to your final walkthrough, we make remodeling in ${config.city} simple, transparent, and rewarding.`}
     buttonText="Get Started Today"
     buttonHref="/contact/"
   />

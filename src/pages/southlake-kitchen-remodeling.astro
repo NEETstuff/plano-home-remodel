@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ServicePage from '../components/ServicePage.astro';
+import { getSiteConfig, localKitchenPath } from '../data/site';
+import {
+  buildKitchenLocalPage,
+  buildLocalServiceSchemas,
+} from '../data/site/local-service';
+
+const config = getSiteConfig();
+if (config.id !== 'southlake') {
+  return Astro.redirect(localKitchenPath(config));
+}
+
+const page = buildKitchenLocalPage(config);
+---
+
+<Layout
+  title={page.title}
+  description={page.description}
+  canonical={page.canonical}
+  brand=""
+  schema={buildLocalServiceSchemas(page, config)}
+>
+  <ServicePage {...page.content} />
+</Layout>

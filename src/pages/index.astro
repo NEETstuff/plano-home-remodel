@@ -4,60 +4,39 @@ import Hero from '../components/Hero.astro';
 import TrustSignals from '../components/TrustSignals.astro';
 import ServicesOverview from '../components/ServicesOverview.astro';
 import WhyChooseUs from '../components/WhyChooseUs.astro';
+import Testimonials from '../components/Testimonials.astro';
 import ServiceAreas from '../components/ServiceAreas.astro';
 import CTA from '../components/CTA.astro';
 import ProjectGallery from '../components/ProjectGallery.astro';
 import { homeHighlights, supportingProjects } from '../assets/projects/gallery';
+import { homepageTestimonials } from '../data/testimonials';
+import {
+  getSiteConfig,
+  buildBusinessSchema,
+  siteUrl,
+  localKitchenPath,
+  localBathroomPath,
+  SHARED,
+} from '../data/site';
 
-const baseSchema = {
-  "@context": "https://schema.org",
-  "@type": "HomeAndConstructionBusiness",
-  "@id": "https://planohomeremodel.com/",
-  name: "Plano Home Remodel & Design",
-  alternateName: "Plano Home Remodel & Design – A Millwood Remodeling Company",
-  description: "Plano, Texas kitchen and bathroom remodeling company. 15+ years experience, in-house designer, 2-year workmanship warranty. A Millwood Remodeling Company.",
-  url: "https://planohomeremodel.com/",
-  telephone: "+12144495922",
-  email: "info@planohomeremodel.com",
-  areaServed: [
-    { "@type": "City", name: "Plano", sameAs: "https://en.wikipedia.org/wiki/Plano,_Texas" },
-    { "@type": "City", name: "Frisco", sameAs: "https://en.wikipedia.org/wiki/Frisco,_Texas" },
-    { "@type": "City", name: "Allen", sameAs: "https://en.wikipedia.org/wiki/Allen,_Texas" },
-    { "@type": "City", name: "Dallas", sameAs: "https://en.wikipedia.org/wiki/Dallas" },
-  ],
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Plano",
-    addressRegion: "TX",
-    addressCountry: "US",
-  },
-  foundingDate: "2009",
-  knowsAbout: ["Kitchen Remodeling", "Bathroom Remodeling", "Home Renovation", "Interior Design"],
-  parentOrganization: {
-    "@type": "HomeAndConstructionBusiness",
-    name: "Millwood Remodeling",
-    url: "https://millwoodremodeling.com",
-  },
-  sameAs: ["https://millwoodremodeling.com"],
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Remodeling Services",
-    itemListElement: [
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Kitchen Remodeling" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Bathroom Remodeling" } },
-    ],
-  },
-};
-
-const schemas = [baseSchema];
+const config = getSiteConfig();
+const schemas = [buildBusinessSchema(config)];
+const kitchenLocal = localKitchenPath(config);
+const bathroomLocal = localBathroomPath(config);
 ---
 
-<Layout title="Kitchen & Bathroom Remodeling Plano, TX" description="Plano's trusted kitchen and bathroom remodeling company since 2009. In-house designer, premium craftsmanship, 2-year warranty. A Millwood Remodeling Company. Get your free quote today." canonical="https://planohomeremodel.com/" brand="" schema={schemas}>
+<Layout
+  title={config.seo.home.title}
+  description={config.seo.home.description}
+  canonical={siteUrl('/', config)}
+  brand=""
+  schema={schemas}
+>
 
   <Hero
     variant="home"
-    title="Plano's Premier Kitchen & Bathroom Remodeling Company"
-    subtitle="15+ years transforming North Dallas homes with exceptional craftsmanship, in-house design, and a 2-year workmanship warranty. A Millwood Remodeling Company."
+    title={config.home.heroTitle}
+    subtitle={config.home.heroSubtitle}
     ctaText="Get Your Free Quote"
     ctaHref="/contact/"
     secondaryText="View Our Work"
@@ -67,47 +46,37 @@ const schemas = [baseSchema];
   <section class="py-16 lg:py-20 bg-white">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
-        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">Kitchen & Bathroom Remodeling Built for Plano Homes</h2>
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">{config.home.introHeading}</h2>
         <p class="text-text-light text-lg max-w-3xl mx-auto">
-          Plano and North Dallas homes each have their own era, style, and quirks — and your remodel should be designed around them. Whether your kitchen has felt dated for a decade or your master bath&rsquo;s garden tub has never been used, we turn tired spaces into the rooms you actually live in.
+          {config.home.intro}
         </p>
       </div>
       <div class="grid sm:grid-cols-3 gap-6">
-        <div class="bg-warm rounded-xl p-6 border border-warm-dark">
-          <h3 class="font-bold text-primary mb-2">Reclaim the Heart of Your Home</h3>
-          <p class="text-text-light text-sm leading-relaxed mb-4">
-            Many Plano homes built in the 1970s through 2000s still have their original kitchens — galley layouts, old laminate, and dated lighting. We rework them around how families actually cook, gather, and entertain today.
-          </p>
-          <a href="/kitchen-remodeling/" class="inline-flex items-center gap-1 text-accent hover:text-accent-light text-sm font-semibold transition-colors">
-            Explore Kitchen Remodeling →
-          </a>
-          <br />
-          <a href="/plano-kitchen-remodeling/" class="inline-flex items-center gap-1 text-accent hover:text-accent-light text-sm font-semibold transition-colors">
-            Kitchens in Plano by neighborhood →
-          </a>
-        </div>
-        <div class="bg-warm rounded-xl p-6 border border-warm-dark">
-          <h3 class="font-bold text-primary mb-2">Turn Unused Space Into Daily Luxury</h3>
-          <p class="text-text-light text-sm leading-relaxed mb-4">
-            That never-used garden tub, the dated guest bath, the shower you tolerate — a curbless walk-in shower or a redesigned vanity can change how you start and end every day.
-          </p>
-          <a href="/bathroom-remodeling/" class="inline-flex items-center gap-1 text-accent hover:text-accent-light text-sm font-semibold transition-colors">
-            Explore Bathroom Remodeling →
-          </a>
-          <br />
-          <a href="/plano-bathroom-remodeling/" class="inline-flex items-center gap-1 text-accent hover:text-accent-light text-sm font-semibold transition-colors">
-            Bathrooms in Plano by neighborhood →
-          </a>
-        </div>
-        <div class="bg-warm rounded-xl p-6 border border-warm-dark">
-          <h3 class="font-bold text-primary mb-2">A Local Team That Stands Behind the Work</h3>
-          <p class="text-text-light text-sm leading-relaxed mb-4">
-            As a Millwood Remodeling company, we have served North Dallas for 15+ years with an in-house designer, transparent pricing, and a 2-year workmanship warranty on every project.
-          </p>
-          <a href="/contact/" class="inline-flex items-center gap-1 text-accent hover:text-accent-light text-sm font-semibold transition-colors">
-            Get Your Free Quote →
-          </a>
-        </div>
+        {config.home.highlights.map((item) => (
+          <div class="bg-warm rounded-xl p-6 border border-warm-dark">
+            <h3 class="font-bold text-primary mb-2">{item.title}</h3>
+            <p class="text-text-light text-sm leading-relaxed mb-4">{item.text}</p>
+            <a href={item.href} class="inline-flex items-center gap-1 text-accent hover:text-accent-light text-sm font-semibold transition-colors">
+              {item.linkLabel}
+            </a>
+            {item.href === '/kitchen-remodeling/' && (
+              <>
+                <br />
+                <a href={kitchenLocal} class="inline-flex items-center gap-1 text-accent hover:text-accent-light text-sm font-semibold transition-colors">
+                  Kitchens in {config.city} by neighborhood →
+                </a>
+              </>
+            )}
+            {item.href === '/bathroom-remodeling/' && (
+              <>
+                <br />
+                <a href={bathroomLocal} class="inline-flex items-center gap-1 text-accent hover:text-accent-light text-sm font-semibold transition-colors">
+                  Bathrooms in {config.city} by neighborhood →
+                </a>
+              </>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -115,8 +84,8 @@ const schemas = [baseSchema];
   <section class="py-16 lg:py-20 bg-warm">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
-        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">Our Recent Work in Plano & North Dallas</h2>
-        <p class="text-text-light text-lg max-w-2xl mx-auto">From custom kitchens to spa-like bathrooms, see how we transform North Texas homes.</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">{config.home.galleryHeading}</h2>
+        <p class="text-text-light text-lg max-w-2xl mx-auto">{config.home.gallerySubtitle}</p>
       </div>
       <ProjectGallery projects={homeHighlights} />
       <div class="text-center mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -141,6 +110,14 @@ const schemas = [baseSchema];
 
   <TrustSignals />
 
+  <Testimonials
+    items={homepageTestimonials}
+    limit={5}
+    heading="What Our Clients Say"
+    subtitle={SHARED.testimonialDisclaimer}
+    bg="warm"
+  />
+
   <ServicesOverview />
 
   <WhyChooseUs />
@@ -148,22 +125,22 @@ const schemas = [baseSchema];
   <section class="py-16 lg:py-20 bg-white">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
-        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">Guides for Plano Homeowners</h2>
-        <p class="text-text-light text-lg max-w-2xl mx-auto">Practical, local advice on costs, timelines, and planning your remodel — written for North Dallas homes.</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">{config.home.guidesHeading}</h2>
+        <p class="text-text-light text-lg max-w-2xl mx-auto">{config.home.guidesSubtitle}</p>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <a href="/blog/garden-tub-to-walk-in-shower-plano/" class="group bg-warm rounded-xl p-6 border border-warm-dark hover:shadow-md hover:border-accent/30 transition-all">
-          <h3 class="font-bold text-primary mb-2 group-hover:text-accent transition-colors">Garden Tub to Walk-In Shower Conversions in Plano</h3>
-          <p class="text-text-light text-sm leading-relaxed mb-4">Costs, timelines, and design ideas for one of the most requested changes in East Plano master baths.</p>
+          <h3 class="font-bold text-primary mb-2 group-hover:text-accent transition-colors">Garden Tub to Walk-In Shower Conversions</h3>
+          <p class="text-text-light text-sm leading-relaxed mb-4">Costs, timelines, and design ideas for one of the most requested changes in North Dallas master baths.</p>
           <span class="text-accent font-semibold text-sm">Read the Guide →</span>
         </a>
         <a href="/blog/how-much-does-a-bathroom-remodel-cost-in-plano/" class="group bg-warm rounded-xl p-6 border border-warm-dark hover:shadow-md hover:border-accent/30 transition-all">
-          <h3 class="font-bold text-primary mb-2 group-hover:text-accent transition-colors">How Much Does a Bathroom Remodel Cost in Plano?</h3>
+          <h3 class="font-bold text-primary mb-2 group-hover:text-accent transition-colors">How Much Does a Bathroom Remodel Cost?</h3>
           <p class="text-text-light text-sm leading-relaxed mb-4">A realistic look at what full baths, master baths, and high-end remodels run in the North Dallas market.</p>
           <span class="text-accent font-semibold text-sm">Read the Guide →</span>
         </a>
         <a href="/blog/how-long-does-a-kitchen-remodel-take-plano/" class="group bg-warm rounded-xl p-6 border border-warm-dark hover:shadow-md hover:border-accent/30 transition-all">
-          <h3 class="font-bold text-primary mb-2 group-hover:text-accent transition-colors">How Long Does a Kitchen Remodel Take in Plano?</h3>
+          <h3 class="font-bold text-primary mb-2 group-hover:text-accent transition-colors">How Long Does a Kitchen Remodel Take?</h3>
           <p class="text-text-light text-sm leading-relaxed mb-4">A week-by-week timeline from design through punch list — and what keeps a remodel on schedule.</p>
           <span class="text-accent font-semibold text-sm">Read the Guide →</span>
         </a>

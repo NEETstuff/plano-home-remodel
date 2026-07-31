@@ -1,28 +1,33 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import {
+  getSiteConfig,
+  siteUrl,
+  buildBreadcrumbSchema,
+  SHARED,
+} from '../data/site';
+
+const config = getSiteConfig();
 
 const schema = [
   {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://planohomeremodel.com/privacy-policy/",
-    name: "Privacy Policy | Plano Home Remodel & Design",
-    description: "Privacy policy for Plano Home Remodel & Design. Learn how we collect, use, and protect your personal information.",
-    breadcrumb: {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://planohomeremodel.com/" },
-        { "@type": "ListItem", position: 2, name: "Privacy Policy", item: "https://planohomeremodel.com/privacy-policy/" },
-      ],
-    },
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': siteUrl('/privacy-policy/', config),
+    name: `Privacy Policy | ${config.brandName}`,
+    description: `Privacy policy for ${config.brandName}. Learn how we collect, use, and protect your personal information.`,
   },
+  buildBreadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Privacy Policy', path: '/privacy-policy/' },
+  ]),
 ];
 ---
 
 <Layout
   title="Privacy Policy"
-  description="Privacy policy for Plano Home Remodel & Design. Learn how we collect, use, and protect your personal information when you visit our website."
-  canonical="https://planohomeremodel.com/privacy-policy/"
+  description={`Privacy policy for ${config.brandName}. Learn how we collect, use, and protect your personal information when you visit our website.`}
+  canonical={siteUrl('/privacy-policy/', config)}
   schema={schema}
   noIndex={false}
 >
@@ -38,7 +43,7 @@ const schema = [
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
       <div class="prose prose-sm max-w-none text-text-light space-y-6">
 
-        <p>Plano Home Remodel & Design ("we," "our," or "us") respects your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website <strong>planohomeremodel.com</strong>.</p>
+        <p>{config.brandName} ("we," "our," or "us") respects your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website <strong>{config.domain}</strong>.</p>
 
         <h2 class="text-lg font-bold text-primary">Information We Collect</h2>
         <p>We collect information you voluntarily provide when you fill out a contact form, schedule a consultation, or communicate with us. This may include:</p>
@@ -64,7 +69,7 @@ const schema = [
         <p>We do not sell, trade, or rent your personal information to third parties. We may share your information with:</p>
         <ul class="list-disc pl-5 space-y-1">
           <li>Service providers who assist us in operating our business (e.g., email services, analytics)</li>
-          <li>Our parent company, Millwood Remodeling, as necessary to provide our services</li>
+          <li>Our parent company, {SHARED.parentCompany.name}, as necessary to provide our services</li>
           <li>Legal authorities when required by law</li>
         </ul>
 
@@ -76,7 +81,7 @@ const schema = [
         <p>We use Google Analytics to understand how visitors use our website. Google Analytics collects information such as pages visited, approximate location, device, and browser type. It does not collect your name, email address, or phone number, and you can opt out using Google's Analytics opt-out browser add-on.</p>
 
         <h2 class="text-lg font-bold text-primary">Third-Party Links</h2>
-        <p>Our website may contain links to third-party websites, including <a href="https://millwoodremodeling.com" target="_blank" rel="noopener noreferrer" class="text-accent hover:text-accent-light underline">millwoodremodeling.com</a>. We are not responsible for the privacy practices of these websites.</p>
+        <p>Our website may contain links to third-party websites, including <a href={SHARED.parentCompany.url} target="_blank" rel="noopener noreferrer" class="text-accent hover:text-accent-light underline">millwoodremodeling.com</a>. We are not responsible for the privacy practices of these websites.</p>
 
         <h2 class="text-lg font-bold text-primary">Your Rights</h2>
         <p>Depending on your location, you may have the right to:</p>
@@ -85,7 +90,7 @@ const schema = [
           <li>Request correction or deletion of your information</li>
           <li>Opt out of marketing communications</li>
         </ul>
-        <p>To exercise these rights, contact us at <a href="mailto:info@planohomeremodel.com" class="text-accent hover:text-accent-light underline">info@planohomeremodel.com</a>.</p>
+        <p>To exercise these rights, contact us at <a href={`mailto:${config.email}`} class="text-accent hover:text-accent-light underline">{config.email}</a>.</p>
 
         <h2 class="text-lg font-bold text-primary">Changes to This Policy</h2>
         <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated "Last updated" date.</p>
@@ -93,8 +98,8 @@ const schema = [
         <h2 class="text-lg font-bold text-primary">Contact Us</h2>
         <p>If you have questions about this Privacy Policy, please contact us:</p>
         <ul class="list-disc pl-5 space-y-1">
-          <li>Phone: <a href="tel:+12144495922" class="text-accent hover:text-accent-light underline">(214) 449-5922</a></li>
-          <li>Email: <a href="mailto:info@planohomeremodel.com" class="text-accent hover:text-accent-light underline">info@planohomeremodel.com</a></li>
+          <li>Phone: <a href={`tel:${SHARED.phoneTel}`} class="text-accent hover:text-accent-light underline">{SHARED.phoneDisplay}</a></li>
+          <li>Email: <a href={`mailto:${config.email}`} class="text-accent hover:text-accent-light underline">{config.email}</a></li>
         </ul>
 
       </div>

@@ -1,11 +1,18 @@
 ---
-// Thin wrapper page — all content lives in src/data/local-service-pages.ts.
-// Clone instructions live there too.
 import Layout from '../layouts/Layout.astro';
 import ServicePage from '../components/ServicePage.astro';
-import { localServicePages, buildServiceSchemas } from '../data/local-service-pages';
+import { getSiteConfig, localKitchenPath } from '../data/site';
+import {
+  buildKitchenLocalPage,
+  buildLocalServiceSchemas,
+} from '../data/site/local-service';
 
-const page = localServicePages.find((p) => p.slug === 'plano-kitchen-remodeling')!;
+const config = getSiteConfig();
+if (config.id !== 'plano') {
+  return Astro.redirect(localKitchenPath(config));
+}
+
+const page = buildKitchenLocalPage(config);
 ---
 
 <Layout
@@ -13,9 +20,7 @@ const page = localServicePages.find((p) => p.slug === 'plano-kitchen-remodeling'
   description={page.description}
   canonical={page.canonical}
   brand=""
-  schema={buildServiceSchemas(page)}
+  schema={buildLocalServiceSchemas(page, config)}
 >
-
   <ServicePage {...page.content} />
-
 </Layout>

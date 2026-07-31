@@ -2,48 +2,58 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import TrustSignals from '../components/TrustSignals.astro';
+import Testimonials from '../components/Testimonials.astro';
 import CTA from '../components/CTA.astro';
+import { costGuideTestimonials } from '../data/testimonials';
+import {
+  getSiteConfig,
+  siteUrl,
+  buildBreadcrumbSchema,
+  localKitchenPath,
+  localBathroomPath,
+  SHARED,
+} from '../data/site';
+
+const config = getSiteConfig();
+const kitchenLocal = localKitchenPath(config);
+const bathroomLocal = localBathroomPath(config);
 
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "@id": "https://planohomeremodel.com/cost-guides/",
-  name: "Kitchen & Bathroom Remodel Cost Guide Plano TX | 2026 Pricing",
-  description: "Real kitchen and bathroom remodel costs for Plano and North Dallas. Kitchens $40,000–$100,000+, bathrooms $20,000–$40,000, master baths to $75,000. Free in-home estimate.",
+  "@id": siteUrl('/cost-guides/', config),
+  name: config.seo.costGuides.title,
+  description: config.seo.costGuides.description,
 };
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://planohomeremodel.com/" },
-    { "@type": "ListItem", position: 2, name: "Cost Guides", item: "https://planohomeremodel.com/cost-guides/" },
-  ],
-};
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'Cost Guides', path: '/cost-guides/' },
+]);
 
 const faqs = [
   {
-    q: 'How much does a kitchen remodel cost in Plano, TX?',
-    a: 'Most custom kitchen remodels in Plano run from $40,000 to $100,000+. We do not take on lower-budget, partial-scope projects — anything below that range does not allow the level of finish we stand behind. Final cost depends on cabinetry, countertops, appliances, and whether you change the layout.',
+    q: `How much does a kitchen remodel cost in ${config.city}, TX?`,
+    a: `Most custom kitchen remodels in ${config.city} run from $40,000 to $100,000+. We do not take on lower-budget, partial-scope projects — anything below that range does not allow the level of finish we stand behind. Final cost depends on cabinetry, countertops, appliances, and whether you change the layout.`,
   },
   {
-    q: 'How much does a bathroom remodel cost in Plano, TX?',
-    a: 'Bathroom remodels typically range from $20,000 to $40,000, with high-end full master baths running up to $75,000. We do not take on powder-room-only or sub-$20,000 projects — our remodels are complete, full-scope jobs with new tile, fixtures, and finishes.',
+    q: `How much does a bathroom remodel cost in ${config.city}, TX?`,
+    a: `Bathroom remodels typically range from $20,000 to $40,000, with high-end full master baths running up to $75,000. We do not take on powder-room-only or sub-$20,000 projects — our remodels are complete, full-scope jobs with new tile, fixtures, and finishes.`,
   },
   {
-    q: 'How long do kitchen and bathroom remodels take in Plano?',
+    q: `How long do kitchen and bathroom remodels take in ${config.city}?`,
     a: 'Kitchen remodels take about 6–10 weeks from demolition to completion, or 10–12 weeks for premium custom projects. Bathroom remodels take 4–6 weeks, and 6–8 weeks for full master baths with layout changes. Custom cabinet fabrication adds 4–6 weeks of lead time before construction.',
   },
   {
-    q: 'Does Plano Home Remodel take on small or low-budget projects?',
-    a: 'No. We focus on mid-range to high-end, full-scope kitchen and bathroom remodels. We do not take on powder-room-only or partial-scope jobs. If your project falls below our range — kitchens start around $40,000 and bathrooms around $20,000 — we will tell you honestly.',
+    q: `Does ${config.brandShort} take on small or low-budget projects?`,
+    a: `No. We focus on mid-range to high-end, full-scope kitchen and bathroom remodels. We do not take on powder-room-only or partial-scope jobs. If your project falls below our range — kitchens start around $40,000 and bathrooms around $20,000 — we will tell you honestly.`,
   },
 ];
 
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  '@id': 'https://planohomeremodel.com/cost-guides/#faq',
+  '@id': siteUrl('/cost-guides/', config) + '#faq',
   mainEntity: faqs.map((faq) => ({
     '@type': 'Question',
     name: faq.q,
@@ -58,77 +68,33 @@ const trustStrip = [
   'Transparent, itemized pricing',
 ];
 
-const scenarios = [
-  {
-    type: 'Kitchen',
-    title: 'Kitchen remodel, existing footprint',
-    range: '$40,000 – $60,000',
-    timeline: '6–8 weeks',
-    detail: 'Custom cabinetry, quartz countertops, new backsplash, lighting, and fixtures — with plumbing and electrical staying roughly in place. The most common Plano kitchen project, especially in East Plano homes from the 1970s–90s.',
-  },
-  {
-    type: 'Kitchen',
-    title: 'Kitchen with layout changes',
-    range: '$60,000 – $85,000',
-    timeline: '8–10 weeks',
-    detail: 'Adds wall removal, an island with seating, or a reworked work triangle. Structural work and City of Plano permitting are included. Popular in West Plano and Legacy open floor plans.',
-  },
-  {
-    type: 'Kitchen',
-    title: 'Premium full-custom kitchen',
-    range: '$85,000 – $100,000+',
-    timeline: '10–12 weeks',
-    detail: 'Full custom cabinetry, premium stone like quartzite or marble, integrated appliances, and specialty features such as butler pantries or built-in coffee stations.',
-  },
-  {
-    type: 'Bathroom',
-    title: 'Full bathroom remodel',
-    range: '$20,000 – $30,000',
-    timeline: '4–6 weeks',
-    detail: 'A complete guest or secondary bath: new vanity, walk-in shower or tub/shower, tile, toilet, lighting, and fixtures. A common pre-sale update across Plano.',
-  },
-  {
-    type: 'Bathroom',
-    title: 'Master bath remodel',
-    range: '$30,000 – $50,000',
-    timeline: '6–8 weeks',
-    detail: 'Garden tub conversion to a walk-in shower, double vanity, custom tile, and heated floors. Layout changes add permitting and cost.',
-  },
-  {
-    type: 'Bathroom',
-    title: 'High-end master bath',
-    range: 'Up to $75,000',
-    timeline: '8+ weeks',
-    detail: 'Premium stone, curbless shower with linear drain, frameless glass, freestanding tub, and a full fixture upgrade — the top of our range.',
-  },
-  {
-    type: 'Kitchen',
-    title: 'Open-concept kitchen & great room',
-    range: '$70,000 – $90,000',
-    timeline: '8–10 weeks',
-    detail: 'A kitchen remodel combined with removing a wall into an adjacent dining or family room. Structural work, beams, and City of Plano permits included. A signature project in West Plano split-levels and Legacy homes.',
-    link: '/plano-kitchen-remodeling/',
-    linkLabel: 'Plano kitchen remodeling by neighborhood',
-  },
-  {
-    type: 'Bathroom',
-    title: 'Garden tub to walk-in shower conversion',
-    range: '$20,000 – $25,000',
-    timeline: '2–4 weeks',
-    detail: 'The most-requested change in East Plano master baths. We remove the underused garden tub and build a waterproofed walk-in shower on the same footprint — plumbing stays put, so cost and timeline stay down.',
-    link: '/blog/garden-tub-to-walk-in-shower-plano/',
-    linkLabel: 'Garden tub conversion guide',
-  },
-  {
-    type: 'Bathroom',
-    title: 'Townhome & condo bathroom update',
-    range: '$20,000 – $30,000',
-    timeline: '4–6 weeks',
-    detail: 'Full bathroom remodel in Plano townhomes and condos — from Austin Ranch to Downtown. Includes HOA coordination, water-shutoff planning, and careful staging where freight access is limited.',
-    link: '/plano-bathroom-remodeling/',
-    linkLabel: 'Plano bathroom remodeling by neighborhood',
-  },
-];
+const scenarios = config.pricing.scenarios.map((s) => ({
+  type: s.type,
+  title: s.title,
+  range: s.range,
+  timeline: s.timeline,
+  detail: s.detail,
+  link: s.link,
+  linkLabel: s.linkLabel,
+}));
+
+const kitchenCosts = config.pricing.kitchen.map((t) => ({
+  tier: t.label,
+  range: t.range,
+  timeline: t.timeline || '',
+  includes: t.includes || '',
+}));
+
+const bathroomCosts = config.pricing.bathroom.map((t) => ({
+  tier: t.label,
+  range: t.range,
+  timeline: t.timeline || '',
+  includes: t.includes || '',
+}));
+
+const kitchenCostDrivers = config.pricing.kitchenDrivers;
+const bathroomCostDrivers = config.pricing.bathroomDrivers;
+
 
 const included = [
   'Free in-home consultation and a detailed, itemized estimate',
@@ -136,7 +102,7 @@ const included = [
   'Demolition, debris removal, and site protection',
   'Dust containment and daily job-site cleanup',
   'Materials and labor for the full agreed scope',
-  'All City of Plano permits and inspections',
+  `All City of ${config.city} permits and inspections`,
   'Plumbing and electrical rough-in and finishing',
   'Project management and daily job-site oversight',
   'Final deep clean and a post-project walkthrough',
@@ -155,61 +121,33 @@ const notIncluded = [
   'Any item outside the agreed scope discovered during demolition — we flag it immediately and price it transparently before proceeding',
 ];
 
-const kitchenCosts = [
-  { tier: 'Custom Kitchen Remodel', range: '$40,000 – $60,000', timeline: '6–8 weeks', includes: 'A complete remodel with custom cabinetry, quartz countertops, a tile backsplash, a quality appliance package, and updated lighting and fixtures.' },
-  { tier: 'Premium & Full Custom', range: '$60,000 – $100,000+', timeline: '8–12 weeks', includes: 'Full custom cabinetry, premium stone (quartzite or marble), layout changes, custom tile, pro-style or integrated appliances, and specialty features like butler pantries.' },
-];
-
-const kitchenCostDrivers = [
-  { factor: 'Custom Cabinetry', impact: '35–45% of budget', note: 'The heart of a custom kitchen. Door style, wood species, finish, and hardware drive cost — and this is where a premium kitchen is really built.' },
-  { factor: 'Countertops', impact: '12–18% of budget', note: 'Quartz is our most popular choice for a reason; premium quartzite and marble sit at the top of the range. Slab size and edge profile matter.' },
-  { factor: 'Appliances', impact: '12–18% of budget', note: 'Pro-style ranges, panel-ready built-ins, and integrated refrigeration cost more but deliver the built-in look. We match the package to how you cook.' },
-  { factor: 'Layout Changes', impact: 'Varies significantly', note: 'Removing walls, relocating plumbing, or reworking the work triangle adds cost — and permitting — but can completely transform how the kitchen functions.' },
-  { factor: 'Flooring & Tile', impact: '8–12% of budget', note: 'Hardwood or large-format tile and custom backsplash work give a high-end kitchen its finished, cohesive feel.' },
-  { factor: 'Lighting & Electrical', impact: '5–8% of budget', note: 'Recessed lighting, under-cabinet task lights, pendants, and dimmers add both function and ambiance — plus the electrical work that powers them.' },
-];
-
-const bathroomCosts = [
-  { tier: 'Full Bathroom Remodel', range: '$20,000 – $30,000', timeline: '4–6 weeks', includes: 'A complete remodel with a new vanity and countertop, walk-in shower or tub/shower replacement, tile flooring, toilet, lighting, and fixtures.' },
-  { tier: 'Master Bath & Premium', range: '$30,000 – $40,000', timeline: '6–8 weeks', includes: 'Custom walk-in shower with frameless glass, double vanity, freestanding tub, premium tile and heated floors. High-end full master baths can run up to $75,000.' },
-];
-
-const bathroomCostDrivers = [
-  { factor: 'Tile & Flooring', impact: '15–25% of budget', note: 'Large-format porcelain, natural stone, and heated floors drive cost — and they are usually the centerpiece of a premium bathroom.' },
-  { factor: 'Shower & Tub', impact: '15–20% of budget', note: 'Custom curbless showers with linear drains and frameless glass cost more than standard tub-showers. Freestanding tubs add cost but create the focal point.' },
-  { factor: 'Vanity & Countertops', impact: '10–15% of budget', note: 'Double vanities with quartz tops and custom cabinetry — soft-close drawers and tailored storage included — make the room work.' },
-  { factor: 'Plumbing & Electrical', impact: '10–15% of budget', note: 'Relocating plumbing, adding heated-floor circuits, and installing high-end shower systems all affect cost. Keeping existing plumbing saves money.' },
-  { factor: 'Fixtures & Hardware', impact: '5–10% of budget', note: 'Faucets, shower heads, and finish hardware. Brushed nickel and matte black remain the most requested in Plano bathrooms.' },
-  { factor: 'Permits & Engineering', impact: '3–5% of budget', note: 'Structural changes, electrical upgrades, and plumbing work require permits. We handle all permitting as part of our service.' },
-];
 ---
 
 <Layout
-  title="Kitchen & Bathroom Remodel Cost Guide Plano, TX"
-  description="Real kitchen and bathroom remodel costs for Plano and North Dallas: kitchens $40,000–$100,000+, bathrooms $20,000–$40,000 (master baths to $75,000). Free in-home estimate — call (214) 449-5922."
-  canonical="https://planohomeremodel.com/cost-guides/"
-  brand=""
+  title={config.seo.costGuides.title}
+  description={config.seo.costGuides.description}
+  canonical={siteUrl('/cost-guides/', config)}
   schema={[pageSchema, breadcrumbSchema, faqSchema]}
 >
 
   <Hero
-    title="Kitchen & Bathroom Remodel Costs in Plano, TX"
-    subtitle="Honest, realistic pricing for Plano and North Dallas homes: kitchen remodels $40,000–$100,000+, bathroom remodels $20,000–$40,000, and up to $75,000 for high-end master baths. Get your exact number with a free in-home estimate."
+    title={config.costGuides.heroTitle}
+    subtitle={config.costGuides.heroSubtitle}
     ctaText="Get Your Free Estimate"
     ctaHref="/contact/"
-    secondaryText="Call (214) 449-5922"
-    secondaryHref="tel:+12144495922"
+    secondaryText={`Call ${SHARED.phoneDisplay}`}
+    secondaryHref={`tel:${SHARED.phoneTel}`}
   />
 
   <section class="py-16 lg:py-20 bg-white">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
       <p class="text-sm text-text-light mb-2">Last updated: 2026</p>
-      <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">How Much Does a Kitchen or Bathroom Remodel Cost in Plano?</h2>
+      <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">How Much Does a Kitchen or Bathroom Remodel Cost in {config.city}?</h2>
       <p class="text-text-light text-lg leading-relaxed">
         The short answer: kitchen remodels typically range from <strong>$40,000 to $100,000+</strong>, and bathroom remodels from <strong>$20,000 to $40,000</strong> — with high-end full master baths running up to <strong>$75,000</strong>.
       </p>
       <p class="text-text-light leading-relaxed mt-4">
-        The real answer: it depends on your home, your goals, and the level of finish you want. Below we break down realistic ranges for Plano and North Dallas homes so you can plan with confidence. All estimates include materials and labor.
+        The real answer: it depends on your home, your goals, and the level of finish you want. Below we break down realistic ranges for {config.city} and North Dallas homes so you can plan with confidence. All estimates include materials and labor.
       </p>
       <p class="text-text-light leading-relaxed mt-4">
         These ranges hold across the North Dallas corridor — homeowners in <a href="/frisco-kitchen-bathroom-remodeling/" class="text-accent hover:text-accent-light underline">Frisco</a>, <a href="/allen-kitchen-bathroom-remodeling/" class="text-accent hover:text-accent-light underline">Allen</a>, and <a href="/mckinney-kitchen-bathroom-remodeling/" class="text-accent hover:text-accent-light underline">McKinney</a> typically land in the same range. See the full list of communities we serve on our <a href="/service-areas/" class="text-accent hover:text-accent-light underline">service areas</a> page.
@@ -220,7 +158,7 @@ const bathroomCostDrivers = [
           We focus on mid-range to high-end, full-scope kitchen and bathroom remodels. We do not take on low-budget, partial-scope, or powder-room-only projects — the level of finish we stand behind requires that investment. Our kitchen projects start around <strong>$40,000</strong> and our bathroom projects around <strong>$20,000</strong>. If your project falls below that range, we will tell you honestly.
         </p>
         <p class="text-sm text-text-light leading-relaxed mt-3">
-          For projects in range, every quote is unique. Final cost depends on your specific home, material selections, and scope of work — the only way to get an accurate number is a free in-home consultation, and we would love to provide one.
+          {config.costGuides.framingIntro}
         </p>
       </div>
     </div>
@@ -256,8 +194,8 @@ const bathroomCostDrivers = [
 
       <div class="mt-12 max-w-4xl mx-auto bg-white rounded-xl border border-warm-dark p-8 text-center">
         <h3 class="text-xl font-bold text-primary mb-2">Ready for a Real Kitchen Number?</h3>
-        <p class="text-text-light text-sm leading-relaxed max-w-xl mx-auto mb-4">Ranges help you budget, but an accurate kitchen estimate comes from seeing your home. A free in-home consultation gives you a detailed, itemized number for your specific Plano kitchen. <a href="/kitchen-remodeling/" class="text-accent hover:text-accent-light underline">See what is included in a custom kitchen remodel</a>, or read our guide to <a href="/blog/how-long-does-a-kitchen-remodel-take-plano/" class="text-accent hover:text-accent-light underline">realistic kitchen remodel timelines in Plano</a>.</p>
-        <p class="text-text-light text-sm leading-relaxed max-w-xl mx-auto mb-6">Planning a project in a specific Plano neighborhood? Our <a href="/plano-kitchen-remodeling/" class="text-accent hover:text-accent-light underline">Plano kitchen remodeling</a> page covers East Plano, West Plano, Legacy, and the Historic District.</p>
+        <p class="text-text-light text-sm leading-relaxed max-w-xl mx-auto mb-4">Ranges help you budget, but an accurate kitchen estimate comes from seeing your home. A free in-home consultation gives you a detailed, itemized number for your specific {config.city} kitchen. <a href="/kitchen-remodeling/" class="text-accent hover:text-accent-light underline">See what is included in a custom kitchen remodel</a>.</p>
+        <p class="text-text-light text-sm leading-relaxed max-w-xl mx-auto mb-6">Planning a project in a specific {config.city} neighborhood? Our <a href={kitchenLocal} class="text-accent hover:text-accent-light underline">{config.city} kitchen remodeling</a> page covers local housing patterns and community notes.</p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
           <a href="/contact/" class="bg-accent hover:bg-accent-light text-white font-semibold px-6 py-3 rounded-lg text-sm transition-colors">Get Your Free Kitchen Estimate</a>
           <a href="tel:+12144495922" class="inline-flex items-center gap-2 border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold px-6 py-3 rounded-lg text-sm transition-colors">
@@ -273,6 +211,17 @@ const bathroomCostDrivers = [
             </span>
           ))}
         </div>
+      </div>
+
+      <div class="mt-10 max-w-2xl mx-auto">
+        <Testimonials
+          items={costGuideTestimonials.filter((t) => t.projectType === 'kitchen')}
+          heading=""
+          subtitle=""
+          compact={true}
+          embedded={true}
+          showImages={false}
+        />
       </div>
     </div>
   </section>
@@ -307,8 +256,8 @@ const bathroomCostDrivers = [
 
       <div class="mt-12 max-w-4xl mx-auto bg-white rounded-xl border border-warm-dark p-8 text-center">
         <h3 class="text-xl font-bold text-primary mb-2">Ready for a Real Bathroom Number?</h3>
-        <p class="text-text-light text-sm leading-relaxed max-w-xl mx-auto mb-4">Whether it is a full bathroom refresh or a high-end master bath, your exact number depends on your space and finishes. A free in-home consultation gives you a detailed, itemized estimate. <a href="/bathroom-remodeling/" class="text-accent hover:text-accent-light underline">See what is included in a custom bathroom remodel</a> or get a deeper look at <a href="/blog/how-much-does-a-bathroom-remodel-cost-in-plano/" class="text-accent hover:text-accent-light underline">what drives bathroom costs in Plano</a>.</p>
-        <p class="text-text-light text-sm leading-relaxed max-w-xl mx-auto mb-6">Considering a garden tub conversion? See our <a href="/blog/garden-tub-to-walk-in-shower-plano/" class="text-accent hover:text-accent-light underline">garden tub to walk-in shower guide</a>, and check <a href="/plano-bathroom-remodeling/" class="text-accent hover:text-accent-light underline">Plano bathroom remodeling</a> for neighborhood-specific guidance.</p>
+        <p class="text-text-light text-sm leading-relaxed max-w-xl mx-auto mb-4">Whether it is a full bathroom refresh or a high-end master bath, your exact number depends on your space and finishes. A free in-home consultation gives you a detailed, itemized estimate. <a href="/bathroom-remodeling/" class="text-accent hover:text-accent-light underline">See what is included in a custom bathroom remodel</a> or get a deeper look at <a href="/blog/how-much-does-a-bathroom-remodel-cost-in-plano/" class="text-accent hover:text-accent-light underline">what drives bathroom costs</a>.</p>
+        <p class="text-text-light text-sm leading-relaxed max-w-xl mx-auto mb-6">Considering a garden tub conversion? See our <a href="/blog/garden-tub-to-walk-in-shower-plano/" class="text-accent hover:text-accent-light underline">garden tub to walk-in shower guide</a>, and check <a href={bathroomLocal} class="text-accent hover:text-accent-light underline">{config.city} bathroom remodeling</a> for neighborhood-specific guidance.</p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
           <a href="/contact/" class="bg-accent hover:bg-accent-light text-white font-semibold px-6 py-3 rounded-lg text-sm transition-colors">Get Your Free Bathroom Estimate</a>
           <a href="tel:+12144495922" class="inline-flex items-center gap-2 border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold px-6 py-3 rounded-lg text-sm transition-colors">
@@ -325,14 +274,25 @@ const bathroomCostDrivers = [
           ))}
         </div>
       </div>
+
+      <div class="mt-10 max-w-2xl mx-auto">
+        <Testimonials
+          items={costGuideTestimonials.filter((t) => t.projectType === 'bathroom')}
+          heading=""
+          subtitle=""
+          compact={true}
+          embedded={true}
+          showImages={false}
+        />
+      </div>
     </div>
   </section>
 
   <section class="py-16 lg:py-20 bg-warm">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
-        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">Plano Kitchen & Bathroom Cost Scenarios</h2>
-        <p class="text-text-light text-lg max-w-2xl mx-auto">How those ranges play out in real Plano homes — grouped by the projects we actually build.</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">{config.city} Kitchen & Bathroom Cost Scenarios</h2>
+        <p class="text-text-light text-lg max-w-2xl mx-auto">How those ranges play out in real {config.city} homes — grouped by the projects we actually build.</p>
       </div>
       <div class="grid lg:grid-cols-3 gap-6">
         {scenarios.map((scenario) => (
@@ -355,7 +315,7 @@ const bathroomCostDrivers = [
       </div>
       <div class="mt-10 text-center space-y-4">
         <p class="text-sm text-text-light">
-          Not sure which scenario fits your home? Our <a href="/plano-kitchen-remodeling/" class="text-accent hover:text-accent-light underline">Plano kitchen remodeling</a> and <a href="/plano-bathroom-remodeling/" class="text-accent hover:text-accent-light underline">Plano bathroom remodeling</a> pages break down projects by neighborhood and home style.
+          Not sure which scenario fits your home? Our <a href={kitchenLocal} class="text-accent hover:text-accent-light underline">{config.city} kitchen remodeling</a> and <a href={bathroomLocal} class="text-accent hover:text-accent-light underline">{config.city} bathroom remodeling</a> pages break down projects by neighborhood and home style.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
           <a href="/contact/" class="bg-accent hover:bg-accent-light text-white font-semibold px-6 py-3 rounded-lg text-sm transition-colors">Get Your Free Estimate</a>
@@ -397,7 +357,7 @@ const bathroomCostDrivers = [
       </div>
       <div class="mt-8 text-center">
         <p class="text-sm text-text-light">
-          Permits and inspections are always included. Wondering when your project needs one? Read our plain-language guide to <a href="/blog/kitchen-remodel-permits-and-hoa-plano/" class="text-accent hover:text-accent-light underline">permits and HOA approvals for Plano remodels</a>, or see how we sequence the whole project on our <a href="/our-process/" class="text-accent hover:text-accent-light underline">design-build process</a> page.
+          Permits and inspections are always included. Wondering when your project needs one? Read our plain-language guide to <a href="/blog/kitchen-remodel-permits-and-hoa-plano/" class="text-accent hover:text-accent-light underline">permits and HOA approvals for local remodels</a>, or see how we sequence the whole project on our <a href="/our-process/" class="text-accent hover:text-accent-light underline">design-build process</a> page.
         </p>
       </div>
     </div>
@@ -463,14 +423,14 @@ const bathroomCostDrivers = [
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-2 gap-12">
         <div>
-      <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Kitchen & Bathroom Remodel Timelines in Plano</h2>
+      <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Kitchen & Bathroom Remodel Timelines in {config.city}</h2>
       <div class="space-y-4">
         <div class="bg-warm rounded-lg p-4">
           <div class="flex items-center justify-between mb-1">
             <h3 class="font-bold text-primary text-sm">Design & Planning Phase</h3>
             <span class="text-xs font-semibold text-accent">2–4 weeks</span>
           </div>
-          <p class="text-text-light text-xs">Consultation, 3D renderings, material selection, permits. See our week-by-week breakdown of <a href="/blog/how-long-does-a-kitchen-remodel-take-plano/" class="text-accent hover:text-accent-light underline">kitchen remodel timelines in Plano</a>.</p>
+          <p class="text-text-light text-xs">Consultation, 3D renderings, material selection, permits. See our week-by-week breakdown of <a href="/blog/how-long-does-a-kitchen-remodel-take-plano/" class="text-accent hover:text-accent-light underline">kitchen remodel timelines</a>.</p>
         </div>
             <div class="bg-warm rounded-lg p-4">
               <div class="flex items-center justify-between mb-1">
@@ -498,7 +458,7 @@ const bathroomCostDrivers = [
         <div>
           <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Planning Your Investment</h2>
           <p class="text-text-light text-sm leading-relaxed mb-4">
-            A well-executed kitchen or bathroom remodel is one of the strongest investments you can make in a Plano home. It improves your daily life and adds lasting value in a competitive market.
+            A well-executed kitchen or bathroom remodel is one of the strongest investments you can make in a {config.city} home. It improves your daily life and adds lasting value in a competitive market.
           </p>
           <p class="text-text-light text-sm leading-relaxed mb-4">
             The best way to plan is a detailed, itemized estimate. We walk through the scope line by line so you know exactly what your budget buys and where upgrades make the biggest impact.
@@ -522,7 +482,7 @@ const bathroomCostDrivers = [
   <section class="py-16 lg:py-20 bg-warm">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
       <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4 text-center">Kitchen & Bathroom Remodel Cost FAQ</h2>
-      <p class="text-text-light text-lg max-w-2xl mx-auto text-center mb-10">The questions Plano homeowners ask us most before starting a kitchen or bathroom remodel.</p>
+      <p class="text-text-light text-lg max-w-2xl mx-auto text-center mb-10">The questions {config.city} homeowners ask us most before starting a kitchen or bathroom remodel.</p>
       <div class="space-y-4">
         {faqs.map((faq) => (
           <div class="bg-white rounded-xl p-5 border border-warm-dark">
@@ -538,7 +498,7 @@ const bathroomCostDrivers = [
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
       <p class="text-text-light text-sm">
         <strong class="text-primary">Ready to explore specific services?</strong><br />
-        Dive deeper with our <a href="/plano-kitchen-remodeling/" class="text-accent hover:text-accent-light underline">Plano kitchen remodeling</a> and <a href="/plano-bathroom-remodeling/" class="text-accent hover:text-accent-light underline">Plano bathroom remodeling</a> pages, or see <a href="/kitchen-remodeling/" class="text-accent hover:text-accent-light underline">kitchen remodeling</a>, <a href="/bathroom-remodeling/" class="text-accent hover:text-accent-light underline">bathroom remodeling</a>, and <a href="/our-process/" class="text-accent hover:text-accent-light underline">our process</a>.
+        Dive deeper with our <a href={kitchenLocal} class="text-accent hover:text-accent-light underline">{config.city} kitchen remodeling</a> and <a href={bathroomLocal} class="text-accent hover:text-accent-light underline">{config.city} bathroom remodeling</a> pages, or see <a href="/kitchen-remodeling/" class="text-accent hover:text-accent-light underline">kitchen remodeling</a>, <a href="/bathroom-remodeling/" class="text-accent hover:text-accent-light underline">bathroom remodeling</a>, and <a href="/our-process/" class="text-accent hover:text-accent-light underline">our process</a>.
       </p>
       <p class="text-text-light text-sm mt-3">
         <strong class="text-primary">Keep reading:</strong> <a href="/blog/garden-tub-to-walk-in-shower-plano/" class="text-accent hover:text-accent-light underline">garden tub conversions</a> &middot; <a href="/blog/how-much-does-a-bathroom-remodel-cost-in-plano/" class="text-accent hover:text-accent-light underline">bathroom remodel costs</a> &middot; <a href="/blog/quartz-vs-granite-countertops-plano-kitchens/" class="text-accent hover:text-accent-light underline">quartz vs. granite</a> &middot; <a href="/blog/kitchen-remodel-permits-and-hoa-plano/" class="text-accent hover:text-accent-light underline">permits &amp; HOA</a> &middot; <a href="/blog/how-long-does-a-kitchen-remodel-take-plano/" class="text-accent hover:text-accent-light underline">kitchen timelines</a>

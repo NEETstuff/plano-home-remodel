@@ -2,99 +2,53 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import TrustSignals from '../components/TrustSignals.astro';
+import Testimonials from '../components/Testimonials.astro';
 import CTA from '../components/CTA.astro';
 import ProjectGallery from '../components/ProjectGallery.astro';
 import { kitchenProjects } from '../assets/projects/gallery';
+import { kitchenTestimonials } from '../data/testimonials';
+import {
+  getSiteConfig,
+  siteUrl,
+  buildBreadcrumbSchema,
+  buildProviderSchema,
+  localKitchenPath,
+  localBathroomPath,
+  SHARED,
+} from '../data/site';
+
+const config = getSiteConfig();
+const localPath = localKitchenPath(config);
+const serviceCopy = config.kitchen;
 
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "Kitchen Remodeling in Plano, TX",
-  description: "Professional kitchen remodeling services in Plano and North Dallas. Custom cabinets, countertops, islands, lighting, and open-layout designs by Millwood Remodeling.",
-  provider: {
-    "@type": "HomeAndConstructionBusiness",
-    "@id": "https://planohomeremodel.com/",
-    name: "Plano Home Remodel & Design",
-    url: "https://planohomeremodel.com/",
-    telephone: "+12144495922",
-    areaServed: [
-      { "@type": "City", name: "Plano" },
-      { "@type": "City", name: "Frisco" },
-      { "@type": "City", name: "Allen" },
-      { "@type": "City", name: "Dallas" },
-    ],
-    parentOrganization: {
-      "@type": "HomeAndConstructionBusiness",
-      name: "Millwood Remodeling",
-      url: "https://millwoodremodeling.com",
-    },
-  },
-  areaServed: [
-    { "@type": "City", name: "Plano", sameAs: "https://en.wikipedia.org/wiki/Plano,_Texas" },
-    { "@type": "City", name: "Frisco", sameAs: "https://en.wikipedia.org/wiki/Frisco,_Texas" },
-    { "@type": "City", name: "Allen", sameAs: "https://en.wikipedia.org/wiki/Allen,_Texas" },
-    { "@type": "City", name: "Dallas", sameAs: "https://en.wikipedia.org/wiki/Dallas" },
-    { "@type": "City", name: "McKinney", sameAs: "https://en.wikipedia.org/wiki/McKinney,_Texas" },
-    { "@type": "City", name: "Richardson", sameAs: "https://en.wikipedia.org/wiki/Richardson,_Texas" },
-  ],
-  priceRange: "$40,000 – $100,000+",
+  name: serviceCopy.heroTitle,
+  description: config.seo.kitchen.description,
+  provider: buildProviderSchema(config),
+  areaServed: config.areaServed.map((a) => ({
+    "@type": "City",
+    name: a.name,
+    ...(a.wiki ? { sameAs: a.wiki } : {}),
+  })),
+  priceRange: SHARED.pricingDefaults.kitchenRangeShort.replace(/–/g, ' – '),
   priceCurrency: "USD",
 };
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://planohomeremodel.com/" },
-    { "@type": "ListItem", position: 2, name: "Kitchen Remodeling", item: "https://planohomeremodel.com/kitchen-remodeling/" },
-  ],
-};
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'Kitchen Remodeling', path: '/kitchen-remodeling/' },
+]);
 
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "How much does a kitchen remodel cost in Plano, TX?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Kitchen remodeling costs in Plano typically range from $40,000 to $100,000+. We focus on custom, full-scope kitchen remodels and do not take on low-budget projects — anything less does not allow the quality we stand behind. Final cost depends on cabinetry, countertop material, layout changes, and appliance package. We provide a detailed, transparent estimate during your free in-home consultation.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How long does a kitchen remodel take in Plano?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Most kitchen remodels in Plano take 6–10 weeks from demolition to completion; premium custom projects with extensive layout changes can run 10–12 weeks. Custom cabinetry fabrication adds 4–6 weeks of lead time before construction begins. We provide a detailed timeline in your project plan and keep you updated throughout the process.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Do you offer custom kitchen cabinets in Plano?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. We design and install custom cabinetry tailored to your Plano home. Whether you prefer traditional shaker-style for a classic Plano Colonial or sleek slab-front for a modern home, our team builds cabinets that maximize storage and complement your architectural style.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Do I need permits for a kitchen remodel in Plano?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes, most kitchen remodels in Plano require permits for electrical, plumbing, and structural changes. We handle all permit applications and coordinate with the City of Plano Building Inspections so you don't have to worry about a thing.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Can you remodel a kitchen without changing the footprint?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Absolutely. Many Plano homeowners choose to keep their existing layout and focus on upgrading cabinets, countertops, backsplash, lighting, and fixtures. This approach can reduce both cost and timeline while still delivering a stunning transformation.",
-      },
-    },
-  ],
+  mainEntity: serviceCopy.faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.q,
+    acceptedAnswer: { "@type": "Answer", text: faq.a },
+  })),
 };
 
 const features = [
@@ -120,7 +74,7 @@ const features = [
   },
   {
     title: 'Open-Concept Layouts',
-    description: 'Remove walls and create the open, airy kitchen you have always wanted. We engineer structural changes carefully, coordinating with Plano building codes to create seamless transitions between kitchen, dining, and living spaces.',
+    description: `Remove walls and create the open, airy kitchen you have always wanted. We engineer structural changes carefully, coordinating with ${config.city} building codes to create seamless transitions between kitchen, dining, and living spaces.`,
     icon: `<svg class="w-6 h-6 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm0 8a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2zm0 8a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2z"/></svg>`,
   },
   {
@@ -170,15 +124,15 @@ const processSteps = [
 ---
 
 <Layout
-  title="Kitchen Remodeling Plano, TX"
-  description="Expert kitchen remodeling in Plano and North Dallas. Custom cabinets, quartz countertops, islands, and open-concept designs. 15+ years experience, in-house designer, 2-year warranty. Get your free estimate."
-  canonical="https://planohomeremodel.com/kitchen-remodeling/"
+  title={config.seo.kitchen.title}
+  description={config.seo.kitchen.description}
+  canonical={siteUrl('/kitchen-remodeling/', config)}
   schema={[serviceSchema, breadcrumbSchema, faqSchema]}
 >
 
   <Hero
-    title="Kitchen Remodeling in Plano & North Dallas"
-    subtitle="Transform your kitchen with custom cabinetry, premium countertops, and thoughtful design. We create kitchens that Plano families love to cook, gather, and live in."
+    title={serviceCopy.heroTitle}
+    subtitle={serviceCopy.heroSubtitle}
     ctaText="Get Your Free Kitchen Estimate"
     ctaHref="/contact/"
     secondaryText="See Our Process"
@@ -190,7 +144,7 @@ const processSteps = [
       <div class="max-w-3xl mx-auto text-center mb-12">
         <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">What We Deliver in Every Kitchen Remodel</h2>
         <p class="text-text-light text-lg">
-          From custom cabinetry to open-concept layouts, every element of your kitchen is thoughtfully designed and expertly installed. Here is what we bring to every Plano kitchen remodel.
+          From custom cabinetry to open-concept layouts, every element of your kitchen is thoughtfully designed and expertly installed. Here is what we bring to every {config.city} kitchen remodel.
         </p>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -212,7 +166,7 @@ const processSteps = [
       <div class="max-w-3xl mx-auto text-center mb-12">
         <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">Our Kitchen Remodeling Process</h2>
         <p class="text-text-light text-lg">
-          From your first call to the final walk-through, our proven process makes remodeling your Plano kitchen smooth and stress-free.
+          From your first call to the final walk-through, our proven process makes remodeling your {config.city} kitchen smooth and stress-free.
         </p>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
@@ -235,7 +189,7 @@ const processSteps = [
   <section class="py-16 lg:py-20 bg-white">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
-        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">Plano Kitchen Remodeling Projects</h2>
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">{config.city} Kitchen Remodeling Projects</h2>
         <p class="text-text-light text-lg max-w-2xl mx-auto">Every kitchen we design and build is tailored to the home and the homeowner. Here are some examples of our work across North Dallas.</p>
       </div>
       <div class="mb-12">
@@ -248,13 +202,13 @@ const processSteps = [
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
-          <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Why Plano Homeowners Choose Us for Kitchen Remodeling</h2>
+          <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Why {config.city} Homeowners Choose Us for Kitchen Remodeling</h2>
           <div class="space-y-5">
             <div class="flex gap-4">
               <span class="shrink-0 w-1 h-auto rounded-full bg-accent" />
               <div>
-                <h3 class="font-bold text-primary">15+ Years of Plano Kitchen Expertise</h3>
-                <p class="text-text-light text-sm leading-relaxed">Since 2009, we have remodeled kitchens across Plano — from 1970s ranchers in East Plano to new custom builds in West Plano. We know the local housing stock and what works best.</p>
+                <h3 class="font-bold text-primary">15+ Years of {config.city} Kitchen Expertise</h3>
+                <p class="text-text-light text-sm leading-relaxed">Since {config.foundingDate}, we have remodeled kitchens across {config.city} and North Dallas. We know the local housing stock and what works best for how families cook and gather.</p>
               </div>
             </div>
             <div class="flex gap-4">
@@ -281,24 +235,24 @@ const processSteps = [
           </div>
         </div>
         <div class="bg-warm rounded-2xl p-8 lg:p-10">
-          <h3 class="text-xl font-bold text-primary mb-4">Popular Kitchen Styles in Plano</h3>
-          <p class="text-text-light text-sm leading-relaxed mb-6">Plano homes span a wide range of architectural styles, and your kitchen should complement your home while reflecting your taste.</p>
+          <h3 class="text-xl font-bold text-primary mb-4">Popular Kitchen Styles in {config.city}</h3>
+          <p class="text-text-light text-sm leading-relaxed mb-6">{config.city} homes span a wide range of architectural styles, and your kitchen should complement your home while reflecting your taste.</p>
           <div class="space-y-4">
             <div class="bg-white rounded-lg p-4 border border-warm-dark">
               <h4 class="font-bold text-primary text-sm">Transitional</h4>
-              <p class="text-text-light text-xs mt-1">The most popular choice in Plano — a blend of traditional warmth and clean modern lines. Shaker cabinets, neutral palettes, quartz countertops.</p>
+              <p class="text-text-light text-xs mt-1">The most popular choice in {config.city} — a blend of traditional warmth and clean modern lines. Shaker cabinets, neutral palettes, quartz countertops.</p>
             </div>
             <div class="bg-white rounded-lg p-4 border border-warm-dark">
               <h4 class="font-bold text-primary text-sm">Modern Farmhouse</h4>
-              <p class="text-text-light text-xs mt-1">Warm wood accents, apron-front sinks, open shelving, and matte black fixtures. Perfect for Plano's newer neighborhoods.</p>
+              <p class="text-text-light text-xs mt-1">Warm wood accents, apron-front sinks, open shelving, and matte black fixtures. Perfect for newer {config.city} neighborhoods.</p>
             </div>
             <div class="bg-white rounded-lg p-4 border border-warm-dark">
               <h4 class="font-bold text-primary text-sm">Contemporary</h4>
-              <p class="text-text-light text-xs mt-1">Sleek slab cabinetry, handleless drawers, large-format tile, and integrated appliances. Ideal for modern Plano homes and condos.</p>
+              <p class="text-text-light text-xs mt-1">Sleek slab cabinetry, handleless drawers, large-format tile, and integrated appliances. Ideal for modern {config.city} homes and condos.</p>
             </div>
             <div class="bg-white rounded-lg p-4 border border-warm-dark">
               <h4 class="font-bold text-primary text-sm">Classic Traditional</h4>
-              <p class="text-text-light text-xs mt-1">Detailed millwork, raised-panel cabinets, crown molding, and elegant fixtures. A timeless look for Plano's established neighborhoods.</p>
+              <p class="text-text-light text-xs mt-1">Detailed millwork, raised-panel cabinets, crown molding, and elegant fixtures. A timeless look for established {config.city} neighborhoods.</p>
             </div>
           </div>
         </div>
@@ -309,59 +263,51 @@ const processSteps = [
   <section class="py-16 lg:py-20 bg-warm">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl mx-auto text-center mb-12">
-        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">Kitchen Remodeling Considerations for Plano Homes</h2>
-        <p class="text-text-light text-lg">Every Plano neighborhood has its own character. Here is what we consider when remodeling kitchens across the area.</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">{serviceCopy.localHeading}</h2>
+        <p class="text-text-light text-lg">{serviceCopy.localIntro}</p>
       </div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="bg-white rounded-xl p-6 border border-warm-dark">
-          <h3 class="font-bold text-primary mb-2">Older Plano Neighborhoods</h3>
-          <p class="text-text-light text-sm leading-relaxed">Homes in East Plano, Historic Downtown, and areas near Parker Road often have smaller footprints and unique structural considerations. We specialize in maximizing every square foot while preserving the charm of these established homes. <a href="/service-areas/" class="text-accent hover:text-accent-light underline">See all areas we serve</a>.</p>
-        </div>
-        <div class="bg-white rounded-xl p-6 border border-warm-dark">
-          <h3 class="font-bold text-primary mb-2">West Plano & Newer Homes</h3>
-          <p class="text-text-light text-sm leading-relaxed">Newer developments in West Plano, Legacy, and Whiffletree often have open floor plans that benefit from large islands, butler pantries, and premium appliance packages. We design kitchens that match the scale and style of these modern homes. <a href="/cost-guides/" class="text-accent hover:text-accent-light underline">See our kitchen remodel cost guide</a> for typical pricing in these neighborhoods.</p>
-        </div>
-        <div class="bg-white rounded-xl p-6 border border-warm-dark">
-          <h3 class="font-bold text-primary mb-2">Townhomes & Condos</h3>
-          <p class="text-text-light text-sm leading-relaxed">Plano has growing townhome and condo communities. We understand HOA guidelines and work within compact footprints to deliver kitchens that feel spacious and function beautifully.</p>
-        </div>
-        <div class="bg-white rounded-xl p-6 border border-warm-dark">
-          <h3 class="font-bold text-primary mb-2">Timeline & Scheduling</h3>
-          <p class="text-text-light text-sm leading-relaxed">Most Plano kitchen remodels run 6–10 weeks. City of Plano permits add 1–2 weeks up front, custom cabinet fabrication takes 4–6 weeks, and some appliance models ship on backorder — so we lock in selections early. Most clients stay home with a temporary kitchen setup, and we schedule around your routine.</p>
-        </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {serviceCopy.localItems.map((item) => (
+          <div class="bg-white rounded-xl p-6 border border-warm-dark">
+            <h3 class="font-bold text-primary mb-2">{item.title}</h3>
+            <p class="text-text-light text-sm leading-relaxed">{item.text}</p>
+          </div>
+        ))}
       </div>
+      <p class="text-center mt-8 text-sm text-text-light">
+        <a href={localPath} class="text-accent hover:text-accent-light font-semibold underline">{config.city} kitchen remodeling by neighborhood →</a>
+        {' · '}
+        <a href="/cost-guides/" class="text-accent hover:text-accent-light font-semibold underline">Kitchen cost guide →</a>
+      </p>
     </div>
   </section>
 
   <TrustSignals />
 
+  <Testimonials
+    items={kitchenTestimonials}
+    heading="Kitchen Remodel Reviews"
+    subtitle={SHARED.testimonialDisclaimer}
+    bg="warm"
+  />
+
   <section class="py-16 lg:py-20 bg-white">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-2 gap-12">
         <div>
-          <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Frequently Asked Questions About Kitchen Remodeling in Plano</h2>
+          <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">{serviceCopy.faqHeading}</h2>
           <div class="space-y-4">
-            <div class="bg-warm rounded-xl p-5 border border-warm-dark">
-              <h3 class="font-bold text-primary text-sm mb-2">Do I need to move out during my kitchen remodel?</h3>
-              <p class="text-text-light text-sm leading-relaxed">Not necessarily. Many of our Plano clients stay in their homes during the remodel. We set up a temporary kitchen area and work efficiently to minimize disruption. For full gut renovations, some homeowners choose to stay with family during the most intensive 1–2 weeks.</p>
-            </div>
-            <div class="bg-warm rounded-xl p-5 border border-warm-dark">
-              <h3 class="font-bold text-primary text-sm mb-2">What is the best countertop material for Plano homes?</h3>
-              <p class="text-text-light text-sm leading-relaxed">Quartz is the most popular choice among Plano homeowners for its durability, low maintenance, and consistent appearance. Granite remains a strong option for those who prefer natural stone. We help you evaluate factors like heat resistance, staining, and maintenance to find the right fit.</p>
-            </div>
-            <div class="bg-warm rounded-xl p-5 border border-warm-dark">
-              <h3 class="font-bold text-primary text-sm mb-2">How much value does a kitchen remodel add to a Plano home?</h3>
-              <p class="text-text-light text-sm leading-relaxed">A well-executed kitchen remodel typically recovers 60–80% of its cost in home value. In Plano's competitive real estate market, an updated kitchen can be the deciding factor for buyers and significantly reduce time on market.</p>
-            </div>
-            <div class="bg-warm rounded-xl p-5 border border-warm-dark">
-              <h3 class="font-bold text-primary text-sm mb-2">When should I start planning my kitchen remodel?</h3>
-              <p class="text-text-light text-sm leading-relaxed">We recommend starting the planning process 6–8 weeks before your desired construction start date. This allows time for design, material selection, permitting, and scheduling. The most popular times for kitchen remodels in Plano are late winter and early fall.</p>
-            </div>
+            {serviceCopy.faqs.map((faq) => (
+              <div class="bg-warm rounded-xl p-5 border border-warm-dark">
+                <h3 class="font-bold text-primary text-sm mb-2">{faq.q}</h3>
+                <p class="text-text-light text-sm leading-relaxed" set:html={faq.a} />
+              </div>
+            ))}
           </div>
         </div>
         <div class="bg-primary rounded-2xl p-8 lg:p-10 text-white">
           <h3 class="text-xl font-bold mb-4">Ready to Start Your Kitchen Remodel?</h3>
-          <p class="text-white/80 text-sm leading-relaxed mb-6">Take the first step toward the kitchen you have been dreaming of. Our team is ready to answer your questions and provide a free, no-obligation estimate for your Plano home.</p>
+          <p class="text-white/80 text-sm leading-relaxed mb-6">Take the first step toward the kitchen you have been dreaming of. Our team is ready to answer your questions and provide a free, no-obligation estimate for your {config.city} home.</p>
           <ul class="space-y-3 mb-8">
             <li class="flex items-center gap-3 text-sm text-white/80">
               <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -383,8 +329,8 @@ const processSteps = [
           <a href="/contact/" class="block w-full bg-accent hover:bg-accent-light text-white font-semibold text-center px-6 py-3.5 rounded-lg transition-colors">
             Get Your Free Kitchen Estimate
           </a>
-          <a href="tel:+12144495922" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
-            Or call (214) 449-5922
+          <a href={`tel:${SHARED.phoneTel}`} class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
+            Or call {SHARED.phoneDisplay}
           </a>
         </div>
       </div>
@@ -398,10 +344,10 @@ const processSteps = [
         Explore our <a href="/bathroom-remodeling/" class="text-accent hover:text-accent-light underline">bathroom remodeling</a> services or check out our <a href="/cost-guides/" class="text-accent hover:text-accent-light underline">cost guides</a> to learn more about what to expect.
       </p>
       <p class="text-text-light text-sm mt-2">
-        Planning a project specifically in Plano? See <a href="/plano-kitchen-remodeling/" class="text-accent hover:text-accent-light underline">Plano kitchen remodeling</a> for neighborhood-by-neighborhood guidance.
+        Planning a project specifically in {config.city}? See <a href={localPath} class="text-accent hover:text-accent-light underline">{config.city} kitchen remodeling</a> for neighborhood-by-neighborhood guidance.
       </p>
       <p class="text-text-light text-sm mt-3">
-        <strong class="text-primary">Keep reading:</strong> <a href="/blog/how-long-does-a-kitchen-remodel-take-plano/" class="text-accent hover:text-accent-light underline">kitchen remodel timelines in Plano</a> &middot; <a href="/blog/quartz-vs-granite-countertops-plano-kitchens/" class="text-accent hover:text-accent-light underline">quartz vs. granite countertops</a> &middot; <a href="/blog/kitchen-remodel-permits-and-hoa-plano/" class="text-accent hover:text-accent-light underline">permits &amp; HOA approvals</a>
+        <strong class="text-primary">Keep reading:</strong> <a href="/blog/how-long-does-a-kitchen-remodel-take-plano/" class="text-accent hover:text-accent-light underline">kitchen remodel timelines</a> &middot; <a href="/blog/quartz-vs-granite-countertops-plano-kitchens/" class="text-accent hover:text-accent-light underline">quartz vs. granite countertops</a> &middot; <a href="/blog/kitchen-remodel-permits-and-hoa-plano/" class="text-accent hover:text-accent-light underline">permits &amp; HOA approvals</a>
       </p>
     </div>
   </section>

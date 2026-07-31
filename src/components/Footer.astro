@@ -1,5 +1,15 @@
 ---
+import {
+  getSiteConfig,
+  SHARED,
+  localKitchenPath,
+  localBathroomPath,
+} from '../data/site';
+
+const config = getSiteConfig();
 const currentYear = new Date().getFullYear();
+const kitchenLocal = localKitchenPath(config);
+const bathroomLocal = localBathroomPath(config);
 ---
 
 <footer class="bg-primary text-white">
@@ -7,11 +17,11 @@ const currentYear = new Date().getFullYear();
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
 
       <div>
-        <h3 class="font-bold text-lg mb-4">Plano Home Remodel & Design</h3>
+        <h3 class="font-bold text-lg mb-4">{config.brandName}</h3>
         <p class="text-white/70 text-sm leading-relaxed mb-4">
-          A Millwood Remodeling Company. Proudly serving Plano and the North Dallas area with premium kitchen and bathroom remodeling since 2009.
+          {config.brandTagline}. Proudly serving {config.city} and the surrounding area with premium kitchen and bathroom remodeling since {config.foundingDate}.
         </p>
-        <a href="https://millwoodremodeling.com" target="_blank" rel="noopener noreferrer" class="text-accent hover:text-accent-light text-sm transition-colors">
+        <a href={SHARED.parentCompany.url} target="_blank" rel="noopener noreferrer" class="text-accent hover:text-accent-light text-sm transition-colors">
           millwoodremodeling.com →
         </a>
       </div>
@@ -21,8 +31,8 @@ const currentYear = new Date().getFullYear();
         <ul class="space-y-2.5">
           <li><a href="/kitchen-remodeling/" class="text-white/70 hover:text-accent text-sm transition-colors">Kitchen Remodeling</a></li>
           <li><a href="/bathroom-remodeling/" class="text-white/70 hover:text-accent text-sm transition-colors">Bathroom Remodeling</a></li>
-          <li><a href="/plano-kitchen-remodeling/" class="text-white/70 hover:text-accent text-sm transition-colors">Plano Kitchen Remodeling</a></li>
-          <li><a href="/plano-bathroom-remodeling/" class="text-white/70 hover:text-accent text-sm transition-colors">Plano Bathroom Remodeling</a></li>
+          <li><a href={kitchenLocal} class="text-white/70 hover:text-accent text-sm transition-colors">{config.city} Kitchen Remodeling</a></li>
+          <li><a href={bathroomLocal} class="text-white/70 hover:text-accent text-sm transition-colors">{config.city} Bathroom Remodeling</a></li>
           <li><a href="/our-process/" class="text-white/70 hover:text-accent text-sm transition-colors">Our Process</a></li>
           <li><a href="/cost-guides/" class="text-white/70 hover:text-accent text-sm transition-colors">Cost Guides</a></li>
         </ul>
@@ -31,10 +41,10 @@ const currentYear = new Date().getFullYear();
       <div>
         <h3 class="font-semibold mb-4 text-sm uppercase tracking-wider text-white/60">Service Areas</h3>
         <ul class="space-y-2.5">
-          <li><a href="/service-areas/" class="text-white/70 hover:text-accent text-sm transition-colors">Plano, TX</a></li>
-          <li><a href="/service-areas/" class="text-white/70 hover:text-accent text-sm transition-colors">Frisco, TX</a></li>
-          <li><a href="/service-areas/" class="text-white/70 hover:text-accent text-sm transition-colors">Allen, TX</a></li>
-          <li><a href="/service-areas/" class="text-white/70 hover:text-accent text-sm transition-colors">Dallas, TX</a></li>
+          <li><a href="/service-areas/" class="text-white/70 hover:text-accent text-sm transition-colors">{config.city}, {config.state}</a></li>
+          {config.nearbyCities.slice(0, 4).map((name) => (
+            <li><a href="/service-areas/" class="text-white/70 hover:text-accent text-sm transition-colors">{name}, TX</a></li>
+          ))}
           <li><a href="/service-areas/" class="text-white/70 hover:text-accent text-sm transition-colors">+ Surrounding Areas</a></li>
         </ul>
       </div>
@@ -43,13 +53,13 @@ const currentYear = new Date().getFullYear();
         <h3 class="font-semibold mb-4 text-sm uppercase tracking-wider text-white/60">Contact</h3>
         <ul class="space-y-2.5 text-white/70 text-sm">
           <li>
-            <a href="tel:+12144495922" class="hover:text-accent transition-colors">(214) 449-5922</a>
+            <a href={`tel:${SHARED.phoneTel}`} class="hover:text-accent transition-colors">{SHARED.phoneDisplay}</a>
           </li>
           <li>
             <a href="/contact/" class="hover:text-accent transition-colors">Get a Free Quote</a>
           </li>
           <li>
-            <a href="mailto:info@planohomeremodel.com" class="hover:text-accent transition-colors">info@planohomeremodel.com</a>
+            <a href={`mailto:${config.email}`} class="hover:text-accent transition-colors">{config.email}</a>
           </li>
         </ul>
         <div class="mt-6">
@@ -62,7 +72,7 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <div class="mt-10 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/50">
-      <p>&copy; {currentYear} Plano Home Remodel & Design. All rights reserved. A Millwood Remodeling Company.</p>
+      <p>&copy; {currentYear} {config.brandName}. All rights reserved. {config.brandTagline}.</p>
       <div class="flex gap-6">
         <a href="/privacy-policy/" class="hover:text-accent transition-colors">Privacy Policy</a>
         <a href="/terms/" class="hover:text-accent transition-colors">Terms of Service</a>

@@ -1,15 +1,15 @@
 ---
-const areas = [
-  'Plano', 'Frisco', 'Allen', 'McKinney', 'Dallas', 'Richardson',
-  'Carrollton', 'Addison', 'The Colony', 'Little Elm', 'Murphy', 'Sachse',
-];
+import { getSiteConfig } from '../data/site';
+
+const config = getSiteConfig();
+const areas = [config.city, ...config.nearbyCities];
 ---
 
 <section class="py-16 lg:py-20 bg-warm">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">Proudly Serving Plano & the North Dallas Area</h2>
+    <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">Proudly Serving {config.city} & Nearby Communities</h2>
     <p class="text-text-light text-lg max-w-2xl mx-auto mb-10">
-      From the historic streets of Downtown Plano to the master-planned communities of West Plano — we bring our remodeling expertise to your neighborhood.
+      Kitchen and bathroom remodeling for {config.city} and surrounding North Dallas areas — with local knowledge of housing stock, permits, and neighborhood patterns.
     </p>
     <div class="flex flex-wrap justify-center gap-3">
       {areas.map((area) => (

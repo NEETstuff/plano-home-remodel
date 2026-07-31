@@ -1,11 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getSiteConfig, siteUrl, SHARED } from '../data/site';
+
+const config = getSiteConfig();
 ---
 
 <Layout
   title="Page Not Found"
-  description="We could not find the page you were looking for. Plano Home Remodel & Design is Plano's trusted kitchen and bathroom remodeling company. Call (214) 449-5922 or explore our services."
-  canonical="https://planohomeremodel.com/404/"
+  description={`We could not find the page you were looking for. ${config.brandName} is ${config.city}'s trusted kitchen and bathroom remodeling company. Call ${SHARED.phoneDisplay} or explore our services.`}
+  canonical={siteUrl('/404/', config)}
   brand=""
   noIndex
 >
@@ -22,8 +25,8 @@ import Layout from '../layouts/Layout.astro';
         <a href="/contact/" class="bg-accent hover:bg-accent-light text-white font-semibold px-8 py-3.5 rounded-lg text-base transition-colors shadow-lg shadow-accent/20">
           Schedule Free Consultation
         </a>
-        <a href="tel:+12144495922" class="font-semibold px-8 py-3.5 rounded-lg text-base transition-colors border-2 border-white text-white hover:bg-white hover:text-primary">
-          Call (214) 449-5922
+        <a href={`tel:${SHARED.phoneTel}`} class="font-semibold px-8 py-3.5 rounded-lg text-base transition-colors border-2 border-white text-white hover:bg-white hover:text-primary">
+          Call {SHARED.phoneDisplay}
         </a>
       </div>
     </div>
@@ -35,12 +38,12 @@ import Layout from '../layouts/Layout.astro';
       <div class="grid sm:grid-cols-2 gap-6">
         <a href="/kitchen-remodeling/" class="group block bg-warm rounded-xl p-6 border border-warm-dark hover:shadow-md hover:border-accent/30 transition-all">
           <h3 class="font-bold text-primary mb-2 group-hover:text-accent transition-colors">Kitchen Remodeling</h3>
-          <p class="text-text-light text-sm leading-relaxed">Custom cabinets, quartz countertops, islands, and open-concept designs for Plano and North Dallas homes.</p>
+          <p class="text-text-light text-sm leading-relaxed">Custom cabinets, quartz countertops, islands, and open-concept designs for {config.city} and North Dallas homes.</p>
           <span class="inline-flex items-center gap-1 text-accent font-semibold text-sm mt-4 transition-all">Learn More →</span>
         </a>
         <a href="/bathroom-remodeling/" class="group block bg-warm rounded-xl p-6 border border-warm-dark hover:shadow-md hover:border-accent/30 transition-all">
           <h3 class="font-bold text-primary mb-2 group-hover:text-accent transition-colors">Bathroom Remodeling</h3>
-          <p class="text-text-light text-sm leading-relaxed">Custom walk-in showers, double vanities, and spa-quality finishes built for Plano homes.</p>
+          <p class="text-text-light text-sm leading-relaxed">Custom walk-in showers, double vanities, and spa-quality finishes built for {config.city} homes.</p>
           <span class="inline-flex items-center gap-1 text-accent font-semibold text-sm mt-4 transition-all">Learn More →</span>
         </a>
       </div>

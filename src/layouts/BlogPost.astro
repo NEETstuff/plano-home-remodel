@@ -14,6 +14,7 @@
 //   </BlogPost>
 import Layout from './Layout.astro';
 import CTA from '../components/CTA.astro';
+import { getSiteConfig, siteUrl as absoluteUrl, SHARED } from '../data/site';
 
 export interface Props {
   title: string;
@@ -28,8 +29,8 @@ export interface Props {
 
 const { title, description, slug, datePublished, dateModified, category, relatedTitle, relatedHref } = Astro.props;
 
-const siteUrl = 'https://planohomeremodel.com';
-const canonical = `${siteUrl}/blog/${slug}/`;
+const config = getSiteConfig();
+const canonical = absoluteUrl(`/blog/${slug}/`, config);
 const modified = dateModified ?? datePublished;
 
 const articleSchema = {
@@ -40,8 +41,16 @@ const articleSchema = {
   description,
   datePublished,
   dateModified: modified,
-  author: { '@type': 'Organization', '@id': `${siteUrl}/#organization`, name: 'Millwood Remodeling' },
-  publisher: { '@type': 'Organization', '@id': `${siteUrl}/#organization`, name: 'Millwood Remodeling' },
+  author: {
+    '@type': 'Organization',
+    '@id': `${config.siteUrl}/#organization`,
+    name: SHARED.parentCompany.name,
+  },
+  publisher: {
+    '@type': 'Organization',
+    '@id': `${config.siteUrl}/#organization`,
+    name: SHARED.parentCompany.name,
+  },
   mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
   isPartOf: { '@type': 'WebPage', '@id': canonical },
   inLanguage: 'en-US',
@@ -81,7 +90,7 @@ const formattedDate = new Date(modified).toLocaleDateString('en-US', { year: 'nu
       <div>
         <p class="text-sm font-semibold text-primary">About the Author</p>
         <p class="text-text-light text-sm mt-1">
-          Written by the team at <a href="/about/" class="text-accent hover:text-accent-light underline">Plano Home Remodel &amp; Design</a> — a <a href="https://millwoodremodeling.com" target="_blank" rel="noopener noreferrer" class="text-accent hover:text-accent-light underline">Millwood Remodeling</a> company serving Plano and North Dallas since 2009.
+          Written by the team at <a href="/about/" class="text-accent hover:text-accent-light underline">{config.brandName}</a> — a <a href={SHARED.parentCompany.url} target="_blank" rel="noopener noreferrer" class="text-accent hover:text-accent-light underline">{SHARED.parentCompany.name}</a> company serving {config.city} and North Dallas since {config.foundingDate}.
         </p>
       </div>
       {relatedHref && relatedTitle && (

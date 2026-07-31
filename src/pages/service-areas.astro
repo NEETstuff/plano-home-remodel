@@ -2,240 +2,107 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import CTA from '../components/CTA.astro';
+import {
+  getSiteConfig,
+  siteUrl,
+  buildBusinessSchema,
+  buildBreadcrumbSchema,
+  localKitchenPath,
+  localBathroomPath,
+  SHARED,
+} from '../data/site';
 
-const areasSchema = {
-  "@context": "https://schema.org",
-  "@type": "HomeAndConstructionBusiness",
-  "@id": "https://planohomeremodel.com/",
-  name: "Plano Home Remodel & Design",
-  description: "Kitchen and bathroom remodeling services across Plano and North Dallas. A Millwood Remodeling Company.",
-  url: "https://planohomeremodel.com/",
-  telephone: "+12144495922",
-  areaServed: [
-    { "@type": "City", name: "Plano", sameAs: "https://en.wikipedia.org/wiki/Plano,_Texas" },
-    { "@type": "City", name: "Frisco", sameAs: "https://en.wikipedia.org/wiki/Frisco,_Texas" },
-    { "@type": "City", name: "Allen", sameAs: "https://en.wikipedia.org/wiki/Allen,_Texas" },
-    { "@type": "City", name: "McKinney", sameAs: "https://en.wikipedia.org/wiki/McKinney,_Texas" },
-    { "@type": "City", name: "Dallas", sameAs: "https://en.wikipedia.org/wiki/Dallas" },
-    { "@type": "City", name: "Richardson", sameAs: "https://en.wikipedia.org/wiki/Richardson,_Texas" },
-    { "@type": "City", name: "Carrollton", sameAs: "https://en.wikipedia.org/wiki/Carrollton,_Texas" },
-    { "@type": "City", name: "Addison", sameAs: "https://en.wikipedia.org/wiki/Addison,_Texas" },
-    { "@type": "City", name: "The Colony", sameAs: "https://en.wikipedia.org/wiki/The_Colony,_Texas" },
-    { "@type": "City", name: "Little Elm", sameAs: "https://en.wikipedia.org/wiki/Little_Elm,_Texas" },
-    { "@type": "City", name: "Murphy", sameAs: "https://en.wikipedia.org/wiki/Murphy,_Texas" },
-    { "@type": "City", name: "Sachse", sameAs: "https://en.wikipedia.org/wiki/Sachse,_Texas" },
-  ],
-  parentOrganization: {
-    "@type": "HomeAndConstructionBusiness",
-    name: "Millwood Remodeling",
-    url: "https://millwoodremodeling.com",
-  },
+const config = getSiteConfig();
+const kitchenLocal = localKitchenPath(config);
+const bathroomLocal = localBathroomPath(config);
+
+const areasSchema = buildBusinessSchema(config);
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'Service Areas', path: '/service-areas/' },
+]);
+
+/** Primary city card + nearby cities from config (truthful service area list) */
+const primary = {
+  name: config.city,
+  description: config.serviceAreas.intro.join(' '),
+  neighborhoods: config.neighborhoods.join(', '),
+  kitchenHref: kitchenLocal,
+  bathroomHref: bathroomLocal,
 };
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://planohomeremodel.com/" },
-    { "@type": "ListItem", position: 2, name: "Service Areas", item: "https://planohomeremodel.com/service-areas/" },
-  ],
-};
-
-const areas = [
-  {
-    name: 'Plano',
-    description: 'Our home base. We have remodeled kitchens and bathrooms across every part of Plano — from the historic downtown craftsman homes to the master-planned communities of West Plano, Legacy, and Whiffletree. We know Plano\'s building codes, architectural styles, and design preferences inside and out. See our dedicated <a href="/plano-kitchen-remodeling/" class="text-accent hover:text-accent-light underline">Plano kitchen remodeling</a> and <a href="/plano-bathroom-remodeling/" class="text-accent hover:text-accent-light underline">Plano bathroom remodeling</a> pages for the neighborhoods we serve.',
-    neighborhoods: 'Downtown, East Plano, West Plano, Legacy, Whiffletree, Willow Bend, Lakeside, Russell Creek',
-    highlight: 'opening up 1970s–90s galley kitchens, converting unused garden tubs to walk-in showers, and adding islands to West Plano\'s open floor plans. Most of our projects are within a short drive of our design studio.',
-  },
-  {
-    name: 'Frisco',
-    slug: 'frisco-kitchen-bathroom-remodeling',
-    description: 'One of the fastest-growing cities in North Texas, Frisco is full of newer homes that benefit from modern kitchen and bathroom designs. We help Frisco homeowners personalize their spaces with custom cabinetry, large islands, spa-like master baths, and thoughtful storage solutions.',
-    neighborhoods: 'Stonebriar, The Trails, Plantation, Phillips Creek Ranch, Starwood, Lawler Park',
-    highlight: 'large-island kitchens with butler pantries, spa-style master baths with curbless showers, and upgrading builder-standard finishes in neighborhoods like Stonebriar and Starwood.',
-  },
-  {
-    name: 'Allen',
-    slug: 'allen-kitchen-bathroom-remodeling',
-    description: 'Allen homeowners love the blend of established charm and new construction. Whether you are updating a 1990s master bath in Twin Creeks or designing a custom kitchen in the Villages of Allen, we bring the same attention to detail and quality craftsmanship.',
-    neighborhoods: 'Twin Creeks, Villages of Allen, Waterford, Timber Creek, Greenville Corridor',
-    highlight: 'refreshing 1990s–2000s kitchens with quartz tops and shaker cabinetry, dual-vanity master bath updates, and full modernizations that keep Allen\'s established neighborhoods looking timeless.',
-  },
-  {
-    name: 'McKinney',
-    slug: 'mckinney-kitchen-bathroom-remodeling',
-    description: 'From the Victorian homes in Historic Downtown McKinney to the new builds in Craig Ranch, McKinney offers a wide range of architectural styles. We specialize in kitchen and bathroom remodels that honor each home\'s character while bringing modern function and style.',
-    neighborhoods: 'Historic Downtown, Craig Ranch, Stonebridge, Adriatica, Eldorado Heights',
-    highlight: 'updating Historic Downtown Victorians, upgrading Craig Ranch new builds with custom cabinets, and bathroom renovations that suit Stonebridge\'s custom-home style.',
-  },
-  {
-    name: 'Dallas',
-    description: 'Serving North Dallas, Preston Hollow, and nearby neighborhoods with premium kitchen and bathroom remodeling. Dallas homes often feature unique architectural details that require thoughtful design and experienced craftsmanship.',
-    neighborhoods: 'Preston Hollow, Lake Highlands, North Dallas, Vickery Meadow, Bluffview',
-  },
-  {
-    name: 'Richardson',
-    description: 'Richardson\'s established neighborhoods are full of homes from the 1970s–1990s that are ripe for updates. We help Richardson homeowners reimagine their kitchens and bathrooms with modern layouts, updated finishes, and improved functionality.',
-    neighborhoods: 'Canyon Creek, Richardson Heights, Cottonwood, Spring Valley, Yale Station',
-  },
-  {
-    name: 'Carrollton',
-    description: 'Carrollton offers a mix of established neighborhoods and newer developments. From updating a post-war home near Downtown Carrollton to remodeling a modern kitchen in the Trinity Mills area, we tailor every project to the home and the homeowner.',
-    neighborhoods: 'Downtown Carrollton, Trinity Mills, Josey Ranch, Frankford, Crosby Estates',
-  },
-  {
-    name: 'Addison',
-    description: 'Addison is known for its vibrant restaurant scene and mix of condos, townhomes, and single-family homes. We work with Addison homeowners on kitchen and bathroom remodels that maximize space and style — often with open concepts and modern finishes.',
-    neighborhoods: 'Addison Circle, Midtown, Addison Hills, Country Place, Chaparral',
-  },
-  {
-    name: 'The Colony',
-    description: 'The Colony\'s lakeside location near Lake Lewisville creates a relaxed lifestyle. We remodel kitchens and bathrooms in homes across The Colony, with many projects focusing on open layouts, modern farmhouse styles, and durable materials that stand up to active families.',
-    neighborhoods: 'Creeks of The Colony, Austin Crossing, Lakeside, Stewart Peninsula',
-  },
-  {
-    name: 'Little Elm',
-    description: 'Little Elm has grown significantly in recent years, with many newer homes needing personalization. We help homeowners design kitchens and bathrooms that match their lifestyle — from chef\'s kitchens to spa-inspired master baths.',
-    neighborhoods: 'Union, Providence, Paloma Creek, Sunset Pointe, Oak Point',
-  },
-  {
-    name: 'Murphy',
-    description: 'Murphy\'s family-friendly neighborhoods feature many homes built in the 2000s that are ready for updates. We help Murphy homeowners bring their kitchens and bathrooms up to date with modern finishes, better layouts, and higher-quality materials.',
-    neighborhoods: 'Cedars of Murphy, Murphy Crossing, Timber Creek, Oak Hills, Waterford Crossing',
-  },
-  {
-    name: 'Sachse',
-    description: 'Sachse offers a small-town feel with big opportunities for remodeling. We work with Sachse homeowners on kitchen and bathroom projects that add both daily enjoyment and long-term value to their homes.',
-    neighborhoods: 'Sachse Crossing, Heritage Park, Country Bend, Park Ridge, Stonehaven',
-  },
-];
+const nearby = config.nearbyCities.map((name) => {
+  const sat = config.satelliteCities?.find((s) => s.name === name);
+  return {
+    name,
+    slug: sat?.slug,
+    description: sat
+      ? sat.intro[0]
+      : `Kitchen and bathroom remodeling in ${name}, TX — available when the project fits our full-remodel focus. Contact us to confirm fit and timing.`,
+    neighborhoods: sat?.neighborhoods || '',
+  };
+});
 ---
 
 <Layout
-  title="Remodeling Service Areas Plano, TX"
-  description="Proudly serving Plano, Frisco, Allen, McKinney, Dallas, Richardson, Carrollton, Addison, The Colony, and more. Local kitchen and bathroom remodeling backed by 15+ years of Millwood expertise."
-  canonical="https://planohomeremodel.com/service-areas/"
+  title={config.seo.serviceAreas.title}
+  description={config.seo.serviceAreas.description}
+  canonical={siteUrl('/service-areas/', config)}
   schema={[areasSchema, breadcrumbSchema]}
 >
 
   <Hero
-    title="Proudly Serving Plano & the North Dallas Area"
-    subtitle="We bring Millwood Remodeling's 15+ years of kitchen and bathroom expertise to homes across North Texas. Wherever you are in the area, we are ready to help."
+    title={config.serviceAreas.heroTitle}
+    subtitle={config.serviceAreas.heroSubtitle}
     ctaText="Get Your Free Quote"
     ctaHref="/contact/"
+    secondaryText={`Call ${SHARED.phoneDisplay}`}
+    secondaryHref={`tel:${SHARED.phoneTel}`}
   />
 
   <section class="py-16 lg:py-20 bg-white">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center mb-12">
-      <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">Where We Serve</h2>
-      <p class="text-text-light text-lg">
-        We are based in Plano and serve the entire North Dallas corridor. Whether you are in a historic neighborhood or a brand-new development, our team is ready to transform your kitchen or bathroom.
-      </p>
-    </div>
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 max-w-3xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">{config.serviceAreas.introHeading}</h2>
+        {config.serviceAreas.intro.map((p) => (
+          <p class="text-text-light text-lg leading-relaxed mb-4">{p}</p>
+        ))}
+      </div>
+
+      <div class="bg-warm rounded-2xl p-8 border border-warm-dark mb-10">
+        <h3 class="text-xl font-bold text-primary mb-2">{primary.name}, TX</h3>
+        <p class="text-text-light text-sm leading-relaxed mb-3">{primary.description}</p>
+        {primary.neighborhoods && (
+          <p class="text-xs text-text-light mb-4"><strong class="text-primary">Neighborhoods:</strong> {primary.neighborhoods}</p>
+        )}
+        <div class="flex flex-wrap gap-4 text-sm">
+          <a href={primary.kitchenHref} class="text-accent hover:text-accent-light font-semibold">{config.city} kitchen remodeling →</a>
+          <a href={primary.bathroomHref} class="text-accent hover:text-accent-light font-semibold">{config.city} bathroom remodeling →</a>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-bold text-primary mb-6">Nearby Communities</h3>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {areas.map((area) => (
-          <div class="bg-warm rounded-xl p-6 border border-warm-dark">
-            <h3 class="text-lg font-bold text-primary mb-2">
-              {area.slug ? (
-                <a href={`/${area.slug}/`} class="hover:text-accent transition-colors">{area.name}, TX</a>
-              ) : (
-                <>{area.name}, TX</>
-              )}
-            </h3>
+        {nearby.map((area) => (
+          <div class="bg-white rounded-xl p-6 border border-warm-dark">
+            <h4 class="font-bold text-primary mb-2">{area.name}, TX</h4>
             <p class="text-text-light text-sm leading-relaxed mb-3">{area.description}</p>
-            {
-              area.highlight && (
-                <div class="bg-white rounded-lg p-3 border border-warm-dark mb-3">
-                  <p class="text-xs text-text-light leading-relaxed">
-                    <span class="font-semibold text-primary">Popular projects:</span> {area.highlight}
-                  </p>
-                </div>
-              )
-            }
-            <details class="group">
-              <summary class="text-xs font-semibold text-accent cursor-pointer hover:text-accent-light transition-colors list-none flex items-center gap-1">
-                <span>Neighborhoods served</span>
-                <svg class="w-3 h-3 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-              </summary>
-              <p class="text-xs text-text-light mt-2">{area.neighborhoods}</p>
-            </details>
+            {area.neighborhoods && (
+              <p class="text-xs text-text-light mb-2"><strong class="text-primary">Areas:</strong> {area.neighborhoods}</p>
+            )}
+            {area.slug && (
+              <a href={`/${area.slug}/`} class="text-accent hover:text-accent-light text-sm font-semibold">Learn more →</a>
+            )}
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="py-16 lg:py-20 bg-warm">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Why Local Expertise Matters</h2>
-          <div class="space-y-4">
-            <div class="bg-white rounded-xl p-5 border border-warm-dark">
-              <h3 class="font-bold text-primary text-sm">We Know North Dallas Homes</h3>
-              <p class="text-text-light text-sm leading-relaxed mt-1">Every neighborhood has its own architectural style, building era, and HOA requirements. We have worked across all of them and know what works — and what does not — in each area.</p>
-            </div>
-            <div class="bg-white rounded-xl p-5 border border-warm-dark">
-              <h3 class="font-bold text-primary text-sm">Permitting & Code Expertise</h3>
-              <p class="text-text-light text-sm leading-relaxed mt-1">Plano, Frisco, Allen, McKinney, Dallas, and every city in between has its own permitting process and building codes. We handle all the paperwork so your remodel is compliant and stress-free. Learn about <a href="/our-process/" class="text-accent hover:text-accent-light underline">our remodeling process</a> and how we manage permitting for you.</p>
-            </div>
-            <div class="bg-white rounded-xl p-5 border border-warm-dark">
-              <h3 class="font-bold text-primary text-sm">Local Vendor Relationships</h3>
-              <p class="text-text-light text-sm leading-relaxed mt-1">Our years in the North Dallas market mean strong relationships with local suppliers, material yards, and trade partners. That translates to better pricing, faster lead times, and smoother project execution for you. <a href="/cost-guides/" class="text-accent hover:text-accent-light underline">Check our cost guides</a> to understand typical pricing in your area.</p>
-            </div>
-            <div class="bg-white rounded-xl p-5 border border-warm-dark">
-              <h3 class="font-bold text-primary text-sm">A Millwood Remodeling Company</h3>
-              <p class="text-text-light text-sm leading-relaxed mt-1">We bring the resources, reputation, and reliability of <a href="https://millwoodremodeling.com" target="_blank" rel="noopener noreferrer" class="text-accent hover:text-accent-light underline">Millwood Remodeling</a> to every project we take on. That means you get local attention backed by 15+ years of proven excellence across North Texas.</p>
-            </div>
-          </div>
-        </div>
-        <div class="bg-primary rounded-2xl p-8 lg:p-10 text-white">
-          <h3 class="text-xl font-bold mb-4">Wherever You Are, We Are Here to Help</h3>
-          <p class="text-white/80 text-sm leading-relaxed mb-6">If you do not see your exact neighborhood above, do not worry — we likely serve it. Plano Home Remodel & Design covers the entire North Dallas area. Call or click to find out if we serve your specific location.</p>
-          <ul class="space-y-3 mb-8">
-            <li class="flex items-center gap-3 text-sm text-white/80">
-              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              Free in-home consultation
-            </li>
-            <li class="flex items-center gap-3 text-sm text-white/80">
-              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              Kitchen & bathroom specialists
-            </li>
-            <li class="flex items-center gap-3 text-sm text-white/80">
-              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              In-house designer included
-            </li>
-            <li class="flex items-center gap-3 text-sm text-white/80">
-              <svg class="w-5 h-5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              2-year workmanship warranty
-            </li>
-          </ul>
-          <a href="/contact/" class="block w-full bg-accent hover:bg-accent-light text-white font-semibold text-center px-6 py-3.5 rounded-lg transition-colors">
-            Schedule Free Consultation
-          </a>
-          <a href="tel:+12144495922" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
-            Or call (214) 449-5922
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-12 bg-white border-t border-warm-dark">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-      <p class="text-text-light text-sm">
-        <strong class="text-primary">Not sure what you need?</strong><br />
-        Learn more about our <a href="/kitchen-remodeling/" class="text-accent hover:text-accent-light underline">kitchen remodeling</a> or <a href="/bathroom-remodeling/" class="text-accent hover:text-accent-light underline">bathroom remodeling</a> services, or read about <a href="/our-process/" class="text-accent hover:text-accent-light underline">our remodeling process</a> to understand what to expect.
-      </p>
-    </div>
-  </section>
-
   <CTA
-    title="Not Sure If We Serve Your Area?"
-    subtitle="Give us a call or send a message. We cover the entire North Dallas area and would love to discuss your project."
-    buttonText="Contact Us Today"
+    title={`Ready to Remodel in ${config.city}?`}
+    subtitle="Schedule a free in-home consultation. We will confirm scope, timeline, and a clear estimate."
+    buttonText="Get Your Free Quote"
     buttonHref="/contact/"
   />
 

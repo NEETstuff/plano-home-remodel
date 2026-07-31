@@ -3,81 +3,65 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import TrustSignals from '../components/TrustSignals.astro';
 import CTA from '../components/CTA.astro';
+import {
+  getSiteConfig,
+  siteUrl,
+  buildBusinessSchema,
+  buildBreadcrumbSchema,
+  SHARED,
+} from '../data/site';
+
+const config = getSiteConfig();
 
 const aboutSchema = {
-  "@context": "https://schema.org",
-  "@type": "HomeAndConstructionBusiness",
-  "@id": "https://planohomeremodel.com/",
-  name: "Plano Home Remodel & Design",
-  description: "A Millwood Remodeling Company — 15+ years of kitchen and bathroom remodeling expertise in Plano and North Dallas. In-house design, premium craftsmanship, 2-year warranty.",
-  url: "https://planohomeremodel.com/",
-  telephone: "+12144495922",
-  email: "info@planohomeremodel.com",
-  foundingDate: "2009",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Plano",
-    addressRegion: "TX",
-    addressCountry: "US",
-  },
+  ...buildBusinessSchema(config),
   founder: {
-    "@type": "Person",
-    name: "Graham Smith",
-    jobTitle: "Owner & Lead Designer",
-    knowsAbout: ["Kitchen Design", "Bathroom Design", "Home Remodeling", "Interior Design"],
+    '@type': 'Person',
+    name: 'Graham Smith',
+    jobTitle: 'Owner & Lead Designer',
+    knowsAbout: ['Kitchen Design', 'Bathroom Design', 'Home Remodeling', 'Interior Design'],
   },
-  parentOrganization: {
-    "@type": "HomeAndConstructionBusiness",
-    name: "Millwood Remodeling",
-    url: "https://millwoodremodeling.com",
-  },
-  sameAs: ["https://millwoodremodeling.com"],
-  knowsAbout: [
-    "Kitchen Remodeling", "Bathroom Remodeling", "Custom Cabinetry", "Countertop Installation",
-    "Tile Installation", "Home Renovation", "Interior Design", "Project Management",
-  ],
 };
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://planohomeremodel.com/" },
-    { "@type": "ListItem", position: 2, name: "About Us", item: "https://planohomeremodel.com/about/" },
-  ],
-};
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', path: '/' },
+  { name: 'About Us', path: '/about/' },
+]);
 
 const values = [
   {
     title: 'Quality Without Compromise',
-    description: 'We use premium materials, employ skilled craftsmen, and maintain rigorous quality standards on every project. There are no shortcuts in our process.',
+    description:
+      'We use premium materials, employ skilled craftsmen, and maintain rigorous quality standards on every project. There are no shortcuts in our process.',
   },
   {
     title: 'Transparency & Trust',
-    description: 'Clear communication, itemized pricing, and honest timelines. We believe informed clients make the best partners, and trust is the foundation of every successful remodel.',
+    description:
+      'Clear communication, itemized pricing, and honest timelines. We believe informed clients make the best partners, and trust is the foundation of every successful remodel.',
   },
   {
     title: 'Local Expertise, Local Pride',
-    description: 'We live and work in Plano. We know the neighborhoods, the building codes, and the unique character of North Dallas homes. This is our community, and we take pride in improving it one home at a time.',
+    description: `We live and work in the ${config.city} area. We know the neighborhoods, the building codes, and the unique character of North Dallas homes. This is our community, and we take pride in improving it one home at a time.`,
   },
   {
     title: 'Design-Led Approach',
-    description: 'Great remodels start with great design. Our in-house designer ensures every element works together — from cabinet layout to tile pattern to lighting placement — before construction begins.',
+    description:
+      'Great remodels start with great design. Our in-house designer ensures every element works together — from cabinet layout to tile pattern to lighting placement — before construction begins.',
   },
 ];
 ---
 
 <Layout
-  title="About Plano Home Remodel & Design"
-  description="Meet the team behind Plano's trusted kitchen and bathroom remodeling company. 15+ years experience, in-house designer, 2-year warranty. A Millwood Remodeling Company. Learn our story."
-  canonical="https://planohomeremodel.com/about/"
+  title={config.seo.about.title}
+  description={config.seo.about.description}
+  canonical={siteUrl('/about/', config)}
   brand=""
   schema={[aboutSchema, breadcrumbSchema]}
 >
 
   <Hero
-    title="About Plano Home Remodel & Design"
-    subtitle="We are a Millwood Remodeling Company — a team of experienced craftspeople, designers, and project managers dedicated to transforming homes in Plano and North Dallas."
+    title={config.about.heroTitle}
+    subtitle={config.about.heroSubtitle}
     ctaText="Get Your Free Quote"
     ctaHref="/contact/"
     secondaryText="View Our Services"
@@ -89,45 +73,45 @@ const values = [
       <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <div>
           <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Our Story: Built on Craftsmanship, Led by Design</h2>
+          {config.about.story.map((para) => (
+            <p class="text-text-light leading-relaxed mb-4">
+              {para.includes('Millwood Remodeling') ? (
+                <>
+                  {para.split('Millwood Remodeling')[0]}
+                  <a href={SHARED.parentCompany.url} target="_blank" rel="noopener noreferrer" class="text-accent hover:text-accent-light underline">Millwood Remodeling</a>
+                  {para.split('Millwood Remodeling').slice(1).join('Millwood Remodeling')}
+                </>
+              ) : (
+                para
+              )}
+            </p>
+          ))}
           <p class="text-text-light leading-relaxed mb-4">
-            Plano Home Remodel & Design was founded as the Plano-area practice of <a href="https://millwoodremodeling.com" target="_blank" rel="noopener noreferrer" class="text-accent hover:text-accent-light underline">Millwood Remodeling</a> — a company built on the belief that remodeling should be a rewarding experience, not a stressful one.
-          </p>
-          <p class="text-text-light leading-relaxed mb-4">
-            For over 15 years, we have been helping Plano homeowners transform their <a href="/kitchen-remodeling/" class="text-accent hover:text-accent-light underline">kitchens</a> and <a href="/bathroom-remodeling/" class="text-accent hover:text-accent-light underline">bathrooms</a> into spaces they love. What started as a small crew focused on quality craftsmanship has grown into a full-service remodeling company with an in-house design studio, dedicated project managers, and a reputation for excellence <a href="/service-areas/" class="text-accent hover:text-accent-light underline">across North Dallas</a>.
-          </p>
-          <p class="text-text-light leading-relaxed mb-4">
-            We remain proudly local. Every project we take on is personally overseen by our team, from the initial consultation to the final walkthrough. We do not subcontract to outside crews or disappear after the check clears. When you choose us, you choose a partner who is invested in your satisfaction.
-          </p>
-          <p class="text-text-light leading-relaxed">
-            Today, we are one of Plano's most trusted remodeling companies — and we believe that is because we have never lost sight of what matters most: doing exceptional work for exceptional people.
+            Explore our <a href="/kitchen-remodeling/" class="text-accent hover:text-accent-light underline">kitchen remodeling</a> and <a href="/bathroom-remodeling/" class="text-accent hover:text-accent-light underline">bathroom remodeling</a> services, or see <a href="/service-areas/" class="text-accent hover:text-accent-light underline">where we work</a>.
           </p>
         </div>
         <div class="bg-primary rounded-2xl p-8 lg:p-10 text-white">
-          <h3 class="text-xl font-bold mb-4">Our Promise to You</h3>
+          <h3 class="text-xl font-bold mb-6">At a Glance</h3>
           <ul class="space-y-4">
-            <li class="flex items-start gap-3 text-sm text-white/80">
+            <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span><strong class="text-white">15+ years</strong> of Plano remodeling experience</span>
+              <span><strong class="text-white">{SHARED.experienceClaim}</strong> of North Dallas remodeling experience</span>
             </li>
-            <li class="flex items-start gap-3 text-sm text-white/80">
+            <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span><strong class="text-white">In-house designer</strong> for seamless design-build</span>
+              <span><strong class="text-white">In-house designer</strong> on every project</span>
             </li>
-            <li class="flex items-start gap-3 text-sm text-white/80">
+            <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span><strong class="text-white">2-year workmanship warranty</strong> for peace of mind</span>
+              <span><strong class="text-white">{SHARED.warranty}</strong> on workmanship</span>
             </li>
-            <li class="flex items-start gap-3 text-sm text-white/80">
-              <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span><strong class="text-white">Licensed, insured, and bonded</strong> for your protection</span>
-            </li>
-            <li class="flex items-start gap-3 text-sm text-white/80">
+            <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
               <span><strong class="text-white">Millwood quality standards</strong> backed by a proven company</span>
             </li>
-            <li class="flex items-start gap-3 text-sm text-white/80">
+            <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span><strong class="text-white">Fully permitted, code-compliant</strong> projects in every city we serve</span>
+              <span><strong class="text-white">Full kitchen & bathroom focus</strong> — not powder-room-only jobs</span>
             </li>
           </ul>
         </div>
@@ -137,66 +121,19 @@ const values = [
 
   <section class="py-16 lg:py-20 bg-warm">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl mx-auto text-center mb-12">
+      <div class="text-center mb-12">
         <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">The Millwood Difference</h2>
-        <p class="text-text-light text-lg">
+        <p class="text-text-light text-lg max-w-2xl mx-auto">
           As part of the Millwood Remodeling family, we bring more than 15 years of institutional knowledge, <a href="/our-process/" class="text-accent hover:text-accent-light underline">proven processes</a>, and exceptional vendor relationships to every project.
         </p>
       </div>
-      <div class="grid sm:grid-cols-3 gap-6">
-        <div class="bg-white rounded-xl p-6 border border-warm-dark text-center">
-          <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-warm mb-4">
-            <svg class="w-7 h-7 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+      <div class="grid sm:grid-cols-2 gap-6">
+        {values.map((value) => (
+          <div class="bg-white rounded-xl p-6 border border-warm-dark">
+            <h3 class="font-bold text-primary mb-2">{value.title}</h3>
+            <p class="text-text-light text-sm leading-relaxed">{value.description}</p>
           </div>
-          <h3 class="font-bold text-primary mb-1">Established Systems</h3>
-          <p class="text-text-light text-sm leading-relaxed">Years of refined processes for design, project management, quality control, and client communication. We do not reinvent the wheel for every project — we improve it.</p>
-        </div>
-        <div class="bg-white rounded-xl p-6 border border-warm-dark text-center">
-          <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-warm mb-4">
-            <svg class="w-7 h-7 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-          </div>
-          <h3 class="font-bold text-primary mb-1">Skilled Team</h3>
-          <p class="text-text-light text-sm leading-relaxed">Our designers, project managers, and trade partners are the best in North Dallas. We invest in ongoing training and retain our team because great people do great work.</p>
-        </div>
-        <div class="bg-white rounded-xl p-6 border border-warm-dark text-center">
-          <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-warm mb-4">
-            <svg class="w-7 h-7 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          </div>
-          <h3 class="font-bold text-primary mb-1">Real Value</h3>
-          <p class="text-text-light text-sm leading-relaxed">Our vendor relationships mean better pricing on materials. Our efficient processes mean fewer days of disruption. Our quality work means fewer callbacks. The result: exceptional value for every dollar you invest.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-16 lg:py-20 bg-white">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Our Values</h2>
-          <div class="space-y-6">
-            {values.map((value) => (
-              <div>
-                <h3 class="font-bold text-primary mb-1">{value.title}</h3>
-                <p class="text-text-light text-sm leading-relaxed">{value.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div class="bg-warm rounded-2xl p-8 lg:p-10">
-          <h3 class="text-xl font-bold text-primary mb-4">Why Choose Plano Home Remodel & Design?</h3>
-          <p class="text-text-light text-sm leading-relaxed mb-6">When you work with us, you are not just hiring a contractor — you are partnering with a team that cares about your home as much as you do.</p>
-          <p class="text-text-light text-sm leading-relaxed mb-6">We take the time to understand how you live, what you value, and what you want your home to feel like. Then we bring our expertise, creativity, and craftsmanship to make it happen.</p>
-          <p class="text-text-light text-sm leading-relaxed">
-            And because we are a <a href="https://millwoodremodeling.com" target="_blank" rel="noopener noreferrer" class="text-accent hover:text-accent-light underline">Millwood Remodeling</a> company, you get the best of both worlds: the personalized attention of a local team and the resources, experience, and reliability of an established remodeling company with 15+ years in business.
-          </p>
-          <div class="mt-6">
-            <a href="/contact/" class="inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-white font-semibold px-6 py-3 rounded-lg text-sm transition-colors">
-              Start Your Project
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </a>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   </section>
@@ -204,9 +141,9 @@ const values = [
   <TrustSignals />
 
   <CTA
-    title="Let's Build Something Beautiful Together"
-    subtitle="Your dream kitchen or bathroom is just a conversation away. Reach out and let's make it happen."
-    buttonText="Schedule Free Consultation"
+    title="Ready to Work With Us?"
+    subtitle={`Schedule a free in-home consultation and see why ${config.city} homeowners choose ${config.brandShort}.`}
+    buttonText="Get Your Free Quote"
     buttonHref="/contact/"
   />
 

@@ -127,7 +127,7 @@ export const bathroomProjects: GalleryProject[] = [
 export const homeHighlights: GalleryProject[] = [
   {
     title: 'Kitchen Remodeling',
-    summary: 'Custom cabinetry, quartz countertops, backsplash, and lighting — the full scope of a Plano kitchen remodel.',
+    summary: 'Custom cabinetry, quartz countertops, backsplash, and lighting — the full scope of a custom kitchen remodel.',
     photos: [photo('kitchen', 1, 3, 5), photo('kitchen', 1, 4, 5)],
   },
   {

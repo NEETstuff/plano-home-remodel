@@ -1,4 +1,6 @@
 ---
+import { getSiteConfig, siteUrl } from '../data/site';
+
 export interface Props {
   title: string;
   description: string;
@@ -9,16 +11,13 @@ export interface Props {
   brand?: string;
 }
 
+const config = getSiteConfig();
 const { title, description, canonical, ogImage, ogType = 'website', noIndex = false, brand } = Astro.props;
-const siteName = 'Plano Home Remodel & Design';
-const titleBrand = brand ?? 'Plano Home Remodel';
+const siteName = config.brandName;
+const titleBrand = brand === '' ? '' : (brand ?? config.brandShort);
 const fullTitle = titleBrand ? `${title} | ${titleBrand}` : title;
-const pageCanonical = canonical || Astro.url.href;
-
-// Social sharing image: a real, branded 1200x630 image is committed at
-// /public/og-image.jpg and used as the default. Pages can override it by
-// passing ogImage="https://planohomeremodel.com/your-image.jpg".
-const pageOgImage = ogImage ?? 'https://planohomeremodel.com/og-image.jpg';
+const pageCanonical = canonical || siteUrl(Astro.url.pathname, config);
+const pageOgImage = ogImage ?? siteUrl('/og-image.jpg', config);
 ---
 
 <title>{fullTitle}</title>

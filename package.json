@@ -8,6 +8,12 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:plano": "SITE_CITY=plano astro build",
+    "build:frisco": "SITE_CITY=frisco astro build",
+    "build:richardson": "SITE_CITY=richardson astro build",
+    "build:grapevine": "SITE_CITY=grapevine astro build",
+    "build:southlake": "SITE_CITY=southlake astro build",
+    "build:highlandpark": "SITE_CITY=highlandpark astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
