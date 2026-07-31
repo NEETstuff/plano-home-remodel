@@ -1,11 +1,29 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://planohomeremodel.com/privacy-policy/",
+    name: "Privacy Policy | Plano Home Remodel & Design",
+    description: "Privacy policy for Plano Home Remodel & Design. Learn how we collect, use, and protect your personal information.",
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://planohomeremodel.com/" },
+        { "@type": "ListItem", position: 2, name: "Privacy Policy", item: "https://planohomeremodel.com/privacy-policy/" },
+      ],
+    },
+  },
+];
 ---
 
 <Layout
-  title="Privacy Policy – Plano Home Remodel & Design"
-  description="Privacy policy for Plano Home Remodel & Design. Learn how we collect, use, and protect your personal information."
+  title="Privacy Policy"
+  description="Privacy policy for Plano Home Remodel & Design. Learn how we collect, use, and protect your personal information when you visit our website."
   canonical="https://planohomeremodel.com/privacy-policy/"
+  schema={schema}
   noIndex={false}
 >
 
@@ -53,8 +71,9 @@ import Layout from '../layouts/Layout.astro';
         <h2 class="text-lg font-bold text-primary">Data Security</h2>
         <p>We implement reasonable security measures to protect your personal information. However, no method of transmission over the Internet is 100% secure, and we cannot guarantee absolute security.</p>
 
-        <h2 class="text-lg font-bold text-primary">Cookies</h2>
+        <h2 class="text-lg font-bold text-primary">Cookies & Analytics</h2>
         <p>Our website may use cookies and similar tracking technologies to enhance your browsing experience. You can control cookie settings through your browser preferences.</p>
+        <p>We use Google Analytics to understand how visitors use our website. Google Analytics collects information such as pages visited, approximate location, device, and browser type. It does not collect your name, email address, or phone number, and you can opt out using Google's Analytics opt-out browser add-on.</p>
 
         <h2 class="text-lg font-bold text-primary">Third-Party Links</h2>
         <p>Our website may contain links to third-party websites, including <a href="https://millwoodremodeling.com" target="_blank" rel="noopener noreferrer" class="text-accent hover:text-accent-light underline">millwoodremodeling.com</a>. We are not responsible for the privacy practices of these websites.</p>
@@ -74,7 +93,7 @@ import Layout from '../layouts/Layout.astro';
         <h2 class="text-lg font-bold text-primary">Contact Us</h2>
         <p>If you have questions about this Privacy Policy, please contact us:</p>
         <ul class="list-disc pl-5 space-y-1">
-          <li>Phone: <a href="tel:+14695062339" class="text-accent hover:text-accent-light underline">(469) 506-2339</a></li>
+          <li>Phone: <a href="tel:+12144495922" class="text-accent hover:text-accent-light underline">(214) 449-5922</a></li>
           <li>Email: <a href="mailto:info@planohomeremodel.com" class="text-accent hover:text-accent-light underline">info@planohomeremodel.com</a></li>
         </ul>
 

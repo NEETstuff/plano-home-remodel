@@ -3,18 +3,20 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import TrustSignals from '../components/TrustSignals.astro';
 import CTA from '../components/CTA.astro';
+import ProjectGallery from '../components/ProjectGallery.astro';
+import { bathroomProjects } from '../assets/projects/gallery';
 
 const serviceSchema = {
   "@context": "https://schema.org",
-  "@type": ["Service", "Product"],
+  "@type": "Service",
   name: "Bathroom Remodeling in Plano, TX",
   description: "Professional bathroom remodeling services in Plano and North Dallas. Custom showers, double vanities, soaking tubs, and accessibility upgrades by Millwood Remodeling.",
   provider: {
     "@type": "HomeAndConstructionBusiness",
-    "@id": "https://planohomeremodel.com",
+    "@id": "https://planohomeremodel.com/",
     name: "Plano Home Remodel & Design",
-    url: "https://planohomeremodel.com",
-    telephone: "+14695062339",
+    url: "https://planohomeremodel.com/",
+    telephone: "+12144495922",
     areaServed: [
       { "@type": "City", name: "Plano" },
       { "@type": "City", name: "Frisco" },
@@ -35,18 +37,17 @@ const serviceSchema = {
     { "@type": "City", name: "McKinney", sameAs: "https://en.wikipedia.org/wiki/McKinney,_Texas" },
     { "@type": "City", name: "Richardson", sameAs: "https://en.wikipedia.org/wiki/Richardson,_Texas" },
   ],
-  offers: {
-    "@type": "Offer",
-    priceRange: "$10,000 – $35,000+",
-    priceCurrency: "USD",
-    availability: "https://schema.org/InStock",
-  },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "127",
-    bestRating: "5",
-  },
+  priceRange: "$10,000 – $35,000+",
+  priceCurrency: "USD",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://planohomeremodel.com/" },
+    { "@type": "ListItem", position: 2, name: "Bathroom Remodeling", item: "https://planohomeremodel.com/bathroom-remodeling/" },
+  ],
 };
 
 const faqSchema = {
@@ -169,10 +170,10 @@ const processSteps = [
 ---
 
 <Layout
-  title="Bathroom Remodeling Plano, TX – Custom Bathroom Remodels"
-  description="Expert Plano bathroom remodeling. Custom walk-in showers, double vanities, soaking tubs, and accessibility upgrades. 15+ years experience, in-house designer, 2-year warranty. A Millwood Remodeling Company."
+  title="Bathroom Remodeling Plano, TX"
+  description="Expert bathroom remodeling in Plano and North Dallas. Custom walk-in showers, double vanities, soaking tubs, and spa-quality finishes. 15+ years, in-house designer, 2-year warranty. Free estimate."
   canonical="https://planohomeremodel.com/bathroom-remodeling/"
-  schema={[serviceSchema, faqSchema]}
+  schema={[serviceSchema, breadcrumbSchema, faqSchema]}
 >
 
   <Hero
@@ -232,6 +233,18 @@ const processSteps = [
   </section>
 
   <section class="py-16 lg:py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">Plano Bathroom Remodeling Projects</h2>
+        <p class="text-text-light text-lg max-w-2xl mx-auto">From spa-like master retreats to stylish powder rooms, our bathroom remodels are designed for lasting beauty and function.</p>
+      </div>
+      <div class="mb-12">
+        <ProjectGallery projects={bathroomProjects} columns={3} />
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-warm">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
@@ -299,18 +312,22 @@ const processSteps = [
         <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">Bathroom Remodeling Considerations for Plano Homes</h2>
         <p class="text-text-light text-lg">From older master baths to new construction, we tailor every remodel to your Plano home's unique needs.</p>
       </div>
-      <div class="grid sm:grid-cols-3 gap-6">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="bg-white rounded-xl p-6 border border-warm-dark">
           <h3 class="font-bold text-primary mb-2">Older Plano Master Baths</h3>
-          <p class="text-text-light text-sm leading-relaxed">Many Plano homes built in the 1980s–2000s have large master bathrooms with garden tubs that go unused. We convert these into spacious walk-in showers with bench seating and built-in storage, giving you a bathroom you will actually use every day.</p>
+          <p class="text-text-light text-sm leading-relaxed">Many Plano homes built in the 1980s–2000s have large master bathrooms with garden tubs that go unused. We convert these into spacious walk-in showers with bench seating and built-in storage, giving you a bathroom you will actually use every day. <a href="/cost-guides/" class="text-accent hover:text-accent-light underline">See our bathroom remodel cost guide</a> for pricing on master bath conversions.</p>
         </div>
         <div class="bg-white rounded-xl p-6 border border-warm-dark">
           <h3 class="font-bold text-primary mb-2">Powder Rooms & Guest Baths</h3>
-          <p class="text-text-light text-sm leading-relaxed">Small bathrooms make a big impression. We maximize every inch with pedestal sinks, wall-mounted vanities, space-saving toilets, and statement mirrors. A quick powder room update can be completed in 1–2 weeks.</p>
+          <p class="text-text-light text-sm leading-relaxed">Small bathrooms make a big impression. We maximize every inch with pedestal sinks, wall-mounted vanities, space-saving toilets, and statement mirrors. A quick powder room update can be completed in 1–2 weeks. <a href="/our-process/" class="text-accent hover:text-accent-light underline">See our remodeling process</a> for what to expect.</p>
         </div>
         <div class="bg-white rounded-xl p-6 border border-warm-dark">
           <h3 class="font-bold text-primary mb-2">Water & Moisture Management</h3>
-          <p class="text-text-light text-sm leading-relaxed">North Texas humidity and hard water present challenges. We specify moisture-resistant materials, proper ventilation, water softening connections, and waterproofing systems that keep your bathroom beautiful and damage-free for years.</p>
+          <p class="text-text-light text-sm leading-relaxed">North Texas humidity and hard water present challenges. We specify moisture-resistant materials, proper ventilation, water softening connections, and waterproofing systems that keep your bathroom beautiful and damage-free for years. <a href="/service-areas/" class="text-accent hover:text-accent-light underline">We serve Plano and all of North Dallas</a>.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 border border-warm-dark">
+          <h3 class="font-bold text-primary mb-2">Timeline & Scheduling</h3>
+          <p class="text-text-light text-sm leading-relaxed">Bathroom remodels in Plano typically take 3–5 weeks. Special-order tile and plumbing fixtures can add lead time, so we confirm selections before demolition begins. If you only have one full bath, we stage the work in phases so your family stays comfortable throughout.</p>
         </div>
       </div>
     </div>
@@ -366,8 +383,8 @@ const processSteps = [
           <a href="/contact/" class="block w-full bg-accent hover:bg-accent-light text-white font-semibold text-center px-6 py-3.5 rounded-lg transition-colors">
             Get Your Free Bathroom Estimate
           </a>
-          <a href="tel:+14695062339" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
-            Or call (469) 506-2339
+          <a href="tel:+12144495922" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
+            Or call (214) 449-5922
           </a>
         </div>
       </div>

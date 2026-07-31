@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+import type { GalleryProject } from '../assets/projects/gallery';
+import { getProjectPhoto } from '../assets/projects/gallery';
+
+export interface Props {
+  projects: GalleryProject[];
+  columns?: 2 | 3 | 4;
+}
+
+const { projects, columns = 3 } = Astro.props;
+
+const gridClass =
+  columns === 2
+    ? 'sm:grid-cols-2'
+    : columns === 4
+      ? 'sm:grid-cols-2 lg:grid-cols-4'
+      : 'sm:grid-cols-2 lg:grid-cols-3';
+---
+
+<div class={`grid ${gridClass} gap-6`}>
+  {
+    projects.map((project) => {
+      const photo = getProjectPhoto(project.photo);
+      return (
+        <figure class="bg-warm rounded-xl overflow-hidden border border-warm-dark">
+          <!-- The expected photo file is: {project.photo} (.jpg/.jpeg/.png/.webp/.avif) in src/assets/projects/ -->
+          {
+            photo ? (
+              <Image
+                src={photo}
+                width={800}
+                height={600}
+                fit="cover"
+                widths={[400, 800, 1200]}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                alt={project.alt}
+                loading="lazy"
+              />
+            ) : (
+              <div class="aspect-[4/3] w-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center p-6">
+                <div class="text-center">
+                  <p class="text-accent font-semibold text-xs uppercase tracking-wider mb-2">Project Photo</p>
+                  <p class="text-white font-semibold text-sm leading-relaxed">{project.caption}</p>
+                  <p class="text-white/50 text-xs mt-2">Photo coming soon</p>
+                </div>
+              </div>
+            )
+          }
+          <figcaption class="p-4">
+            <p class="font-semibold text-primary text-sm">{project.caption}</p>
+          </figcaption>
+        </figure>
+      );
+    })
+  }
+</div>

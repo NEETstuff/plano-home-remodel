@@ -6,11 +6,11 @@ import CTA from '../components/CTA.astro';
 const areasSchema = {
   "@context": "https://schema.org",
   "@type": "HomeAndConstructionBusiness",
-  "@id": "https://planohomeremodel.com/service-areas/",
+  "@id": "https://planohomeremodel.com/",
   name: "Plano Home Remodel & Design",
   description: "Kitchen and bathroom remodeling services across Plano and North Dallas. A Millwood Remodeling Company.",
-  url: "https://planohomeremodel.com/service-areas/",
-  telephone: "+14695062339",
+  url: "https://planohomeremodel.com/",
+  telephone: "+12144495922",
   areaServed: [
     { "@type": "City", name: "Plano", sameAs: "https://en.wikipedia.org/wiki/Plano,_Texas" },
     { "@type": "City", name: "Frisco", sameAs: "https://en.wikipedia.org/wiki/Frisco,_Texas" },
@@ -32,26 +32,42 @@ const areasSchema = {
   },
 };
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://planohomeremodel.com/" },
+    { "@type": "ListItem", position: 2, name: "Service Areas", item: "https://planohomeremodel.com/service-areas/" },
+  ],
+};
+
 const areas = [
   {
     name: 'Plano',
     description: 'Our home base. We have remodeled kitchens and bathrooms across every part of Plano — from the historic downtown craftsman homes to the master-planned communities of West Plano, Legacy, and Whiffletree. We know Plano\'s building codes, architectural styles, and design preferences inside and out.',
     neighborhoods: 'Downtown, East Plano, West Plano, Legacy, Whiffletree, Willow Bend, Lakeside, Russell Creek',
+    highlight: 'opening up 1970s–90s galley kitchens, converting unused garden tubs to walk-in showers, and adding islands to West Plano\'s open floor plans. Most of our projects are within a short drive of our design studio.',
   },
   {
     name: 'Frisco',
+    slug: 'frisco-kitchen-bathroom-remodeling',
     description: 'One of the fastest-growing cities in North Texas, Frisco is full of newer homes that benefit from modern kitchen and bathroom designs. We help Frisco homeowners personalize their spaces with custom cabinetry, large islands, spa-like master baths, and thoughtful storage solutions.',
     neighborhoods: 'Stonebriar, The Trails, Plantation, Phillips Creek Ranch, Starwood, Lawler Park',
+    highlight: 'large-island kitchens with butler pantries, spa-style master baths with curbless showers, and upgrading builder-standard finishes in neighborhoods like Stonebriar and Starwood.',
   },
   {
     name: 'Allen',
+    slug: 'allen-kitchen-bathroom-remodeling',
     description: 'Allen homeowners love the blend of established charm and new construction. Whether you are updating a 1990s master bath in Twin Creeks or designing a custom kitchen in the Villages of Allen, we bring the same attention to detail and quality craftsmanship.',
     neighborhoods: 'Twin Creeks, Villages of Allen, Waterford, Timber Creek, Greenville Corridor',
+    highlight: 'refreshing 1990s–2000s kitchens with quartz tops and shaker cabinetry, dual-vanity master bath updates, and full modernizations that keep Allen\'s established neighborhoods looking timeless.',
   },
   {
     name: 'McKinney',
+    slug: 'mckinney-kitchen-bathroom-remodeling',
     description: 'From the Victorian homes in Historic Downtown McKinney to the new builds in Craig Ranch, McKinney offers a wide range of architectural styles. We specialize in kitchen and bathroom remodels that honor each home\'s character while bringing modern function and style.',
     neighborhoods: 'Historic Downtown, Craig Ranch, Stonebridge, Adriatica, Eldorado Heights',
+    highlight: 'updating Historic Downtown Victorians, upgrading Craig Ranch new builds with custom cabinets, and bathroom renovations that suit Stonebridge\'s custom-home style.',
   },
   {
     name: 'Dallas',
@@ -97,10 +113,10 @@ const areas = [
 ---
 
 <Layout
-  title="Kitchen & Bathroom Remodeling Service Areas – Plano & North Dallas"
-  description="Proudly serving Plano, Frisco, Allen, McKinney, Dallas, Richardson, Carrollton, Addison, and more. Local kitchen and bathroom remodeling backed by 15+ years of Millwood expertise."
+  title="Remodeling Service Areas Plano, TX"
+  description="Proudly serving Plano, Frisco, Allen, McKinney, Dallas, Richardson, Carrollton, Addison, The Colony, and more. Local kitchen and bathroom remodeling backed by 15+ years of Millwood expertise."
   canonical="https://planohomeremodel.com/service-areas/"
-  schema={[areasSchema]}
+  schema={[areasSchema, breadcrumbSchema]}
 >
 
   <Hero
@@ -121,8 +137,23 @@ const areas = [
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {areas.map((area) => (
           <div class="bg-warm rounded-xl p-6 border border-warm-dark">
-            <h3 class="text-lg font-bold text-primary mb-2">{area.name}, TX</h3>
+            <h3 class="text-lg font-bold text-primary mb-2">
+              {area.slug ? (
+                <a href={`/${area.slug}/`} class="hover:text-accent transition-colors">{area.name}, TX</a>
+              ) : (
+                <>{area.name}, TX</>
+              )}
+            </h3>
             <p class="text-text-light text-sm leading-relaxed mb-3">{area.description}</p>
+            {
+              area.highlight && (
+                <div class="bg-white rounded-lg p-3 border border-warm-dark mb-3">
+                  <p class="text-xs text-text-light leading-relaxed">
+                    <span class="font-semibold text-primary">Popular projects:</span> {area.highlight}
+                  </p>
+                </div>
+              )
+            }
             <details class="group">
               <summary class="text-xs font-semibold text-accent cursor-pointer hover:text-accent-light transition-colors list-none flex items-center gap-1">
                 <span>Neighborhoods served</span>
@@ -148,11 +179,11 @@ const areas = [
             </div>
             <div class="bg-white rounded-xl p-5 border border-warm-dark">
               <h3 class="font-bold text-primary text-sm">Permitting & Code Expertise</h3>
-              <p class="text-text-light text-sm leading-relaxed mt-1">Plano, Frisco, Allen, McKinney, Dallas, and every city in between has its own permitting process and building codes. We handle all the paperwork so your remodel is compliant and stress-free.</p>
+              <p class="text-text-light text-sm leading-relaxed mt-1">Plano, Frisco, Allen, McKinney, Dallas, and every city in between has its own permitting process and building codes. We handle all the paperwork so your remodel is compliant and stress-free. Learn about <a href="/our-process/" class="text-accent hover:text-accent-light underline">our remodeling process</a> and how we manage permitting for you.</p>
             </div>
             <div class="bg-white rounded-xl p-5 border border-warm-dark">
               <h3 class="font-bold text-primary text-sm">Local Vendor Relationships</h3>
-              <p class="text-text-light text-sm leading-relaxed mt-1">Our years in the North Dallas market mean strong relationships with local suppliers, material yards, and trade partners. That translates to better pricing, faster lead times, and smoother project execution for you.</p>
+              <p class="text-text-light text-sm leading-relaxed mt-1">Our years in the North Dallas market mean strong relationships with local suppliers, material yards, and trade partners. That translates to better pricing, faster lead times, and smoother project execution for you. <a href="/cost-guides/" class="text-accent hover:text-accent-light underline">Check our cost guides</a> to understand typical pricing in your area.</p>
             </div>
             <div class="bg-white rounded-xl p-5 border border-warm-dark">
               <h3 class="font-bold text-primary text-sm">A Millwood Remodeling Company</h3>
@@ -184,8 +215,8 @@ const areas = [
           <a href="/contact/" class="block w-full bg-accent hover:bg-accent-light text-white font-semibold text-center px-6 py-3.5 rounded-lg transition-colors">
             Schedule Free Consultation
           </a>
-          <a href="tel:+14695062339" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
-            Or call (469) 506-2339
+          <a href="tel:+12144495922" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
+            Or call (214) 449-5922
           </a>
         </div>
       </div>

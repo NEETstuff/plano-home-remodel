@@ -1,0 +1,59 @@
+---
+// ---------------------------------------------------------------------------
+// Google Analytics 4 (GA4) — privacy-conscious, ready to activate
+//
+// HOW TO ACTIVATE ANALYTICS (takes ~1 minute):
+//   1. Create a GA4 property at https://analytics.google.com
+//   2. Copy the Measurement ID (looks like G-AB12CD3456)
+//   3. Replace the placeholder on the next line with your real ID.
+//   4. Rebuild and deploy — nothing else needs to change.
+//
+// While the placeholder is in place, NO tracking code is loaded and no data
+// is sent to Google. This keeps the site privacy-safe before launch and
+// avoids reporting page views to a non-existent property.
+//
+// Included once activated:
+//   - Page views (default gtag 'config' behavior)
+//   - Click-to-call events on every "tel:" link site-wide
+//   - Form-submission events on the contact page (see contact.astro)
+// ---------------------------------------------------------------------------
+
+const GA4_ID = 'G-XXXXXXXXXX';
+const enabled = GA4_ID !== 'G-XXXXXXXXXX';
+---
+
+<!--
+  GA4 ACTIVATION: Replace the placeholder Measurement ID in the frontmatter of
+  src/components/Analytics.astro (line: const GA4_ID = 'G-XXXXXXXXXX') with
+  your real ID, then rebuild. Tracking is off until you do.
+-->
+{
+  enabled && (
+    <>
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
+      <script is:inline data-gid={GA4_ID}>
+        var gid = document.currentScript.getAttribute('data-gid');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', gid);
+      </script>
+      <script is:inline>
+        // Lightweight, non-blocking conversion tracking helper.
+        // Sends a "click_to_call" event for any <a href="tel:..."> link when
+        // gtag is loaded. No-ops safely otherwise.
+        document.addEventListener('click', function (e) {
+          var tel = e.target && e.target.closest ? e.target.closest('a[href^="tel:"]') : null;
+          if (tel && typeof window.gtag === 'function') {
+            window.gtag('event', 'click_to_call', {
+              phone_number: tel.getAttribute('href'),
+              transport_type: 'beacon',
+            });
+          }
+        });
+      </script>
+    </>
+  )
+}

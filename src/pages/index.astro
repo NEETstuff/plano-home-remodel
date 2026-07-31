@@ -6,16 +6,18 @@ import ServicesOverview from '../components/ServicesOverview.astro';
 import WhyChooseUs from '../components/WhyChooseUs.astro';
 import ServiceAreas from '../components/ServiceAreas.astro';
 import CTA from '../components/CTA.astro';
+import ProjectGallery from '../components/ProjectGallery.astro';
+import { homepageProjects } from '../assets/projects/gallery';
 
 const baseSchema = {
   "@context": "https://schema.org",
   "@type": "HomeAndConstructionBusiness",
-  "@id": "https://planohomeremodel.com",
+  "@id": "https://planohomeremodel.com/",
   name: "Plano Home Remodel & Design",
   alternateName: "Plano Home Remodel & Design – A Millwood Remodeling Company",
   description: "Plano, Texas kitchen and bathroom remodeling company. 15+ years experience, in-house designer, 2-year workmanship warranty. A Millwood Remodeling Company.",
-  url: "https://planohomeremodel.com",
-  telephone: "+14695062339",
+  url: "https://planohomeremodel.com/",
+  telephone: "+12144495922",
   email: "info@planohomeremodel.com",
   areaServed: [
     { "@type": "City", name: "Plano", sameAs: "https://en.wikipedia.org/wiki/Plano,_Texas" },
@@ -46,57 +48,12 @@ const baseSchema = {
       { "@type": "Offer", itemOffered: { "@type": "Service", name: "Bathroom Remodeling" } },
     ],
   },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "127",
-    bestRating: "5",
-  },
 };
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "How much does a kitchen remodel cost in Plano, TX?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Kitchen remodeling in Plano typically ranges from $25,000 to $75,000 depending on the scope and materials. We offer free in-home consultations to provide an accurate estimate for your specific project.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How long does a bathroom renovation take?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Most bathroom remodels take 3-5 weeks from start to finish. Our team provides a detailed timeline during the consultation phase so you know exactly what to expect.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Do you offer design services?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes! We have an in-house designer who works with you to create a custom design plan. This is included as part of our full-service remodeling process.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Are you licensed and insured?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes, we are fully licensed, insured, and bonded. We are a Millwood Remodeling company with 15+ years of experience serving Plano and the North Dallas area.",
-      },
-    },
-  ],
-};
-
-const schemas = [baseSchema, faqSchema];
+const schemas = [baseSchema];
 ---
 
-<Layout title="Plano Home Remodel & Design – Kitchen & Bathroom Remodeling" description="Plano's trusted kitchen and bathroom remodeling company. 15+ years experience, in-house designer, and 2-year warranty. A Millwood Remodeling Company. Get your free quote today." canonical="https://planohomeremodel.com/" schema={schemas}>
+<Layout title="Kitchen & Bathroom Remodeling Plano, TX" description="Plano's trusted kitchen and bathroom remodeling company since 2009. In-house designer, premium craftsmanship, 2-year warranty. A Millwood Remodeling Company. Get your free quote today." canonical="https://planohomeremodel.com/" brand="" schema={schemas}>
 
   <Hero
     variant="home"
@@ -107,6 +64,66 @@ const schemas = [baseSchema, faqSchema];
     secondaryText="View Our Work"
     secondaryHref="/kitchen-remodeling/"
   />
+
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">Kitchen & Bathroom Remodeling Built for Plano Homes</h2>
+        <p class="text-text-light text-lg max-w-3xl mx-auto">
+          Plano and North Dallas homes each have their own era, style, and quirks — and your remodel should be designed around them. Whether your kitchen has felt dated for a decade or your master bath&rsquo;s garden tub has never been used, we turn tired spaces into the rooms you actually live in.
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-6">
+        <div class="bg-warm rounded-xl p-6 border border-warm-dark">
+          <h3 class="font-bold text-primary mb-2">Reclaim the Heart of Your Home</h3>
+          <p class="text-text-light text-sm leading-relaxed mb-4">
+            Many Plano homes built in the 1970s through 2000s still have their original kitchens — galley layouts, old laminate, and dated lighting. We rework them around how families actually cook, gather, and entertain today.
+          </p>
+          <a href="/kitchen-remodeling/" class="inline-flex items-center gap-1 text-accent hover:text-accent-light text-sm font-semibold transition-colors">
+            Explore Kitchen Remodeling →
+          </a>
+        </div>
+        <div class="bg-warm rounded-xl p-6 border border-warm-dark">
+          <h3 class="font-bold text-primary mb-2">Turn Unused Space Into Daily Luxury</h3>
+          <p class="text-text-light text-sm leading-relaxed mb-4">
+            That never-used garden tub, the cramped powder room, the shower you tolerate — a curbless walk-in shower or a redesigned vanity can change how you start and end every day.
+          </p>
+          <a href="/bathroom-remodeling/" class="inline-flex items-center gap-1 text-accent hover:text-accent-light text-sm font-semibold transition-colors">
+            Explore Bathroom Remodeling →
+          </a>
+        </div>
+        <div class="bg-warm rounded-xl p-6 border border-warm-dark">
+          <h3 class="font-bold text-primary mb-2">A Local Team That Stands Behind the Work</h3>
+          <p class="text-text-light text-sm leading-relaxed mb-4">
+            As a Millwood Remodeling company, we have served North Dallas for 15+ years with an in-house designer, transparent pricing, and a 2-year workmanship warranty on every project.
+          </p>
+          <a href="/contact/" class="inline-flex items-center gap-1 text-accent hover:text-accent-light text-sm font-semibold transition-colors">
+            Get Your Free Quote →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-warm">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">Our Recent Work in Plano & North Dallas</h2>
+        <p class="text-text-light text-lg max-w-2xl mx-auto">From custom kitchens to spa-like bathrooms, see how we transform North Texas homes.</p>
+      </div>
+      <ProjectGallery projects={homepageProjects} />
+      <div class="text-center mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/kitchen-remodeling/" class="inline-flex items-center gap-2 text-accent hover:text-accent-light font-semibold transition-colors">
+          View Our Kitchen & Bathroom Work
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+        <a href="/cost-guides/" class="inline-flex items-center gap-2 text-accent hover:text-accent-light font-semibold transition-colors">
+          See Kitchen & Bathroom Costs
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <TrustSignals />
 

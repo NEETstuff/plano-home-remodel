@@ -7,11 +7,11 @@ import CTA from '../components/CTA.astro';
 const aboutSchema = {
   "@context": "https://schema.org",
   "@type": "HomeAndConstructionBusiness",
-  "@id": "https://planohomeremodel.com/about/",
+  "@id": "https://planohomeremodel.com/",
   name: "Plano Home Remodel & Design",
   description: "A Millwood Remodeling Company — 15+ years of kitchen and bathroom remodeling expertise in Plano and North Dallas. In-house design, premium craftsmanship, 2-year warranty.",
-  url: "https://planohomeremodel.com/about/",
-  telephone: "+14695062339",
+  url: "https://planohomeremodel.com/",
+  telephone: "+12144495922",
   email: "info@planohomeremodel.com",
   foundingDate: "2009",
   address: {
@@ -33,15 +33,18 @@ const aboutSchema = {
   },
   sameAs: ["https://millwoodremodeling.com"],
   award: ["Multiple Best of Houzz Awards", "Top Rated Remodeling Contractor – Plano"],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "127",
-    bestRating: "5",
-  },
   knowsAbout: [
     "Kitchen Remodeling", "Bathroom Remodeling", "Custom Cabinetry", "Countertop Installation",
     "Tile Installation", "Home Renovation", "Interior Design", "Project Management",
+  ],
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://planohomeremodel.com/" },
+    { "@type": "ListItem", position: 2, name: "About Us", item: "https://planohomeremodel.com/about/" },
   ],
 };
 
@@ -66,10 +69,11 @@ const values = [
 ---
 
 <Layout
-  title="About Plano Home Remodel & Design – A Millwood Remodeling Company"
-  description="Meet the team behind Plano's trusted kitchen and bathroom remodeling company. 15+ years experience, in-house designer, 2-year warranty. Learn why Plano homeowners choose us."
+  title="About Plano Home Remodel & Design"
+  description="Meet the team behind Plano's trusted kitchen and bathroom remodeling company. 15+ years experience, in-house designer, 2-year warranty. A Millwood Remodeling Company. Learn our story."
   canonical="https://planohomeremodel.com/about/"
-  schema={[aboutSchema]}
+  brand=""
+  schema={[aboutSchema, breadcrumbSchema]}
 >
 
   <Hero
@@ -90,7 +94,7 @@ const values = [
             Plano Home Remodel & Design was founded as the Plano-area practice of <a href="https://millwoodremodeling.com" target="_blank" rel="noopener noreferrer" class="text-accent hover:text-accent-light underline">Millwood Remodeling</a> — a company built on the belief that remodeling should be a rewarding experience, not a stressful one.
           </p>
           <p class="text-text-light leading-relaxed mb-4">
-            For over 15 years, we have been helping Plano homeowners transform their kitchens and bathrooms into spaces they love. What started as a small crew focused on quality craftsmanship has grown into a full-service remodeling company with an in-house design studio, dedicated project managers, and a reputation for excellence across North Dallas.
+            For over 15 years, we have been helping Plano homeowners transform their <a href="/kitchen-remodeling/" class="text-accent hover:text-accent-light underline">kitchens</a> and <a href="/bathroom-remodeling/" class="text-accent hover:text-accent-light underline">bathrooms</a> into spaces they love. What started as a small crew focused on quality craftsmanship has grown into a full-service remodeling company with an in-house design studio, dedicated project managers, and a reputation for excellence <a href="/service-areas/" class="text-accent hover:text-accent-light underline">across North Dallas</a>.
           </p>
           <p class="text-text-light leading-relaxed mb-4">
             We remain proudly local. Every project we take on is personally overseen by our team, from the initial consultation to the final walkthrough. We do not subcontract to outside crews or disappear after the check clears. When you choose us, you choose a partner who is invested in your satisfaction.
@@ -137,7 +141,7 @@ const values = [
       <div class="max-w-3xl mx-auto text-center mb-12">
         <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">The Millwood Difference</h2>
         <p class="text-text-light text-lg">
-          As part of the Millwood Remodeling family, we bring more than 15 years of institutional knowledge, proven processes, and exceptional vendor relationships to every project.
+          As part of the Millwood Remodeling family, we bring more than 15 years of institutional knowledge, <a href="/our-process/" class="text-accent hover:text-accent-light underline">proven processes</a>, and exceptional vendor relationships to every project.
         </p>
       </div>
       <div class="grid sm:grid-cols-3 gap-6">

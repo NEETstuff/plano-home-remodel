@@ -4,50 +4,20 @@ import Hero from '../components/Hero.astro';
 import TrustSignals from '../components/TrustSignals.astro';
 import CTA from '../components/CTA.astro';
 
-const faqSchema = {
+const pageSchema = {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "How much does a kitchen remodel cost in Plano, TX in 2026?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Most kitchen remodels in Plano range from $25,000 to $75,000+ depending on size and scope. A minor refresh with new countertops, hardware, and paint runs $8,000–$15,000. A mid-range remodel with semi-custom cabinets and quartz countertops is $25,000–$50,000. A full custom renovation with premium materials and layout changes starts at $50,000 and can exceed $100,000.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How much does a bathroom remodel cost in Plano, TX?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Bathroom remodel costs in Plano range from $6,000–$10,000 for a powder room update, $10,000–$20,000 for a guest bath, and $20,000–$40,000+ for a full master bathroom renovation. Key cost drivers include tile selection, shower size and complexity, vanity quality, and whether you are changing the layout.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "What is the biggest cost driver in a kitchen remodel?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Cabinetry is typically the largest expense in a kitchen remodel, accounting for 30–40% of the total budget. Countertops are the second-largest at 10–15%. Labor, appliances, flooring, lighting, plumbing fixtures, and backsplash make up the remainder. Choosing stock versus custom cabinetry and quartz versus marble can significantly affect your total cost.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Is financing available for kitchen and bathroom remodeling?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. Millwood Remodeling offers financing options through approved lenders to help you manage your project budget. We discuss financing during your free consultation and can help you find a plan that works for your situation. Ask about current rates and terms when you call.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How long does a kitchen or bathroom remodel take in Plano?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "A kitchen remodel typically takes 6–10 weeks, and a bathroom remodel takes 3–5 weeks. Timelines depend on the scope of work, material availability, and any unexpected structural issues. We provide a detailed timeline during the design phase and keep you updated throughout the project.",
-      },
-    },
+  "@type": "WebPage",
+  "@id": "https://planohomeremodel.com/cost-guides/",
+  name: "Remodeling Cost Guide Plano TX | Kitchen & Bathroom Prices 2026",
+  description: "Real kitchen and bathroom remodeling costs for Plano and North Dallas homes. See budget ranges, cost drivers, timelines, and financing options.",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://planohomeremodel.com/" },
+    { "@type": "ListItem", position: 2, name: "Cost Guides", item: "https://planohomeremodel.com/cost-guides/" },
   ],
 };
 
@@ -83,10 +53,10 @@ const bathroomCostDrivers = [
 ---
 
 <Layout
-  title="Kitchen & Bathroom Remodel Cost Guide – Plano, TX (2026)"
-  description="Realistic pricing for kitchen and bathroom remodeling in Plano and North Dallas. See cost ranges, what drives your budget, timelines, and financing options. Free consultation included."
+  title="Remodeling Cost Guide Plano, TX"
+  description="Real kitchen and bathroom remodeling costs for Plano and North Dallas homes. See budget ranges, cost drivers, timelines, and financing options. Free in-home estimate included."
   canonical="https://planohomeremodel.com/cost-guides/"
-  schema={[faqSchema]}
+  schema={[pageSchema, breadcrumbSchema]}
 >
 
   <Hero
@@ -183,15 +153,15 @@ const bathroomCostDrivers = [
           <div class="space-y-4">
             <div class="bg-white rounded-xl p-5 border border-warm-dark">
               <h3 class="font-bold text-primary text-sm">Keep Your Layout</h3>
-              <p class="text-text-light text-sm leading-relaxed mt-1">Keeping existing plumbing and electrical locations saves thousands. You can still achieve a stunning transformation with new cabinets, countertops, tile, and fixtures in the same footprint.</p>
+              <p class="text-text-light text-sm leading-relaxed mt-1">Keeping existing plumbing and electrical locations saves thousands. You can still achieve a stunning transformation with new cabinets, countertops, tile, and fixtures in the same footprint. <a href="/our-process/" class="text-accent hover:text-accent-light underline">Our step-by-step process</a> explains how we manage these projects.</p>
             </div>
             <div class="bg-white rounded-xl p-5 border border-warm-dark">
               <h3 class="font-bold text-primary text-sm">Phase Your Project</h3>
-              <p class="text-text-light text-sm leading-relaxed mt-1">If a full renovation is not in the budget right now, we can phase the work. Start with the most impactful changes — like countertops and backsplash — and tackle cabinets and flooring later.</p>
+              <p class="text-text-light text-sm leading-relaxed mt-1">If a full renovation is not in the budget right now, we can phase the work. Start with the most impactful changes — like countertops and backsplash — and tackle cabinets and flooring later. <a href="/contact/" class="text-accent hover:text-accent-light underline">Schedule a free consultation</a> to discuss a phased approach.</p>
             </div>
             <div class="bg-white rounded-xl p-5 border border-warm-dark">
               <h3 class="font-bold text-primary text-sm">Choose Value Materials</h3>
-              <p class="text-text-light text-sm leading-relaxed mt-1">Quartz offers marble-like beauty at a fraction of the cost. Luxury vinyl plank flooring delivers the look of hardwood with better water resistance. Semi-custom cabinets provide excellent quality without the custom price tag.</p>
+              <p class="text-text-light text-sm leading-relaxed mt-1">Quartz offers marble-like beauty at a fraction of the cost. Luxury vinyl plank flooring delivers the look of hardwood with better water resistance. Semi-custom cabinets provide excellent quality without the custom price tag. See our <a href="/kitchen-remodeling/" class="text-accent hover:text-accent-light underline">kitchen remodeling</a> and <a href="/bathroom-remodeling/" class="text-accent hover:text-accent-light underline">bathroom remodeling</a> pages for material options.</p>
             </div>
             <div class="bg-white rounded-xl p-5 border border-warm-dark">
               <h3 class="font-bold text-primary text-sm">Ask About Financing</h3>
@@ -223,8 +193,8 @@ const bathroomCostDrivers = [
           <a href="/contact/" class="block w-full bg-accent hover:bg-accent-light text-white font-semibold text-center px-6 py-3.5 rounded-lg transition-colors">
             Get Your Free Estimate
           </a>
-          <a href="tel:+14695062339" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
-            Or call (469) 506-2339
+          <a href="tel:+12144495922" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
+            Or call (214) 449-5922
           </a>
         </div>
       </div>
@@ -282,8 +252,8 @@ const bathroomCostDrivers = [
             <a href="/contact/" class="bg-accent hover:bg-accent-light text-white font-semibold px-6 py-3 rounded-lg text-sm text-center transition-colors">
               Schedule Free Consultation
             </a>
-            <a href="tel:+14695062339" class="border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold px-6 py-3 rounded-lg text-sm text-center transition-colors">
-              Call (469) 506-2339
+            <a href="tel:+12144495922" class="border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold px-6 py-3 rounded-lg text-sm text-center transition-colors">
+              Call (214) 449-5922
             </a>
           </div>
         </div>

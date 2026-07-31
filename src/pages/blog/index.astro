@@ -2,6 +2,9 @@
 import Layout from '../../layouts/Layout.astro';
 import CTA from '../../components/CTA.astro';
 
+// TO ADD A REAL ARTICLE: create it in src/pages/blog/ (e.g. slug.astro) and add
+// an entry below with its URL. The page stays noindex until real posts exist —
+// remove `noIndex` in the <Layout> above once the first article is published.
 const blogPosts = [
   {
     title: 'How Much Does a Kitchen Remodel Cost in Plano, TX?',
@@ -25,12 +28,20 @@ const blogPosts = [
     category: 'Kitchen',
   },
 ];
+const categories = [
+  { name: 'Kitchen', href: '/kitchen-remodeling/' },
+  { name: 'Bathroom', href: '/bathroom-remodeling/' },
+  { name: 'Cost Guides', href: '/cost-guides/' },
+  { name: 'Process & Planning', href: '/our-process/' },
+];
 ---
 
 <Layout
-  title="Remodeling Tips & Insights for Plano Homeowners"
-  description="Practical advice, cost guides, and design inspiration for Plano and North Dallas homeowners planning a kitchen or bathroom remodel. From the team at Millwood Remodeling."
+  title="Kitchen & Bathroom Remodeling Tips for Plano, TX"
+  description="Practical remodeling advice and design tips for Plano and North Dallas homeowners. Kitchen and bathroom remodel guides, cost insights, and local expertise from Millwood Remodeling."
   canonical="https://planohomeremodel.com/blog/"
+  brand=""
+  noIndex
 >
 
   <section class="bg-warm py-16 lg:py-24">
@@ -39,11 +50,30 @@ const blogPosts = [
       <p class="text-text-light text-lg sm:text-xl max-w-2xl mx-auto">
         Practical advice, local insights, and design inspiration from the team at Plano Home Remodel & Design — a Millwood Remodeling Company.
       </p>
+      <p class="text-text-light max-w-2xl mx-auto mt-4">
+        New here? Start with our <a href="/cost-guides/" class="text-accent hover:text-accent-light underline">kitchen and bathroom cost guides</a>, then read about our <a href="/our-process/" class="text-accent hover:text-accent-light underline">design-build process</a> to see how a remodel actually comes together.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-warm pb-12 -mt-2">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap justify-center gap-3">
+        {categories.map((category) => (
+          <a href={category.href} class="bg-white px-4 py-2 rounded-full text-sm font-medium text-primary border border-warm-dark hover:border-accent/40 hover:text-accent transition-colors">
+            {category.name}
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
   <section class="py-16 lg:py-20 bg-white">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">Latest Articles</h2>
+        <p class="text-text-light text-lg max-w-2xl mx-auto">Guides, design ideas, and planning advice written specifically for Plano and North Dallas homeowners.</p>
+      </div>
       {blogPosts.length > 0 ? (
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post) => (

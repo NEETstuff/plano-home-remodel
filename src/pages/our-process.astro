@@ -3,42 +3,20 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import CTA from '../components/CTA.astro';
 
-const faqSchema = {
+const pageSchema = {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "How long does the entire remodeling process take from start to finish?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "From your first consultation to final walkthrough, expect 8–14 weeks for a full kitchen remodel and 4–7 weeks for a bathroom remodel. Design and permitting typically take 2–3 weeks, with construction making up the remainder.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Do I need to be home during the remodeling?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Not during the entire process. You only need to be present for the initial consultation, material selections, and final walkthrough. We communicate daily updates so you always know what is happening.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Can I live in my home during a kitchen or bathroom remodel?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. We set up temporary kitchen stations when remodeling a kitchen and ensure at least one bathroom remains functional when remodeling a bathroom. We minimize dust with containment systems and maintain a clean jobsite throughout.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How are cost overruns handled?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "We provide detailed, itemized quotes upfront and only proceed with your approval. If unexpected issues arise (like hidden water damage or outdated wiring), we flag them immediately with photographic evidence and a clear cost estimate before proceeding.",
-      },
-    },
+  "@type": "WebPage",
+  "@id": "https://planohomeremodel.com/our-process/",
+  name: "Our Remodeling Process Plano TX | Kitchen & Bathroom Remodels",
+  description: "See exactly how we remodel kitchens and bathrooms in Plano and North Dallas. Free consultation, 3D design, expert craftsmanship, 2-year warranty.",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://planohomeremodel.com/" },
+    { "@type": "ListItem", position: 2, name: "Our Process", item: "https://planohomeremodel.com/our-process/" },
   ],
 };
 
@@ -143,10 +121,10 @@ const steps = [
 ---
 
 <Layout
-  title="Our Kitchen & Bathroom Remodeling Process in Plano, TX"
-  description="From free consultation to final walkthrough — see exactly how we remodel kitchens and bathrooms in Plano. Stress-free process, in-house design, 2-year warranty. Start today."
+  title="Our Remodeling Process Plano, TX"
+  description="See exactly how we remodel kitchens and bathrooms in Plano and North Dallas. Free consultation, 3D design, expert craftsmanship, 2-year warranty. Start your project today."
   canonical="https://planohomeremodel.com/our-process/"
-  schema={[faqSchema]}
+  schema={[pageSchema, breadcrumbSchema]}
 >
 
   <Hero
@@ -217,7 +195,7 @@ const steps = [
               <span class="shrink-0 w-1 h-auto rounded-full bg-accent" />
               <div>
                 <h3 class="font-bold text-primary">Transparent Communication</h3>
-                <p class="text-text-light text-sm leading-relaxed">You receive daily progress updates, photos of completed work, and a direct line to your project manager. No guessing, no wondering — you always know where things stand.</p>
+                <p class="text-text-light text-sm leading-relaxed">You receive daily progress updates, photos of completed work, and a direct line to your project manager. No guessing, no wondering — you always know where things stand. Explore our <a href="/kitchen-remodeling/" class="text-accent hover:text-accent-light underline">kitchen remodeling</a> or <a href="/bathroom-remodeling/" class="text-accent hover:text-accent-light underline">bathroom remodeling</a> pages to see what our process delivers.</p>
               </div>
             </div>
             <div class="flex gap-4">
@@ -231,7 +209,7 @@ const steps = [
               <span class="shrink-0 w-1 h-auto rounded-full bg-accent" />
               <div>
                 <h3 class="font-bold text-primary">Minimal Disruption</h3>
-                <p class="text-text-light text-sm leading-relaxed">We use dust containment systems, maintain clean jobsites daily, and work efficiently to keep your home livable throughout the remodel. We respect your home and your schedule.</p>
+                <p class="text-text-light text-sm leading-relaxed">We use dust containment systems, maintain clean jobsites daily, and work efficiently to keep your home livable throughout the remodel. We respect your home and your schedule. <a href="/contact/" class="text-accent hover:text-accent-light underline">Contact us</a> to start your project.</p>
               </div>
             </div>
             <div class="flex gap-4">
@@ -267,8 +245,8 @@ const steps = [
           <a href="/contact/" class="block w-full bg-accent hover:bg-accent-light text-white font-semibold text-center px-6 py-3.5 rounded-lg transition-colors">
             Schedule Your Free Consultation
           </a>
-          <a href="tel:+14695062339" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
-            Or call (469) 506-2339
+          <a href="tel:+12144495922" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
+            Or call (214) 449-5922
           </a>
         </div>
       </div>

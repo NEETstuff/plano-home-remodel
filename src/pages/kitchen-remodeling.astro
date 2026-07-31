@@ -3,18 +3,20 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import TrustSignals from '../components/TrustSignals.astro';
 import CTA from '../components/CTA.astro';
+import ProjectGallery from '../components/ProjectGallery.astro';
+import { kitchenProjects } from '../assets/projects/gallery';
 
 const serviceSchema = {
   "@context": "https://schema.org",
-  "@type": ["Service", "Product"],
+  "@type": "Service",
   name: "Kitchen Remodeling in Plano, TX",
   description: "Professional kitchen remodeling services in Plano and North Dallas. Custom cabinets, countertops, islands, lighting, and open-layout designs by Millwood Remodeling.",
   provider: {
     "@type": "HomeAndConstructionBusiness",
-    "@id": "https://planohomeremodel.com",
+    "@id": "https://planohomeremodel.com/",
     name: "Plano Home Remodel & Design",
-    url: "https://planohomeremodel.com",
-    telephone: "+14695062339",
+    url: "https://planohomeremodel.com/",
+    telephone: "+12144495922",
     areaServed: [
       { "@type": "City", name: "Plano" },
       { "@type": "City", name: "Frisco" },
@@ -35,18 +37,17 @@ const serviceSchema = {
     { "@type": "City", name: "McKinney", sameAs: "https://en.wikipedia.org/wiki/McKinney,_Texas" },
     { "@type": "City", name: "Richardson", sameAs: "https://en.wikipedia.org/wiki/Richardson,_Texas" },
   ],
-  offers: {
-    "@type": "Offer",
-    priceRange: "$25,000 – $75,000+",
-    priceCurrency: "USD",
-    availability: "https://schema.org/InStock",
-  },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "127",
-    bestRating: "5",
-  },
+  priceRange: "$25,000 – $75,000+",
+  priceCurrency: "USD",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://planohomeremodel.com/" },
+    { "@type": "ListItem", position: 2, name: "Kitchen Remodeling", item: "https://planohomeremodel.com/kitchen-remodeling/" },
+  ],
 };
 
 const faqSchema = {
@@ -148,7 +149,7 @@ const processSteps = [
   {
     number: '02',
     title: 'Design & Planning',
-    description: 'Our in-house designer creates detailed renderings, selects materials, and refines every detail. You see exactly what your kitchen will look like before construction begins.',
+    description: 'Our in-house designer creates detailed renderings, selects materials, and refines every detail. You see exactly what your kitchen will look like before construction begins. <a href="/our-process/" class="text-accent hover:text-accent-light underline">Learn about our full design-build process</a>.',
   },
   {
     number: '03',
@@ -169,10 +170,10 @@ const processSteps = [
 ---
 
 <Layout
-  title="Kitchen Remodeling Plano, TX – Custom Kitchen Remodels"
-  description="Trusted Plano kitchen remodeling company. Custom cabinets, quartz countertops, islands, and open-layout designs. 15+ years experience, in-house designer, 2-year warranty. A Millwood Remodeling Company."
+  title="Kitchen Remodeling Plano, TX"
+  description="Expert kitchen remodeling in Plano and North Dallas. Custom cabinets, quartz countertops, islands, and open-concept designs. 15+ years experience, in-house designer, 2-year warranty. Get your free estimate."
   canonical="https://planohomeremodel.com/kitchen-remodeling/"
-  schema={[serviceSchema, faqSchema]}
+  schema={[serviceSchema, breadcrumbSchema, faqSchema]}
 >
 
   <Hero
@@ -227,6 +228,18 @@ const processSteps = [
         <a href="/our-process/" class="text-accent hover:text-accent-light font-semibold inline-flex items-center gap-1 transition-colors">
           Learn More About Our Process →
         </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-3">Plano Kitchen Remodeling Projects</h2>
+        <p class="text-text-light text-lg max-w-2xl mx-auto">Every kitchen we design and build is tailored to the home and the homeowner. Here are some examples of our work across North Dallas.</p>
+      </div>
+      <div class="mb-12">
+        <ProjectGallery projects={kitchenProjects} columns={3} />
       </div>
     </div>
   </section>
@@ -299,18 +312,22 @@ const processSteps = [
         <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">Kitchen Remodeling Considerations for Plano Homes</h2>
         <p class="text-text-light text-lg">Every Plano neighborhood has its own character. Here is what we consider when remodeling kitchens across the area.</p>
       </div>
-      <div class="grid sm:grid-cols-3 gap-6">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="bg-white rounded-xl p-6 border border-warm-dark">
           <h3 class="font-bold text-primary mb-2">Older Plano Neighborhoods</h3>
-          <p class="text-text-light text-sm leading-relaxed">Homes in East Plano, Historic Downtown, and areas near Parker Road often have smaller footprints and unique structural considerations. We specialize in maximizing every square foot while preserving the charm of these established homes.</p>
+          <p class="text-text-light text-sm leading-relaxed">Homes in East Plano, Historic Downtown, and areas near Parker Road often have smaller footprints and unique structural considerations. We specialize in maximizing every square foot while preserving the charm of these established homes. <a href="/service-areas/" class="text-accent hover:text-accent-light underline">See all areas we serve</a>.</p>
         </div>
         <div class="bg-white rounded-xl p-6 border border-warm-dark">
           <h3 class="font-bold text-primary mb-2">West Plano & Newer Homes</h3>
-          <p class="text-text-light text-sm leading-relaxed">Newer developments in West Plano, Legacy, and Whiffletree often have open floor plans that benefit from large islands, butler pantries, and premium appliance packages. We design kitchens that match the scale and style of these modern homes.</p>
+          <p class="text-text-light text-sm leading-relaxed">Newer developments in West Plano, Legacy, and Whiffletree often have open floor plans that benefit from large islands, butler pantries, and premium appliance packages. We design kitchens that match the scale and style of these modern homes. <a href="/cost-guides/" class="text-accent hover:text-accent-light underline">See our kitchen remodel cost guide</a> for typical pricing in these neighborhoods.</p>
         </div>
         <div class="bg-white rounded-xl p-6 border border-warm-dark">
           <h3 class="font-bold text-primary mb-2">Townhomes & Condos</h3>
           <p class="text-text-light text-sm leading-relaxed">Plano has growing townhome and condo communities. We understand HOA guidelines and work within compact footprints to deliver kitchens that feel spacious and function beautifully.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 border border-warm-dark">
+          <h3 class="font-bold text-primary mb-2">Timeline & Scheduling</h3>
+          <p class="text-text-light text-sm leading-relaxed">Most Plano kitchen remodels run 6–10 weeks. City of Plano permits add 1–2 weeks up front, custom cabinet fabrication takes 4–6 weeks, and some appliance models ship on backorder — so we lock in selections early. Most clients stay home with a temporary kitchen setup, and we schedule around your routine.</p>
         </div>
       </div>
     </div>
@@ -366,8 +383,8 @@ const processSteps = [
           <a href="/contact/" class="block w-full bg-accent hover:bg-accent-light text-white font-semibold text-center px-6 py-3.5 rounded-lg transition-colors">
             Get Your Free Kitchen Estimate
           </a>
-          <a href="tel:+14695062339" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
-            Or call (469) 506-2339
+          <a href="tel:+12144495922" class="block w-full text-center mt-3 text-white/70 hover:text-white text-sm transition-colors">
+            Or call (214) 449-5922
           </a>
         </div>
       </div>
