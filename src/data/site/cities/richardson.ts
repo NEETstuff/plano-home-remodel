@@ -23,7 +23,7 @@ export const richardson: CitySiteConfig = {
   brandShort: 'Richardson Home Remodel',
   brandMark: 'R',
   brandTagline: 'A Millwood Remodeling Company',
-  email: 'info@richardsonhomeremodel.com',
+  email: 'Ryan@MillwoodRemodeling.com',
   addressLocality: 'Richardson',
   cityWiki: 'https://en.wikipedia.org/wiki/Richardson,_Texas',
   foundingDate: '2009',

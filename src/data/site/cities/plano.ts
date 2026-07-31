@@ -20,7 +20,7 @@ export const plano: CitySiteConfig = {
   brandShort: 'Plano Home Remodel',
   brandMark: 'P',
   brandTagline: 'A Millwood Remodeling Company',
-  email: 'info@planohomeremodel.com',
+  email: 'Ryan@MillwoodRemodeling.com',
   addressLocality: 'Plano',
   cityWiki: 'https://en.wikipedia.org/wiki/Plano,_Texas',
   foundingDate: '2009',

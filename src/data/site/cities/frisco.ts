@@ -23,7 +23,7 @@ export const frisco: CitySiteConfig = {
   brandShort: 'Frisco Home Remodel',
   brandMark: 'F',
   brandTagline: 'A Millwood Remodeling Company',
-  email: 'info@friscohomeremodel.com',
+  email: 'Ryan@MillwoodRemodeling.com',
   addressLocality: 'Frisco',
   cityWiki: 'https://en.wikipedia.org/wiki/Frisco,_Texas',
   foundingDate: '2009',

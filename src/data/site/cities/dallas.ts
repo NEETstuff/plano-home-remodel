@@ -26,7 +26,7 @@ export const dallas: CitySiteConfig = {
   brandShort: 'Dallas Remodel & Design',
   brandMark: 'D',
   brandTagline: 'A Millwood Remodeling Company',
-  email: 'info@dallasremodelanddesign.com',
+  email: 'Ryan@MillwoodRemodeling.com',
   addressLocality: 'Dallas',
   cityWiki: 'https://en.wikipedia.org/wiki/Dallas',
   foundingDate: '2009',

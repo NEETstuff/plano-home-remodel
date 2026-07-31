@@ -22,7 +22,7 @@ export const southlake: CitySiteConfig = {
   brandShort: 'Southlake Home Remodel',
   brandMark: 'S',
   brandTagline: 'A Millwood Remodeling Company',
-  email: 'info@southlakehomeremodel.com',
+  email: 'Ryan@MillwoodRemodeling.com',
   addressLocality: 'Southlake',
   cityWiki: 'https://en.wikipedia.org/wiki/Southlake,_Texas',
   foundingDate: '2009',

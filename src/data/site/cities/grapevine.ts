@@ -22,7 +22,7 @@ export const grapevine: CitySiteConfig = {
   brandShort: 'Grapevine Home Remodel',
   brandMark: 'G',
   brandTagline: 'A Millwood Remodeling Company',
-  email: 'info@grapevinehomeremodel.com',
+  email: 'Ryan@MillwoodRemodeling.com',
   addressLocality: 'Grapevine',
   cityWiki: 'https://en.wikipedia.org/wiki/Grapevine,_Texas',
   foundingDate: '2009',

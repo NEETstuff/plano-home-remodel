@@ -23,7 +23,7 @@ export const highlandpark: CitySiteConfig = {
   brandShort: 'Highland Park Home Remodel',
   brandMark: 'H',
   brandTagline: 'A Millwood Remodeling Company',
-  email: 'info@highlandparkhomeremodel.com',
+  email: 'Ryan@MillwoodRemodeling.com',
   addressLocality: 'Highland Park',
   cityWiki: 'https://en.wikipedia.org/wiki/Highland_Park,_Texas',
   foundingDate: '2009',
