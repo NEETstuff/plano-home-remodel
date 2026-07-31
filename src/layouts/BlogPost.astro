@@ -1,0 +1,106 @@
+---
+// Shared layout for real blog articles. Usage:
+//   <BlogPost
+//     title="..."
+//     description="..."
+//     slug="slug"              // used for canonical + OG URL
+//     datePublished="2026-07-31"
+//     dateModified="2026-07-31"
+//     category="Kitchen"       // shown in the post meta
+//     relatedTitle=""
+//     relatedHref=""
+//   >
+//     ...markdown content...
+//   </BlogPost>
+import Layout from './Layout.astro';
+import CTA from '../components/CTA.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  datePublished: string;
+  dateModified?: string;
+  category: string;
+  relatedTitle?: string;
+  relatedHref?: string;
+}
+
+const { title, description, slug, datePublished, dateModified, category, relatedTitle, relatedHref } = Astro.props;
+
+const siteUrl = 'https://planohomeremodel.com';
+const canonical = `${siteUrl}/blog/${slug}/`;
+const modified = dateModified ?? datePublished;
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': `${canonical}#article`,
+  headline: title,
+  description,
+  datePublished,
+  dateModified: modified,
+  author: { '@type': 'Organization', '@id': `${siteUrl}/#organization`, name: 'Millwood Remodeling' },
+  publisher: { '@type': 'Organization', '@id': `${siteUrl}/#organization`, name: 'Millwood Remodeling' },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+  isPartOf: { '@type': 'WebPage', '@id': canonical },
+  inLanguage: 'en-US',
+};
+
+const formattedDate = new Date(modified).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Layout
+  title={title}
+  description={description}
+  canonical={canonical}
+  schema={articleSchema}
+  brand=""
+>
+
+  <article class="bg-warm">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 pt-14 lg:pt-20 pb-10">
+      <div class="flex items-center gap-3 mb-4">
+        <a href="/blog/" class="text-accent hover:text-accent-light text-sm font-semibold transition-colors">&larr; Blog</a>
+        <span class="text-text-light text-sm">{formattedDate}</span>
+        <span class="text-xs font-semibold text-accent uppercase tracking-wider">{category}</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary leading-tight mb-4">{title}</h1>
+      <p class="text-text-light text-lg leading-relaxed">{description}</p>
+    </div>
+  </article>
+
+  <div class="bg-white">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16 article-body">
+      <slot />
+    </div>
+  </div>
+
+  <section class="bg-warm py-10">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div>
+        <p class="text-sm font-semibold text-primary">About the Author</p>
+        <p class="text-text-light text-sm mt-1">
+          Written by the team at <a href="/about/" class="text-accent hover:text-accent-light underline">Plano Home Remodel &amp; Design</a> — a <a href="https://millwoodremodeling.com" target="_blank" rel="noopener noreferrer" class="text-accent hover:text-accent-light underline">Millwood Remodeling</a> company serving Plano and North Dallas since 2009.
+        </p>
+      </div>
+      {relatedHref && relatedTitle && (
+        <a
+          href={relatedHref}
+          class="shrink-0 inline-flex items-center gap-1 text-accent hover:text-accent-light text-sm font-semibold transition-colors"
+        >
+          {relatedTitle}
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+      )}
+    </div>
+  </section>
+
+  <CTA
+    title="Planning a Kitchen or Bathroom Remodel?"
+    subtitle="Get a free consultation and an itemized estimate for your project. No pressure, no obligation — just honest guidance."
+    buttonText="Get Free Consultation"
+    buttonHref="/contact/"
+  />
+
+</Layout>

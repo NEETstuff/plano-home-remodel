@@ -1,0 +1,288 @@
+---
+// ---------------------------------------------------------------------------
+// ServicePage — a reusable, cloneable template for local service pages.
+//
+// HOW TO CLONE FOR A NEW LOCAL SERVICE PAGE (e.g. "Frisco Kitchen Remodeling"):
+//   1. Copy src/pages/plano-kitchen-remodeling.astro to e.g.
+//      src/pages/frisco-kitchen-remodeling.astro and change the content props
+//      (hero, intro, scenarios, neighborhoods, faqs, canonical, schema).
+//   2. The <ServicePage> component below renders every section — no page
+//      markup to copy. Add a link to the new page in src/components/Footer.astro
+//      and cross-link it from /cost-guides/ and the parent service page.
+//   3. Rebuild. Astro generates the static page + sitemap entry automatically.
+//
+// Background alternation is handled here so cloned pages stay visually
+// consistent without any extra work.
+// ---------------------------------------------------------------------------
+
+import { serviceTrustStrip, includedInEveryProject, notIncludedUnlessSpecified } from '../data/service-content';
+
+export interface ServiceScenario {
+  type: string;
+  title: string;
+  range: string;
+  timeline: string;
+  detail: string;
+}
+
+export interface ServiceFaq {
+  q: string;
+  a: string;
+}
+
+export interface Props {
+  heroTitle: string;
+  heroSubtitle: string;
+  ctaText?: string;
+  ctaHref?: string;
+  secondaryText?: string;
+  secondaryHref?: string;
+
+  introHeading: string;
+  intro: string[];
+  introLinks?: { label: string; href: string }[];
+
+  costHeading: string;
+  costIntro: string;
+  scenarios: ServiceScenario[];
+  costNote?: string;
+
+  includeHeading?: string;
+  included?: string[];
+  notIncluded?: string[];
+
+  localHeading: string;
+  localIntro: string;
+  localItems: { title: string; text: string }[];
+
+  processHeading: string;
+  processIntro: string;
+  processSteps: { title: string; text: string }[];
+
+  faqHeading?: string;
+  faqIntro?: string;
+  faqs: ServiceFaq[];
+}
+
+const {
+  heroTitle,
+  heroSubtitle,
+  ctaText = 'Get Your Free Estimate',
+  ctaHref = '/contact/',
+  secondaryText,
+  secondaryHref,
+  introHeading,
+  intro,
+  introLinks = [],
+  costHeading,
+  costIntro,
+  scenarios,
+  costNote,
+  includeHeading = "What's Included in Your Estimate — and What's Not",
+  included = includedInEveryProject,
+  notIncluded = notIncludedUnlessSpecified,
+  localHeading,
+  localIntro,
+  localItems,
+  processHeading,
+  processIntro,
+  processSteps,
+  faqHeading = 'Frequently Asked Questions',
+  faqIntro,
+  faqs,
+} = Astro.props;
+---
+
+<section class="bg-primary text-white py-16 lg:py-24">
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight">{heroTitle}</h1>
+    <p class="text-white/80 text-lg sm:text-xl max-w-2xl mx-auto mb-8 leading-relaxed">{heroSubtitle}</p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href={ctaHref} class="bg-accent hover:bg-accent-light text-white font-semibold px-8 py-3.5 rounded-lg text-base transition-colors shadow-lg shadow-accent/20">{ctaText}</a>
+      {
+        secondaryText && secondaryHref && (
+          <a href={secondaryHref} class="inline-flex items-center gap-2 font-semibold px-8 py-3.5 rounded-lg text-base transition-colors border-2 border-white text-white hover:bg-white hover:text-primary">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            Call (214) 449-5922
+          </a>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<section class="py-16 lg:py-20 bg-white">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">{introHeading}</h2>
+        {intro.map((paragraph) => (
+          <p class="text-text-light leading-relaxed mb-4">{paragraph}</p>
+        ))}
+        {introLinks.length > 0 && (
+          <div class="mt-6 flex flex-wrap gap-3">
+            {introLinks.map((link) => (
+              <a href={link.href} class="inline-flex items-center gap-1 text-accent hover:text-accent-light font-semibold text-sm transition-colors">{link.label} →</a>
+            ))}
+          </div>
+        )}
+      </div>
+      <div class="bg-primary rounded-2xl p-8 lg:p-10 text-white">
+        <h3 class="text-xl font-bold mb-4">How a Plano Project Works</h3>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3 text-sm text-white/80">
+            <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <span><strong class="text-white">Free in-home consultation</strong> — we visit your home and give honest advice on scope, timeline, and budget.</span>
+          </li>
+          <li class="flex items-start gap-3 text-sm text-white/80">
+            <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <span><strong class="text-white">3D design renderings</strong> from our in-house designer, before we touch a wall.</span>
+          </li>
+          <li class="flex items-start gap-3 text-sm text-white/80">
+            <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <span><strong class="text-white">Itemized pricing</strong> with no surprise line items.</span>
+          </li>
+          <li class="flex items-start gap-3 text-sm text-white/80">
+            <svg class="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <span><strong class="text-white">2-year workmanship warranty</strong> on every project.</span>
+          </li>
+        </ul>
+        <div class="mt-6 flex flex-wrap items-center justify-start gap-x-5 gap-y-2 text-xs text-white/70">
+          {serviceTrustStrip.map((item) => (
+            <span class="inline-flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 lg:py-20 bg-warm">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">{costHeading}</h2>
+      <p class="text-text-light text-lg max-w-2xl mx-auto">{costIntro}</p>
+    </div>
+    <div class="grid lg:grid-cols-3 gap-6">
+      {scenarios.map((scenario) => (
+        <div class="bg-white rounded-xl p-6 border border-warm-dark flex flex-col">
+          <span class="text-xs font-semibold text-accent uppercase tracking-wider">{scenario.type}</span>
+          <h3 class="font-bold text-primary text-lg mt-1 mb-2">{scenario.title}</h3>
+          <p class="text-2xl font-bold text-accent mb-1">{scenario.range}</p>
+          <p class="text-sm text-text-light mb-3">Timeline: <span class="font-medium text-text">{scenario.timeline}</span></p>
+          <p class="text-text-light text-sm leading-relaxed flex-1">{scenario.detail}</p>
+          <div class="mt-5 pt-4 border-t border-warm-dark">
+            <a href="/contact/" class="text-accent hover:text-accent-light font-semibold text-sm">Get an estimate for this project →</a>
+          </div>
+        </div>
+      ))}
+    </div>
+    {costNote && (
+      <div class="mt-10 text-center">
+        <p class="text-sm text-text-light" set:html={costNote} />
+      </div>
+    )}
+  </div>
+</section>
+
+<section class="py-16 lg:py-20 bg-white">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">{includeHeading}</h2>
+      <p class="text-text-light text-lg max-w-2xl mx-auto">Every quote is itemized line by line, so you always know exactly what your budget covers before we start.</p>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-6">
+      <div class="bg-warm rounded-2xl p-8 border border-warm-dark">
+        <h3 class="text-lg font-bold text-primary mb-5">Included in every project</h3>
+        <ul class="space-y-3">
+          {included.map((item) => (
+            <li class="flex items-start gap-3 text-sm text-text-light leading-relaxed">
+              <svg class="w-4 h-4 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="bg-warm rounded-2xl p-8 border border-warm-dark">
+        <h3 class="text-lg font-bold text-primary mb-5">Not included unless specified</h3>
+        <ul class="space-y-3">
+          {notIncluded.map((item) => (
+            <li class="flex items-start gap-3 text-sm text-text-light leading-relaxed">
+              <svg class="w-4 h-4 text-primary/40 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 lg:py-20 bg-warm">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">{localHeading}</h2>
+      <p class="text-text-light text-lg max-w-2xl mx-auto">{localIntro}</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {localItems.map((item) => (
+        <div class="bg-white rounded-xl p-6 border border-warm-dark">
+          <h3 class="font-bold text-primary mb-2">{item.title}</h3>
+          <p class="text-text-light text-sm leading-relaxed">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="py-16 lg:py-20 bg-white">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4">{processHeading}</h2>
+      <p class="text-text-light text-lg max-w-2xl mx-auto" set:html={processIntro} />
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+      {processSteps.map((step, index) => (
+        <div class="bg-warm rounded-xl p-6 border border-warm-dark text-center">
+          <div class="text-accent font-bold text-3xl mb-2">{String(index + 1).padStart(2, '0')}</div>
+          <h3 class="font-bold text-primary mb-2">{step.title}</h3>
+          <p class="text-text-light text-sm leading-relaxed">{step.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="py-16 lg:py-20 bg-warm">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-4 text-center">{faqHeading}</h2>
+    {faqIntro && <p class="text-text-light text-lg max-w-2xl mx-auto text-center mb-10">{faqIntro}</p>}
+    <div class="space-y-4">
+      {faqs.map((faq) => (
+        <div class="bg-white rounded-xl p-5 border border-warm-dark">
+          <h3 class="font-bold text-primary text-sm mb-2">{faq.q}</h3>
+          <p class="text-text-light text-sm leading-relaxed">{faq.a}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="bg-primary text-white py-16 lg:py-20">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Ready to Start Your Plano Project?</h2>
+    <p class="text-white/80 text-lg mb-8 max-w-xl mx-auto">Call us directly or schedule a free in-home consultation. We'll walk your home, listen to your goals, and give you an honest, itemized estimate.</p>
+    <a href="tel:+12144495922" class="inline-flex items-center gap-2 text-2xl font-bold text-accent hover:text-accent-light transition-colors mb-8">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+      (214) 449-5922
+    </a>
+    <div>
+      <a href="/contact/" class="inline-flex bg-accent hover:bg-accent-light text-white font-semibold px-8 py-3.5 rounded-lg text-base transition-colors shadow-lg shadow-accent/20">
+        Schedule Free Consultation
+      </a>
+    </div>
+  </div>
+</section>

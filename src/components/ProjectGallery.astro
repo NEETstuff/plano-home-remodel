@@ -45,7 +45,7 @@ const sizes = flat
           const count = project.photos.length;
           return (
             <section>
-              <div class="flex items-baseline justify-between gap-4 mb-6 pb-4 border-b border-warm-dark">
+              <div class="flex items-baseline justify-between gap-4 mb-3 pb-4 border-b border-warm-dark">
                 <div class="flex items-baseline gap-3">
                   <span class="text-accent font-bold text-lg leading-none tabular-nums">{number}</span>
                   <h3 class="text-xl sm:text-2xl font-bold text-primary">{project.title}</h3>
@@ -54,6 +54,9 @@ const sizes = flat
                   {count} {count === 1 ? 'photo' : 'photos'}
                 </p>
               </div>
+              {project.summary && (
+                <p class="text-text-light text-sm leading-relaxed max-w-2xl mb-6">{project.summary}</p>
+              )}
               {count === 1 ? (
                 <div class="max-w-2xl">
                   <GalleryImage src={project.photos[0].src} alt={project.photos[0].alt} sizes={sizes} />

@@ -1,0 +1,161 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ServicePage from '../components/ServicePage.astro';
+
+const canonical = 'https://planohomeremodel.com/plano-bathroom-remodeling/';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${canonical}#service`,
+  name: 'Plano Bathroom Remodeling',
+  description: 'Custom bathroom remodeling across Plano, TX — garden tub conversions, walk-in showers, double vanities, and high-end master baths. Bathrooms $20,000–$40,000, master baths to $75,000. A Millwood Remodeling company.',
+  serviceType: 'Bathroom Remodeling',
+  areaServed: {
+    '@type': 'City',
+    name: 'Plano',
+    sameAs: 'https://en.wikipedia.org/wiki/Plano,_Texas',
+  },
+  provider: {
+    '@type': 'HomeAndConstructionBusiness',
+    '@id': 'https://planohomeremodel.com/',
+    name: 'Plano Home Remodel & Design',
+    url: 'https://planohomeremodel.com/',
+    telephone: '+12144495922',
+    parentOrganization: {
+      '@type': 'HomeAndConstructionBusiness',
+      name: 'Millwood Remodeling',
+      url: 'https://millwoodremodeling.com',
+    },
+  },
+  priceRange: '$20,000 – $40,000',
+  priceCurrency: 'USD',
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://planohomeremodel.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Bathroom Remodeling', item: 'https://planohomeremodel.com/bathroom-remodeling/' },
+    { '@type': 'ListItem', position: 3, name: 'Plano Bathroom Remodeling', item: canonical },
+  ],
+};
+
+const faqs = [
+  {
+    q: 'Should I convert my Plano garden tub into a walk-in shower?',
+    a: 'For most Plano homeowners, yes. Many master baths built in the 1980s\u20132000s have garden tubs that go unused. Converting that space into a walk-in shower with bench seating, a linear drain, and frameless glass gives you a bathroom you will actually use every day — and it is one of our most requested projects.',
+  },
+  {
+    q: 'Which Plano neighborhoods do you serve for bathroom remodels?',
+    a: 'We remodel bathrooms across all of Plano: West Plano, Legacy, and Whiffletree; Willow Bend and Lakeside on Preston; East Plano; the Downtown and Historic District; and communities like Russell Creek, Gleneagles, Los Rios, and Austin Ranch townhomes.',
+  },
+  {
+    q: 'Do I need a permit for a bathroom remodel in Plano?',
+    a: 'Permits are required in Plano for most bathroom remodels that involve electrical, plumbing, or structural changes. We handle all applications and inspections with the City of Plano Building Inspections department on your behalf.',
+  },
+  {
+    q: 'How much does a bathroom remodel cost in Plano?',
+    a: 'Bathroom remodels in Plano typically range from $20,000 to $40,000, and high-end full master baths run up to $75,000. We do not take on powder-room-only or sub-$20,000 projects — our remodels are complete, full-scope jobs. See our <a href="/cost-guides/" class="text-accent hover:text-accent-light underline">bathroom remodel cost guide</a> for the full breakdown.',
+  },
+  {
+    q: 'Can you remodel a Plano bathroom without moving the plumbing?',
+    a: 'Yes. Many Plano homeowners keep existing plumbing locations to save on cost and timeline. We still deliver a completely transformed bathroom with new tile, vanity, fixtures, and lighting — often including a garden-tub-to-shower conversion within the same footprint.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': `${canonical}#faq`,
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
+};
+---
+
+<Layout
+  title="Plano Bathroom Remodeling | Custom Bathrooms in Plano, TX"
+  description="Plano bathroom remodeling built for Plano homes — walk-in showers, garden tub conversions, double vanities, and high-end master baths. $20,000–$40,000, master baths to $75,000. Free estimate: (214) 449-5922."
+  canonical={canonical}
+  brand=""
+  schema={[serviceSchema, breadcrumbSchema, faqSchema]}
+>
+
+  <ServicePage
+    heroTitle="Plano Bathroom Remodeling"
+    heroSubtitle="Turn that never-used garden tub into a walk-in shower you will use every day. We remodel Plano bathrooms — from guest baths to high-end master suites — with custom tile, premium fixtures, and lasting waterproofing."
+    ctaText="Get Your Free Bathroom Estimate"
+    ctaHref="/contact/"
+    secondaryText="See Bathroom Costs"
+    secondaryHref="/cost-guides/"
+
+    introHeading="Bathrooms Built for the Way Plano Lives"
+    intro={[
+      'Plano master baths tell a familiar story. Homes from the 1980s through the 2000s were built with separate tub-and-shower zones and garden tubs that rarely get used — while West Plano and Legacy homes often shipped with builder-standard finishes that leave value on the table. We remodel both, and everything in between.',
+      'Our most requested Plano project is the garden tub conversion: turning that unused tub into a spacious walk-in shower with bench seating, a linear drain, and frameless glass. We also build double vanities, heated floors, custom tile, and high-end master baths — always with proper waterproofing and ventilation for North Texas humidity.',
+      'Every project is a full-scope bathroom remodel with City of Plano permitting, itemized pricing, and our 2-year workmanship warranty.',
+    ]}
+    introLinks={[
+      { label: 'Bathroom Remodeling Services', href: '/bathroom-remodeling/' },
+      { label: 'Bathroom Cost Guide', href: '/cost-guides/' },
+      { label: 'Our Process', href: '/our-process/' },
+    ]}
+
+    costHeading="Bathroom Remodel Costs in Plano, TX"
+    costIntro="Bathroom remodels in Plano typically run from $20,000 to $40,000, with high-end master baths up to $75,000. Here is what those ranges buy."
+    scenarios={[
+      {
+        type: 'Bathroom',
+        title: 'Full bathroom remodel',
+        range: '$20,000 – $30,000',
+        timeline: '4–6 weeks',
+        detail: 'A complete guest or secondary bath: new vanity, walk-in shower or tub/shower, tile, toilet, lighting, and fixtures. A common pre-sale update across Plano.',
+      },
+      {
+        type: 'Bathroom',
+        title: 'Master bath remodel',
+        range: '$30,000 – $50,000',
+        timeline: '6–8 weeks',
+        detail: 'Garden tub conversion to a walk-in shower, double vanity, custom tile, and heated floors. Layout changes add permitting and cost.',
+      },
+      {
+        type: 'Bathroom',
+        title: 'High-end master bath',
+        range: 'Up to $75,000',
+        timeline: '8+ weeks',
+        detail: 'Premium stone, curbless shower with linear drain, frameless glass, freestanding tub, and a full fixture upgrade — the top of our range.',
+      },
+    ]}
+    costNote={'Looking for kitchen pricing too? See our <a href="/cost-guides/" class="text-accent hover:text-accent-light underline">full kitchen &amp; bathroom cost guide</a> or our <a href="/plano-kitchen-remodeling/" class="text-accent hover:text-accent-light underline">Plano kitchen remodeling</a> page.'}
+
+    localHeading="Bathroom Remodeling by Plano Neighborhood"
+    localIntro="Plano\u2019s housing eras bring different bathroom layouts and challenges. We tailor every remodel to your home."
+    localItems={[
+      { title: 'East Plano (1980s–2000s)', text: 'Master baths with garden tubs and dated tile. Converting the tub to a walk-in shower is the single highest-impact update we do here.' },
+      { title: 'West Plano, Legacy & Whiffletree', text: 'Larger master suites with separate tub and shower zones. We reimagine them with double vanities, premium tile, and heated floors.' },
+      { title: 'Downtown & Historic District', text: 'Smaller footprints in older homes. We modernize function with space-efficient layouts and character-preserving finishes.' },
+      { title: 'Willow Bend & Lakeside on Preston', text: 'Custom homes where high-end materials shine — slab stone, curbless showers, and full fixture packages.' },
+      { title: 'Townhomes & Condos (Austin Ranch)', text: 'Compact bathrooms with HOA rules. We design for space efficiency and coordinate all approvals.' },
+      { title: 'Russell Creek, Gleneagles & Los Rios', text: 'A mix of eras. Whether it is a guest bath refresh or a full master redo, we match the scope to the home.' },
+    ]}
+
+    processHeading="The Plano Bathroom Remodeling Process"
+    processIntro={'A proven design-build process, from first call to final walkthrough. See the full detail on our <a href="/our-process/" class="text-accent hover:text-accent-light underline">our process</a> page.'}
+    processSteps={[
+      { title: 'Free Consultation', text: 'We visit your bathroom, assess the space, and give honest advice on scope and budget.' },
+      { title: 'Design & Material Selection', text: '3D renderings plus tile, fixture, and vanity selections with our in-house designer.' },
+      { title: 'Permits & Prep', text: 'We file with the City of Plano and protect your home before demolition.' },
+      { title: 'Construction', text: 'Waterproofing, tile, plumbing, and fixtures installed by our crew.' },
+      { title: 'Walkthrough & Warranty', text: 'We review every detail together — then back the work with a 2-year warranty.' },
+    ]}
+
+    faqHeading="Bathroom Remodeling in Plano: FAQ"
+    faqIntro="The questions Plano homeowners ask us most before starting a bathroom remodel."
+    faqs={faqs}
+  />
+
+</Layout>

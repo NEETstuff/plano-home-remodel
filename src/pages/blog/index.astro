@@ -2,16 +2,49 @@
 import Layout from '../../layouts/Layout.astro';
 import CTA from '../../components/CTA.astro';
 
-// TO ADD A REAL ARTICLE: create it in src/pages/blog/ (e.g. slug.astro) and add
-// an entry below with its URL. The page stays noindex until real posts exist —
-// remove `noIndex` in the <Layout> above once the first article is published.
 const blogPosts: {
   title: string;
   excerpt: string;
   href: string;
   date: string;
   category: string;
-}[] = [];
+}[] = [
+  {
+    title: 'Garden Tub to Walk-In Shower Conversion in Plano: Costs, Timelines & Ideas',
+    excerpt: 'Removing that garden tub and installing a walk-in shower is one of the most popular changes in Plano. Here is what it involves, how long it takes, and what it costs.',
+    href: '/blog/garden-tub-to-walk-in-shower-plano/',
+    date: 'July 31, 2026',
+    category: 'Bathroom',
+  },
+  {
+    title: 'How Long Does a Kitchen Remodel Take in Plano? A Realistic Timeline',
+    excerpt: 'From design through final punch list, a week-by-week look at how long a Plano kitchen remodel takes — and what keeps it on schedule.',
+    href: '/blog/how-long-does-a-kitchen-remodel-take-plano/',
+    date: 'July 24, 2026',
+    category: 'Kitchen',
+  },
+  {
+    title: 'Quartz vs. Granite Countertops for Plano Kitchens: Which Is Right for You?',
+    excerpt: 'The two most popular countertop choices for Plano kitchens, compared honestly on durability, maintenance, looks, and cost.',
+    href: '/blog/quartz-vs-granite-countertops-plano-kitchens/',
+    date: 'July 17, 2026',
+    category: 'Kitchen',
+  },
+  {
+    title: 'How Much Does a Bathroom Remodel Cost in Plano, TX?',
+    excerpt: 'A realistic look at bathroom remodel costs in Plano — what a full bath runs, where master baths land, and what moves the price.',
+    href: '/blog/how-much-does-a-bathroom-remodel-cost-in-plano/',
+    date: 'July 10, 2026',
+    category: 'Bathroom',
+  },
+  {
+    title: 'Do You Need a Permit for a Kitchen or Bathroom Remodel in Plano?',
+    excerpt: 'A plain-language guide to permits and HOA approvals for kitchen and bathroom remodels in Plano.',
+    href: '/blog/kitchen-remodel-permits-and-hoa-plano/',
+    date: 'July 3, 2026',
+    category: 'Process & Planning',
+  },
+];
 const categories = [
   { name: 'Kitchen', href: '/kitchen-remodeling/' },
   { name: 'Bathroom', href: '/bathroom-remodeling/' },
@@ -25,7 +58,6 @@ const categories = [
   description="Practical remodeling advice and design tips for Plano and North Dallas homeowners. Kitchen and bathroom remodel guides, cost insights, and local expertise from Millwood Remodeling."
   canonical="https://planohomeremodel.com/blog/"
   brand=""
-  noIndex
 >
 
   <section class="bg-warm py-16 lg:py-24">

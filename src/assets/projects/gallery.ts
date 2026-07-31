@@ -28,6 +28,10 @@ export interface GalleryPhoto {
 export interface GalleryProject {
   /** Main heading shown beside the numbered badge. */
   title: string;
+  /** Short, truthful caption for the project block. Category-level only —
+   * never claims a specific city, budget, or finish not verifiable from the
+   * photos themselves. */
+  summary?: string;
   photos: GalleryPhoto[];
 }
 
@@ -68,36 +72,96 @@ function photo(category: string, project: number, order: string | number, total:
 
 // Kitchen Remodeling page — all kitchen photos, grouped by project.
 export const kitchenProjects: GalleryProject[] = [
-  { title: 'Kitchen Remodeling', photos: [1, 2, 3, 4, 5].map((n) => photo('kitchen', 1, n, 5)) },
-  { title: 'Kitchen Remodeling', photos: [1, 2, 3, 4, 5, '4b'].map((n) => photo('kitchen', 2, n, 6)) },
-  { title: 'Kitchen Remodeling', photos: [1, 2].map((n) => photo('kitchen', 3, n, 2)) },
+  {
+    title: 'Kitchen Remodeling',
+    summary: 'A complete kitchen remodel — from demolition through final finishes, delivered as a single full-scope project.',
+    photos: [1, 2, 3, 4, 5].map((n) => photo('kitchen', 1, n, 5)),
+  },
+  {
+    title: 'Kitchen Remodeling',
+    summary: 'Custom cabinetry, countertops, backsplash, lighting, and flooring brought together in one cohesive design.',
+    photos: [1, 2, 3, 4, 5, '4b'].map((n) => photo('kitchen', 2, n, 6)),
+  },
+  {
+    title: 'Kitchen Remodeling',
+    summary: 'A kitchen project showing the quality of finish across cabinetry, stone, and tile.',
+    photos: [1, 2].map((n) => photo('kitchen', 3, n, 2)),
+  },
 ];
 
 // Bathroom Remodeling page — all bathroom photos, grouped by project.
 export const bathroomProjects: GalleryProject[] = [
-  { title: 'Bathroom Remodeling', photos: [1, 2].map((n) => photo('bathroom', 1, n, 2)) },
-  { title: 'Bathroom Remodeling', photos: [photo('bathroom', 2, 1, 1)] },
-  { title: 'Bathroom Remodeling', photos: [photo('bathroom', 3, 1, 1)] },
-  { title: 'Bathroom Remodeling', photos: [1, 2].map((n) => photo('bathroom', 4, n, 2)) },
-  { title: 'Bathroom Remodeling', photos: [1, 2].map((n) => photo('bathroom', 5, n, 2)) },
-  { title: 'Bathroom Remodeling', photos: [1, 2].map((n) => photo('bathroom', 6, n, 2)) },
+  {
+    title: 'Bathroom Remodeling',
+    summary: 'A full bathroom remodel with custom tile, a new vanity, and modern fixtures.',
+    photos: [1, 2].map((n) => photo('bathroom', 1, n, 2)),
+  },
+  {
+    title: 'Bathroom Remodeling',
+    summary: 'A walk-in shower remodel — tile, waterproofing, and fixtures built to last in North Texas.',
+    photos: [photo('bathroom', 2, 1, 1)],
+  },
+  {
+    title: 'Bathroom Remodeling',
+    summary: 'A bathroom update featuring a new vanity, tile, and lighting.',
+    photos: [photo('bathroom', 3, 1, 1)],
+  },
+  {
+    title: 'Bathroom Remodeling',
+    summary: 'A complete bathroom transformation with modern fixtures and finishes.',
+    photos: [1, 2].map((n) => photo('bathroom', 4, n, 2)),
+  },
+  {
+    title: 'Bathroom Remodeling',
+    summary: 'Custom tile work and premium fixtures from a full-scope bathroom remodel.',
+    photos: [1, 2].map((n) => photo('bathroom', 5, n, 2)),
+  },
+  {
+    title: 'Bathroom Remodeling',
+    summary: 'The finished quality of tile, fixtures, and cabinetry from a full bathroom remodel.',
+    photos: [1, 2].map((n) => photo('bathroom', 6, n, 2)),
+  },
 ];
 
 // Homepage — strongest mixed kitchen + bathroom highlights.
 export const homeHighlights: GalleryProject[] = [
-  { title: 'Kitchen Remodeling', photos: [photo('kitchen', 1, 3, 5), photo('kitchen', 1, 4, 5)] },
-  { title: 'Kitchen Remodeling', photos: [photo('kitchen', 2, 1, 6)] },
-  { title: 'Kitchen Remodeling', photos: [photo('kitchen', 3, 1, 2)] },
-  { title: 'Bathroom Remodeling', photos: [photo('bathroom', 1, 1, 2)] },
-  { title: 'Bathroom Remodeling', photos: [photo('bathroom', 4, 1, 2)] },
-  { title: 'Bathroom Remodeling', photos: [photo('bathroom', 6, 1, 2)] },
+  {
+    title: 'Kitchen Remodeling',
+    summary: 'Custom cabinetry, quartz countertops, backsplash, and lighting — the full scope of a Plano kitchen remodel.',
+    photos: [photo('kitchen', 1, 3, 5), photo('kitchen', 1, 4, 5)],
+  },
+  {
+    title: 'Kitchen Remodeling',
+    summary: 'A kitchen project showing the quality of finish across cabinetry, stone, and tile.',
+    photos: [photo('kitchen', 2, 1, 6)],
+  },
+  {
+    title: 'Kitchen Remodeling',
+    summary: 'Finished kitchen details from a full-scope remodel.',
+    photos: [photo('kitchen', 3, 1, 2)],
+  },
+  {
+    title: 'Bathroom Remodeling',
+    summary: 'A full bathroom remodel with custom tile, a new vanity, and modern fixtures.',
+    photos: [photo('bathroom', 1, 1, 2)],
+  },
+  {
+    title: 'Bathroom Remodeling',
+    summary: 'A complete bathroom transformation with modern fixtures and finishes.',
+    photos: [photo('bathroom', 4, 1, 2)],
+  },
+  {
+    title: 'Bathroom Remodeling',
+    summary: 'The finished quality of tile, fixtures, and cabinetry from a full bathroom remodel.',
+    photos: [photo('bathroom', 6, 1, 2)],
+  },
 ];
 
 // Homepage secondary band — flooring, pantry, laundry, dining, office.
 export const supportingProjects: GalleryProject[] = [
-  { title: 'Flooring', photos: [1, 2].map((n) => photo('flooring', 1, n, 2)) },
-  { title: 'Pantry', photos: [photo('pantry', 1, 1, 1), photo('pantry', 2, 1, 1)] },
-  { title: 'Laundry Room', photos: [1, 2].map((n) => photo('laundry', 1, n, 2)).concat(photo('laundry', 2, 1, 1)) },
-  { title: 'Dining Area', photos: [photo('dining', 1, 1, 1)] },
-  { title: 'Home Office', photos: [photo('office', 1, 1, 1)] },
+  { title: 'Flooring', summary: 'New flooring installation as part of a larger home project.', photos: [1, 2].map((n) => photo('flooring', 1, n, 2)) },
+  { title: 'Pantry', summary: 'Custom pantry storage and shelving.', photos: [photo('pantry', 1, 1, 1), photo('pantry', 2, 1, 1)] },
+  { title: 'Laundry Room', summary: 'A remodeled laundry room with custom cabinetry and fixtures.', photos: [1, 2].map((n) => photo('laundry', 1, n, 2)).concat(photo('laundry', 2, 1, 1)) },
+  { title: 'Dining Area', summary: 'A finished dining area from a home remodeling project.', photos: [photo('dining', 1, 1, 1)] },
+  { title: 'Home Office', summary: 'A built-out home office space.', photos: [photo('office', 1, 1, 1)] },
 ];
