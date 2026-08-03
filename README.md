@@ -1,46 +1,49 @@
-# Astro Starter Kit: Basics
+# Plano Home Remodel — Multi-City Astro Site
+
+Astro 7 static site. One codebase, multiple city-specific domain builds selected via `SITE_CITY` (defaults to `plano`).
+
+## Builds
 
 ```sh
-npm create astro@latest -- --template basics
+npm run build:plano        # SITE_CITY=plano
+npm run build:dallas       # SITE_CITY=dallas
+npm run build:frisco
+npm run build:richardson
+npm run build:grapevine
+npm run build:southlake
+npm run build:highlandpark
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Each city project deploys its own static build to Vercel from this repo.
 
-## 🚀 Project Structure
+## Contact form
 
-Inside of your Astro project, you'll see the following folders and files:
+The contact page (`src/pages/contact.astro`) submits via AJAX to the Vercel
+serverless function at `api/contact.ts`, which sends lead emails through
+Resend. The function is a root-level Vercel Function, so the static Astro
+build is untouched.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+### Required env vars (set in every city's Vercel project)
+
+| Variable | Required | Default | Notes |
+| :--- | :---: | :--- | :--- |
+| `RESEND_API_KEY` | Yes | — | API key from the Resend dashboard (no client-side exposure). |
+| `CONTACT_TO_EMAIL` | No | `Ryan@MillwoodRemodeling.com` | Recipient of lead emails. |
+| `CONTACT_FROM_EMAIL` | No | `onboarding@resend.dev` | Must be a verified sender. Until a domain is verified, Resend only delivers the onboarding sender to the email address used to sign up for the Resend account. |
+
+### Testing the endpoint
+
+```sh
+curl -X POST https://<your-domain>/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Test","phone":"(214) 555-0123","email":"test@example.com","project-type":"kitchen","message":"Hello","site":"Plano Home Remodel & Design"}'
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Expected: `{"ok":true}` and an email at `CONTACT_TO_EMAIL`.
 
-## 🧞 Commands
+### Security
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- POST-only (`405` otherwise)
+- Server-side validation of `name`, `phone`, `email`, `project-type`
+- Honeypot (`_gotcha`) silently rejects bots
+- No secrets in client code; errors never leak stack traces
