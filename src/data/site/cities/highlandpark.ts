@@ -18,7 +18,7 @@ export const highlandpark: CitySiteConfig = {
   city: 'Highland Park',
   state: 'TX',
   domain: 'highlandparkhomeremodel.com',
-  siteUrl: 'https://highlandparkhomeremodel.com',
+  siteUrl: 'https://www.highlandparkhomeremodel.com',
   brandName: 'Highland Park Home Remodel & Design',
   brandShort: 'Highland Park Home Remodel',
   brandMark: 'H',

@@ -18,7 +18,7 @@ export const frisco: CitySiteConfig = {
   city: 'Frisco',
   state: 'TX',
   domain: 'friscohomeremodel.com',
-  siteUrl: 'https://friscohomeremodel.com',
+  siteUrl: 'https://www.friscohomeremodel.com',
   brandName: 'Frisco Home Remodel & Design',
   brandShort: 'Frisco Home Remodel',
   brandMark: 'F',

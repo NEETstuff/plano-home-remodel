@@ -17,7 +17,7 @@ export const grapevine: CitySiteConfig = {
   city: 'Grapevine',
   state: 'TX',
   domain: 'grapevinehomeremodel.com',
-  siteUrl: 'https://grapevinehomeremodel.com',
+  siteUrl: 'https://www.grapevinehomeremodel.com',
   brandName: 'Grapevine Home Remodel & Design',
   brandShort: 'Grapevine Home Remodel',
   brandMark: 'G',

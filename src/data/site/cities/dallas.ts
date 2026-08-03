@@ -21,7 +21,7 @@ export const dallas: CitySiteConfig = {
   city: 'Dallas',
   state: 'TX',
   domain: 'dallasremodelanddesign.com',
-  siteUrl: 'https://dallasremodelanddesign.com',
+  siteUrl: 'https://www.dallasremodelanddesign.com',
   brandName: 'Dallas Remodel & Design',
   brandShort: 'Dallas Remodel & Design',
   brandMark: 'D',

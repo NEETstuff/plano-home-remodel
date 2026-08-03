@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/frisco-kitchen-bathroom-remodeling",
+      "destination": "https://www.friscohomeremodel.com/",
+      "permanent": true
+    },
+    {
+      "source": "/frisco-kitchen-bathroom-remodeling/",
+      "destination": "https://www.friscohomeremodel.com/",
+      "permanent": true
+    }
+  ]
+}

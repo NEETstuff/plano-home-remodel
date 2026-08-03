@@ -15,7 +15,7 @@ export const plano: CitySiteConfig = {
   city: 'Plano',
   state: 'TX',
   domain: 'planohomeremodel.com',
-  siteUrl: 'https://planohomeremodel.com',
+  siteUrl: 'https://www.planohomeremodel.com',
   brandName: 'Plano Home Remodel & Design',
   brandShort: 'Plano Home Remodel',
   brandMark: 'P',

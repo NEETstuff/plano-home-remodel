@@ -94,6 +94,22 @@ export function localBathroomPath(config?: CitySiteConfig): string {
   return `/${c.id}-bathroom-remodeling/`;
 }
 
+/**
+ * If a satellite city (e.g. a `{name}-kitchen-bathroom-remodeling` feeder
+ * page) has its own dedicated city domain, return that domain so callers can
+ * 301 to it instead of publishing a competing page. Returns null when the
+ * satellite only exists as a page on the current site (no dedicated domain).
+ */
+export function cityDomainForSatellite(name: string): string | null {
+  const target = String(name).toLowerCase().trim();
+  for (const id of listCitySiteIds()) {
+    if (citySites[id].city.toLowerCase() === target) {
+      return citySites[id].domain;
+    }
+  }
+  return null;
+}
+
 /** Organization / LocalBusiness schema core for a city site */
 export function buildBusinessSchema(config: CitySiteConfig = getSiteConfig()) {
   return {

@@ -6,6 +6,7 @@ import {
   siteUrl,
   buildProviderSchema,
   buildBreadcrumbSchema,
+  cityDomainForSatellite,
   SHARED,
 } from '../data/site';
 
@@ -13,7 +14,11 @@ const config = getSiteConfig();
 
 export function getStaticPaths() {
   const cfg = getSiteConfig();
-  const list = cfg.satelliteCities || [];
+  // Cities that already have a dedicated city domain are handled by an edge
+  // 301 (see vercel.json) so we never publish a competing copy here.
+  const list = (cfg.satelliteCities || []).filter(
+    (city) => !cityDomainForSatellite(city.name),
+  );
   return list.map((city) => ({
     params: { city: city.slug },
     props: { page: city },
@@ -21,6 +26,10 @@ export function getStaticPaths() {
 }
 
 const { page } = Astro.props;
+
+const siblings = (config.satelliteCities || []).filter(
+  (c) => c.slug !== page.slug && !cityDomainForSatellite(c.name),
+);
 
 const serviceSchema = {
   '@context': 'https://schema.org',
@@ -113,6 +122,30 @@ const breadcrumbSchema = buildBreadcrumbSchema([
   </section>
 
   <TrustSignals />
+
+  <section class="py-16 lg:py-20 bg-warm">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold text-primary mb-6">Explore Our Remodeling Services</h2>
+      <p class="text-text-light text-lg mb-8">
+        See how we design and build kitchens and bathrooms across the North Dallas area, and what projects cost.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/kitchen-remodeling/" class="bg-white px-4 py-2 rounded-full text-sm font-medium text-primary border border-warm-dark hover:border-accent/40 hover:text-accent transition-colors">Kitchen Remodeling</a>
+        <a href="/bathroom-remodeling/" class="bg-white px-4 py-2 rounded-full text-sm font-medium text-primary border border-warm-dark hover:border-accent/40 hover:text-accent transition-colors">Bathroom Remodeling</a>
+        <a href="/cost-guides/" class="bg-white px-4 py-2 rounded-full text-sm font-medium text-primary border border-warm-dark hover:border-accent/40 hover:text-accent transition-colors">Cost Guides</a>
+        <a href="/service-areas/" class="bg-white px-4 py-2 rounded-full text-sm font-medium text-primary border border-warm-dark hover:border-accent/40 hover:text-accent transition-colors">Service Areas</a>
+        <a href={SHARED.parentCompany.url} target="_blank" rel="noopener noreferrer" class="bg-white px-4 py-2 rounded-full text-sm font-medium text-primary border border-warm-dark hover:border-accent/40 hover:text-accent transition-colors">{SHARED.parentCompany.name}</a>
+      </div>
+      {siblings.length > 0 && (
+        <p class="text-text-light text-sm mt-6">
+          Also serving:{' '}
+          {siblings.map((c) => (
+            <a key={c.slug} href={`/${c.slug}/`} class="text-accent hover:text-accent-light underline mx-1">{c.name}</a>
+          ))}
+        </p>
+      )}
+    </div>
+  </section>
 
   <section class="bg-primary text-white py-16 lg:py-20">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">

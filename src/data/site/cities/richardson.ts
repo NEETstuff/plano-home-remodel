@@ -18,7 +18,7 @@ export const richardson: CitySiteConfig = {
   city: 'Richardson',
   state: 'TX',
   domain: 'richardsonhomeremodel.com',
-  siteUrl: 'https://richardsonhomeremodel.com',
+  siteUrl: 'https://www.richardsonhomeremodel.com',
   brandName: 'Richardson Home Remodel & Design',
   brandShort: 'Richardson Home Remodel',
   brandMark: 'R',

@@ -10,13 +10,13 @@ import sitemap from '@astrojs/sitemap';
  * Default remains Plano production host so current deploys stay unchanged.
  */
 const CITY_SITES = {
-  plano: 'https://planohomeremodel.com',
-  frisco: 'https://friscohomeremodel.com',
-  richardson: 'https://richardsonhomeremodel.com',
-  grapevine: 'https://grapevinehomeremodel.com',
-  southlake: 'https://southlakehomeremodel.com',
-  highlandpark: 'https://highlandparkhomeremodel.com',
-  dallas: 'https://dallasremodelanddesign.com',
+  plano: 'https://www.planohomeremodel.com',
+  frisco: 'https://www.friscohomeremodel.com',
+  richardson: 'https://www.richardsonhomeremodel.com',
+  grapevine: 'https://www.grapevinehomeremodel.com',
+  southlake: 'https://www.southlakehomeremodel.com',
+  highlandpark: 'https://www.highlandparkhomeremodel.com',
+  dallas: 'https://www.dallasremodelanddesign.com',
 };
 
 const siteCity = (process.env.SITE_CITY || 'plano').toLowerCase().trim();

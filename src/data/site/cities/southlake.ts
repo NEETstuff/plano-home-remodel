@@ -17,7 +17,7 @@ export const southlake: CitySiteConfig = {
   city: 'Southlake',
   state: 'TX',
   domain: 'southlakehomeremodel.com',
-  siteUrl: 'https://southlakehomeremodel.com',
+  siteUrl: 'https://www.southlakehomeremodel.com',
   brandName: 'Southlake Home Remodel & Design',
   brandShort: 'Southlake Home Remodel',
   brandMark: 'S',
