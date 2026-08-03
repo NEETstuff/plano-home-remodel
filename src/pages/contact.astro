@@ -59,23 +59,10 @@ const breadcrumbSchema = buildBreadcrumbSchema([
       <div class="grid lg:grid-cols-5 gap-12 lg:gap-16">
 
         <div class="lg:col-span-3">
-          <!--
-            Form Handling — Formspree (recommended for static Astro sites)
-
-            TO ACTIVATE THIS FORM:
-            1. Create a free form at https://formspree.io
-            2. Copy your form endpoint (it looks like https://formspree.io/f/YOUR_FORM_ID)
-            3. Replace "YOUR_FORM_ID" in the action attribute below with your real ID.
-               Example: action="https://formspree.io/f/abcd1234"
-            4. Deploy. No server or API key is required.
-
-            Fields submitted (name/value pairs): name, phone, email,
-            project-type, message, contact-method.
-
-            NOTE: Until a real Formspree ID is in place, submissions will not
-            be received. The form currently posts to a placeholder endpoint.
-          -->
-          <form id="contact-form" class="space-y-6" method="POST" action="https://formspree.io/f/YOUR_FORM_ID">
+          <form id="contact-form" class="space-y-6" method="POST" action="https://formspree.io/f/mjgnqbgg">
+            <input type="hidden" name="site" value={config.brandName} />
+            <input type="hidden" name="_subject" value={`New remodel lead — ${config.brandName}`} />
+            <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
             <div class="grid sm:grid-cols-2 gap-5">
               <div>
                 <label for="name" class="block text-sm font-semibold text-primary mb-1.5">Full Name <span class="text-accent">*</span></label>
